@@ -52,7 +52,7 @@ export default function MainScreen({ goTo, openSheet, tweaks }) {
               fontSize: 88, color: ink, lineHeight: 0.88,
               display: 'flex', alignItems: 'flex-end', gap: 8
             }}>
-              최해3
+              최해성
               <span style={{ fontSize: 22, transform: 'translateY(-12px)', opacity: 0.55 }}>↗</span>
             </div>
             <div className="serif agrandir" style={{ fontSize: 22, color: ink, opacity: 0.8, marginTop: 2, marginLeft: 4 }}>
