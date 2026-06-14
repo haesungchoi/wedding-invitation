@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Wedding Invitation — Figma Frames</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet"/>
+<style>
+  /* Korean system font stack — no external download needed */
+  @font-face {
+    font-family: 'Pretendard';
+    src: local('Apple SD Gothic Neo'), local('Noto Sans KR'), local('Malgun Gothic'), local('sans-serif');
+    font-weight: 300 700;
+    font-style: normal;
+  }
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#2A2A2A">
+  <svg viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg">
+    <!-- 6 phone frames side by side -->
+    <rect width="800" height="560" fill="#2A2A2A"/>
+    <rect x="20"  y="60" width="110" height="190" rx="8" fill="#D4E607"/>
+    <rect x="148" y="60" width="110" height="190" rx="8" fill="#F8F6F0"/>
+    <rect x="276" y="60" width="110" height="190" rx="8" fill="#F8F6F0"/>
+    <rect x="404" y="60" width="110" height="190" rx="8" fill="#D4E607"/>
+    <rect x="532" y="60" width="110" height="190" rx="8" fill="#ffffff"/>
+    <rect x="660" y="60" width="110" height="190" rx="8" fill="#ffffff"/>
+    <!-- label dots -->
+    <rect x="20"  y="268" width="110" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+    <rect x="148" y="268" width="110" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+    <rect x="276" y="268" width="110" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+    <rect x="404" y="268" width="110" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+    <rect x="532" y="268" width="110" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+    <rect x="660" y="268" width="110" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+    <!-- name text lines in first frame -->
+    <rect x="30" y="80" width="60" height="5" rx="2" fill="rgba(17,17,17,0.4)"/>
+    <rect x="30" y="110" width="80" height="18" rx="2" fill="rgba(17,17,17,0.7)"/>
+    <rect x="30" y="135" width="80" height="18" rx="2" fill="rgba(17,17,17,0.7)"/>
+  </svg>
+</template>
+<style>
+  :root {
+    --lime: #D4E607;
+    --ink: #111111;
+    --surface: #F8F6F0;
+    --gray: #767676;
+    --line: rgba(17,17,17,0.18);
+    --frame-w: 390px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #2A2A2A;
+    font-family: 'Bricolage Grotesque', 'Pretendard', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Canvas ─────────────────────────────────────── */
+  .canvas {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 64px;
+    padding: 56px 64px 80px;
+    min-height: 100vh;
+  }
+
+  /* ── Frame wrapper ───────────────────────────────── */
+  .frame-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .frame-tag {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+  }
+  .frame {
+    width: var(--frame-w);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  /* ── Shared typography ───────────────────────────── */
+  .label-en {
+    font-family: 'Bricolage Grotesque', 'Pretendard', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--gray);
+  }
+  .display {
+    font-family: 'Bricolage Grotesque', 'Pretendard', sans-serif;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    font-weight: 400;
+  }
+  .ko-light { font-family: 'Pretendard', sans-serif; font-weight: 300; letter-spacing: -0.01em; }
+  .ko-reg   { font-family: 'Pretendard', sans-serif; font-weight: 400; letter-spacing: -0.01em; }
+  .ko-med   { font-family: 'Pretendard', sans-serif; font-weight: 500; letter-spacing: -0.01em; }
+  .ko-bold  { font-family: 'Pretendard', sans-serif; font-weight: 700; letter-spacing: -0.01em; }
+  .num-mono {
+    font-family: 'Bricolage Grotesque', 'Pretendard', sans-serif;
+    font-feature-settings: 'tnum' on;
+    letter-spacing: 0.02em;
+  }
+  .hr  { height: 1px; background: var(--line); }
+  .hr-ink { height: 1px; background: var(--ink); }
+
+  /* ── Topbar (shared) ─────────────────────────────── */
+  .topbar {
+    padding: 22px 20px 14px;
+    background: rgba(248,246,240,0.95);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+  }
+  .back-btn {
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'Pretendard', sans-serif; font-weight: 600;
+    font-size: 11px; letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+
+  /* ── Contact row ─────────────────────────────────── */
+  .contact-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .contact-actions { display: flex; gap: 6px; }
+  .contact-icon {
+    width: 36px; height: 36px; border-radius: 99px;
+    border: 1px solid var(--ink); background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .contact-icon.dark { background: var(--ink); border-color: var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="canvas">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FRAME 01 · MAIN
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="frame-col">
+    <div class="frame-tag">01 · Main</div>
+    <div class="frame" id="frame-main">
+
+      <!-- HERO (lime) -->
+      <section style="position:relative; background:var(--lime); padding:24px 24px 56px; overflow:hidden;">
+        <!-- top row -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+          <div class="label-en" style="color:var(--ink); opacity:0.7;">HAESEONG · CHAEWON</div>
+          <div style="border:1px solid var(--ink); padding:6px 10px; border-radius:99px; font-family:'Pretendard',sans-serif; font-size:10px; letter-spacing:0.14em; font-weight:600;">SHARE ↗</div>
+        </div>
+
+        <!-- vertical headline -->
+        <div style="position:absolute; right:-6px; top:70px; writing-mode:vertical-rl; transform:rotate(180deg); font-family:'Bricolage Grotesque',sans-serif; font-weight:400; font-size:64px; color:var(--ink); line-height:0.85; opacity:0.95; letter-spacing:0;">
+          WEDDING<br/>INVITATION
+        </div>
+
+        <!-- names -->
+        <div style="margin-top:18px; position:relative; z-index:2;">
+          <div style="margin-bottom:4px;">
+            <div class="display" style="font-size:88px; color:var(--ink); line-height:0.88; display:flex; align-items:flex-end; gap:8px;">
+              최해성
+              <span style="font-size:22px; transform:translateY(-12px); opacity:0.55;">↗</span>
+            </div>
+            <div style="font-family:'Bricolage Grotesque','Pretendard',sans-serif; font-size:22px; color:var(--ink); opacity:0.8; margin-top:2px; margin-left:4px; font-weight:400;">Haeseong Choi</div>
+          </div>
+
+          <div class="display" style="font-size:36px; margin:14px 0 14px 4px; color:var(--ink); display:flex; align-items:center; gap:10px;">
+            <span style="display:inline-block; width:28px; height:1px; background:var(--ink);"></span>
+            <span style="font-size:26px; font-weight:400;">and</span>
+            <span style="display:inline-block; width:28px; height:1px; background:var(--ink);"></span>
+          </div>
+
+          <div>
+            <div class="display" style="font-size:88px; color:var(--ink); line-height:0.88; display:flex; align-items:flex-end; gap:8px;">
+              윤채원
+              <span style="font-size:22px; transform:translateY(-12px); opacity:0.55;">↗</span>
+            </div>
+            <div style="font-family:'Bricolage Grotesque','Pretendard',sans-serif; font-size:22px; color:var(--ink); opacity:0.8; margin-top:2px; margin-left:4px; font-weight:400;">Chaewon Yun</div>
+          </div>
+        </div>
+
+        <div style="margin-top:28px; margin-left:4px; font-family:'Pretendard',sans-serif; font-size:10px; letter-spacing:0.16em; font-weight:500; color:var(--ink); opacity:0.55;">
+          TAP NAME TO READ MORE →
+        </div>
+
+        <!-- couple photo -->
+        <div style="margin-top:38px; position:relative; margin-right:30px; overflow:hidden; aspect-ratio:4/5; max-height:280px;">
+          <img src="img/couple-main.jpg" alt="couple" style="width:100%; height:100%; object-fit:cover; object-position:center 35%;"/>
+          <div style="position:absolute; top:10px; left:10px; background:var(--lime); color:var(--ink); font-family:'Pretendard',sans-serif; font-size:9px; font-weight:700; padding:4px 8px; letter-spacing:0.18em; border-radius:2px; display:flex; align-items:center; gap:6px;">
+            THE TWO <span style="font-size:11px; opacity:0.7;">↗</span>
+          </div>
+        </div>
+
+        <!-- date line -->
+        <div style="margin-top:32px; padding-top:18px; border-top:1px solid var(--ink); display:flex; justify-content:space-between; align-items:baseline;">
+          <div class="num-mono" style="font-weight:800; color:var(--ink); letter-spacing:-0.02em; font-size:16px;">2026.09.12</div>
+          <div style="font-family:'Pretendard',sans-serif; letter-spacing:-0.02em; font-weight:800; color:var(--ink); font-size:16px;">삼성전자 서초사옥</div>
+        </div>
+      </section>
+
+      <!-- THE DAY (cream) -->
+      <section style="background:#F8F6F0; padding:64px 24px 56px; position:relative;">
+        <div class="label-en" style="margin-bottom:28px;">· THE DAY</div>
+
+        <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:8px;">
+          <div class="display" style="color:var(--ink); line-height:0.85; font-size:120px;">09</div>
+          <div style="width:1px; height:120px; background:var(--ink); transform:rotate(8deg); align-self:center;"></div>
+          <div class="display" style="color:var(--ink); line-height:0.85; font-size:120px;">12</div>
+        </div>
+
+        <div class="ko-med" style="text-align:center; font-size:26px; color:var(--ink); line-height:1.35; margin-top:14px; margin-bottom:10px;">
+          2026년 9월 12일<br/>
+          <span style="font-weight:500;">토요일 오후 1시</span>
+        </div>
+
+        <div style="text-align:center; margin-bottom:36px;">
+          <div class="ko-med" style="font-size:17px; margin-bottom:4px;">삼성전자 서초사옥</div>
+          <div class="ko-light" style="font-size:17px; font-weight:500;">5층 웨딩홀</div>
+        </div>
+
+        <!-- family -->
+        <div style="margin-bottom:32px;">
+          <div class="label-en" style="margin-bottom:14px;">· FAMILY</div>
+          <div style="display:grid; gap:14px; font-family:'Pretendard',sans-serif;">
+            <div style="display:flex; align-items:baseline; gap:10px;">
+              <div class="ko-reg" style="font-size:20px; color:#666; flex:1;">
+                <span style="color:var(--ink);">최교선</span>
+                <span style="margin:0 6px; opacity:0.5;">·</span>
+                <span style="color:var(--ink);">구지영</span>
+                <span style="margin-left:6px; font-size:16px;">의 아들</span>
+              </div>
+              <div class="display" style="font-size:20px;">해성</div>
+            </div>
+            <div class="hr"></div>
+            <div style="display:flex; align-items:baseline; gap:10px;">
+              <div class="ko-reg" style="font-size:20px; color:#666; flex:1;">
+                <span style="color:var(--ink);">윤재경</span>
+                <span style="margin:0 6px; opacity:0.5;">·</span>
+                <span style="color:var(--ink);">공명아</span>
+                <span style="margin-left:6px; font-size:16px;">의 딸</span>
+              </div>
+              <div class="display" style="font-size:20px;">채원</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ko-light" style="text-align:center; font-size:14px; color:#555; line-height:1.75; padding:0 4px;">
+          두 사람의 이야기가 하나가 되는 날,<br/>함께 축복해 주세요
+        </div>
+      </section>
+
+      <!-- LOCATION (cream) -->
+      <section style="background:#F8F6F0; padding:48px 24px 40px;">
+        <div class="label-en" style="margin-bottom:18px;">· LOCATION</div>
+        <div style="width:100%; border:1px solid var(--ink); background:#fff; padding:22px 20px; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div class="label-en" style="margin-bottom:6px;">VENUE</div>
+            <div class="ko-med" style="font-size:16px; margin-bottom:2px;">삼성전자 서초사옥 5층</div>
+            <div class="ko-light" style="font-size:13px; color:#666;">오시는 길 보기</div>
+          </div>
+          <span style="font-size:22px;">→</span>
+        </div>
+      </section>
+
+      <!-- CLOSING (lime) -->
+      <section style="background:var(--lime); padding:64px 24px 80px; position:relative; overflow:hidden;">
+        <div class="display" style="color:var(--ink); line-height:0.85; font-size:40px;">
+          THANK<br/>YOU
+        </div>
+        <div style="margin-top:36px;" class="hr-ink"></div>
+        <div style="margin-top:16px; display:flex; justify-content:space-between; align-items:baseline;">
+          <div class="label-en" style="color:var(--ink);">HAESEONG &nbsp;·&nbsp; CHAEWON</div>
+          <div class="num-mono" style="font-size:13px; color:var(--ink); font-weight:500;">2026.09.12</div>
+        </div>
+      </section>
+
+    </div><!-- /frame-main -->
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FRAME 02 · GROOM
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="frame-col">
+    <div class="frame-tag">02 · Groom · 최해성</div>
+    <div class="frame" id="frame-groom">
+
+      <!-- topbar -->
+      <div class="topbar">
+        <div class="back-btn"><span style="font-size:18px; line-height:1;">←</span> MAIN</div>
+        <div class="label-en">HIS STORY</div>
+      </div>
+
+      <!-- hero -->
+      <section style="background:#F8F6F0; padding:8px 24px 32px; position:relative;">
+        <div class="label-en" style="margin-bottom:10px;">· 01 / 02</div>
+        <div class="display" style="line-height:0.86; color:var(--ink); font-size:60px;">
+          HAESEONG<br/>CHOI
+        </div>
+        <div class="ko-light" style="font-size:14px; color:#666; margin-top:10px;">최해성 · 1996. 07. 15</div>
+
+        <div style="margin-top:28px; position:relative; overflow:hidden; aspect-ratio:3/4;">
+          <img src="img/groom.jpg" alt="groom" style="width:100%; height:100%; object-fit:cover; object-position:center 30%;"/>
+          <div style="position:absolute; left:10px; top:10px; background:var(--lime); color:var(--ink); font-family:'Pretendard',sans-serif; font-size:9px; font-weight:700; padding:4px 8px; letter-spacing:0.18em;">GROOM</div>
+          <div style="position:absolute; right:10px; bottom:10px; color:#fff; font-family:'Pretendard',sans-serif; font-weight:700; font-size:10px; letter-spacing:0.18em; text-shadow:0 1px 6px rgba(0,0,0,0.5);">HE / HIM</div>
+        </div>
+      </section>
+
+      <!-- story -->
+      <section style="background:#F8F6F0; padding:0 24px 48px;">
+        <div style="background:var(--lime); display:inline-block; padding:6px 12px; font-family:'Pretendard',sans-serif; font-size:14px; font-weight:700; color:var(--ink); margin-bottom:18px;">
+          좋은 것을 깊이 들여다보는 해성은
+        </div>
+        <div class="ko-light" style="font-size:16px; line-height:1.85; color:#222;">
+          마음 속에 오래 머물던 생각들을<br/>하나의 경험으로 이어가게 되었습니다<br/><br/>
+          그녀의 에너지가, 제 생각을 <span style="background:var(--lime); padding:0 4px;">움직임</span>으로 바꿉니다
+        </div>
+      </section>
+
+      <!-- facts (dark) -->
+      <section style="background:var(--ink); color:var(--lime); padding:40px 24px;">
+        <div class="label-en" style="color:var(--lime); opacity:0.7; margin-bottom:18px;">· FACTS</div>
+        <div style="display:grid; gap:22px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid rgba(212,230,7,0.2); padding-bottom:14px;">
+            <div class="label-en" style="color:var(--lime); opacity:0.6;">PROFESSION</div>
+            <div style="text-align:right;">
+              <div class="ko-med" style="font-size:17px; color:var(--lime);">자동차 상품기획</div>
+              <div style="font-family:'Pretendard',sans-serif; font-size:10px; color:var(--lime); opacity:0.5; margin-top:2px; letter-spacing:0.05em;">Product Planner</div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid rgba(212,230,7,0.2); padding-bottom:14px;">
+            <div class="label-en" style="color:var(--lime); opacity:0.6;">LOVES</div>
+            <div style="text-align:right;">
+              <div class="ko-med" style="font-size:17px; color:var(--lime);">오래 보는 것들</div>
+              <div style="font-family:'Pretendard',sans-serif; font-size:10px; color:var(--lime); opacity:0.5; margin-top:2px; letter-spacing:0.05em;">Things that age well</div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid rgba(212,230,7,0.2); padding-bottom:14px;">
+            <div class="label-en" style="color:var(--lime); opacity:0.6;">A WORD</div>
+            <div style="text-align:right;">
+              <div class="ko-med" style="font-size:17px; color:var(--lime);">깊이</div>
+              <div style="font-family:'Pretendard',sans-serif; font-size:10px; color:var(--lime); opacity:0.5; margin-top:2px; letter-spacing:0.05em;">Depth</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- family + contact -->
+      <section style="background:#F8F6F0; padding:48px 24px 32px;">
+        <div class="label-en" style="margin-bottom:18px;">· FAMILY</div>
+        <div style="border:1px solid var(--ink); padding:22px 20px; background:#fff; margin-bottom:18px;">
+          <div class="ko-light" style="font-size:13px; color:#666; margin-bottom:6px;">
+            <span style="color:var(--ink);">최교선</span>
+            <span style="margin:0 6px; opacity:0.5;">·</span>
+            <span style="color:var(--ink);">구지영</span>
+            <span style="margin-left:6px;">의 아들</span>
+          </div>
+          <div class="display" style="line-height:0.9; color:var(--ink); font-size:40px;">해성</div>
+        </div>
+
+        <div class="label-en" style="margin-bottom:12px;">· CONTACT</div>
+        <!-- contact rows -->
+        <div class="contact-row">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:4px;">
+              <span class="ko-med" style="font-size:15px; color:var(--ink);">최해성</span>
+              <span class="label-en" style="font-size:10px;">신랑</span>
+              <span style="background:var(--lime); color:var(--ink); font-family:'Pretendard',sans-serif; font-size:9px; font-weight:700; padding:2px 6px; letter-spacing:0.14em; border-radius:2px;">PRIMARY</span>
+            </div>
+            <div class="num-mono" style="font-size:12px; color:#666;">010-4019-0258</div>
+          </div>
+          <div class="contact-actions">
+            <div class="contact-icon">💬</div>
+            <div class="contact-icon dark" style="color:var(--lime);">📞</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:4px;">
+              <span class="ko-med" style="font-size:15px; color:var(--ink);">최교선</span>
+              <span class="label-en" style="font-size:10px;">아버지</span>
+            </div>
+            <div class="num-mono" style="font-size:12px; color:#666;">010-7465-6789</div>
+          </div>
+          <div class="contact-actions">
+            <div class="contact-icon">💬</div>
+            <div class="contact-icon dark" style="color:var(--lime);">📞</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:4px;">
+              <span class="ko-med" style="font-size:15px; color:var(--ink);">구지영</span>
+              <span class="label-en" style="font-size:10px;">어머니</span>
+            </div>
+            <div class="num-mono" style="font-size:12px; color:#666;">010-8528-0258</div>
+          </div>
+          <div class="contact-actions">
+            <div class="contact-icon">💬</div>
+            <div class="contact-icon dark" style="color:var(--lime);">📞</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- account CTA -->
+      <section style="background:#F8F6F0; padding:12px 24px 56px;">
+        <div style="width:100%; border:none; background:var(--ink); color:var(--lime); padding:20px 18px; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div class="label-en" style="color:var(--lime); opacity:0.6; margin-bottom:4px;">GROOM SIDE</div>
+            <div class="ko-med" style="font-size:15px; color:var(--lime);">마음 전하실 곳 (신랑측)</div>
+          </div>
+          <span style="font-size:22px;">→</span>
+        </div>
+      </section>
+
+      <!-- bottom band: go to bride -->
+      <section style="background:var(--lime); padding:40px 24px 28px;">
+        <div class="label-en" style="margin-bottom:10px; color:var(--ink);">· HER STORY</div>
+        <div class="display" style="color:var(--ink); line-height:0.88; display:flex; align-items:flex-end; gap:8px; font-size:40px;">
+          윤채원
+          <span style="font-size:20px; transform:translateY(-8px); opacity:0.6;">↗</span>
+        </div>
+        <div style="font-size:18px; color:var(--ink); opacity:0.75; margin-top:4px; font-weight:400;">Read Chaewon's story →</div>
+      </section>
+
+      <!-- back to main -->
+      <section style="background:#F8F6F0; padding:36px 24px 80px; text-align:center;">
+        <div style="display:inline-block; border:1px solid var(--ink); color:var(--ink); padding:14px 28px; border-radius:99px; font-family:'Pretendard',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.18em;">← 메인으로 돌아가기</div>
+      </section>
+
+    </div><!-- /frame-groom -->
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FRAME 03 · BRIDE
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="frame-col">
+    <div class="frame-tag">03 · Bride · 윤채원</div>
+    <div class="frame" id="frame-bride">
+
+      <!-- topbar -->
+      <div class="topbar">
+        <div class="back-btn"><span style="font-size:18px; line-height:1;">←</span> MAIN</div>
+        <div class="label-en">HER STORY</div>
+      </div>
+
+      <!-- hero -->
+      <section style="background:#F8F6F0; padding:8px 24px 32px; position:relative;">
+        <div class="label-en" style="margin-bottom:10px;">· 02 / 02</div>
+        <div class="display" style="line-height:0.86; color:var(--ink); font-size:60px;">
+          CHAEWON<br/>YUN
+        </div>
+        <div class="ko-light" style="font-size:14px; color:#666; margin-top:10px;">윤채원 · 1999. 02. 12</div>
+
+        <div style="margin-top:28px; position:relative; overflow:hidden; aspect-ratio:3/4;">
+          <img src="img/bride.jpg" alt="bride" style="width:100%; height:100%; object-fit:cover; object-position:center 25%;"/>
+          <div style="position:absolute; left:10px; top:10px; background:var(--ink); color:var(--lime); font-family:'Pretendard',sans-serif; font-size:9px; font-weight:700; padding:4px 8px; letter-spacing:0.18em;">BRIDE</div>
+          <div style="position:absolute; right:10px; bottom:10px; color:#fff; font-family:'Pretendard',sans-serif; font-weight:700; font-size:10px; letter-spacing:0.18em; text-shadow:0 1px 6px rgba(0,0,0,0.5);">SHE / HER</div>
+        </div>
+      </section>
+
+      <!-- story -->
+      <section style="background:#F8F6F0; padding:0 24px 48px;">
+        <div style="background:var(--ink); color:var(--lime); display:inline-block; padding:6px 12px; font-family:'Pretendard',sans-serif; font-size:14px; font-weight:700; margin-bottom:18px;">
+          움직일수록 더 살아나는 채원은
+        </div>
+        <div class="ko-light" style="font-size:16px; line-height:1.85; color:#222;">
+          이제는 함께 걷는 길 위에서<br/>삶의 순간들을 더 깊고 넓게 바라보게 되었습니다<br/><br/>
+          그의 성실함이, 제 <span style="background:var(--lime); padding:0 4px;">열정</span>에 의미를 더해줍니다
+        </div>
+      </section>
+
+      <!-- facts (lime) -->
+      <section style="background:var(--lime); padding:40px 24px;">
+        <div class="label-en" style="margin-bottom:18px;">· FACTS</div>
+        <div style="display:grid; gap:22px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--ink); padding-bottom:14px;">
+            <div class="label-en" style="opacity:0.7;">WORKS AS A</div>
+            <div style="text-align:right;">
+              <div class="ko-med" style="font-size:17px;">AI 리서처</div>
+              <div style="font-family:'Pretendard',sans-serif; font-size:10px; opacity:0.6; margin-top:2px; letter-spacing:0.05em;">AI Researcher</div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--ink); padding-bottom:14px;">
+            <div class="label-en" style="opacity:0.7;">LOVES</div>
+            <div style="text-align:right;">
+              <div class="ko-med" style="font-size:17px;">새로운 길</div>
+              <div style="font-family:'Pretendard',sans-serif; font-size:10px; opacity:0.6; margin-top:2px; letter-spacing:0.05em;">New paths</div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--ink); padding-bottom:14px;">
+            <div class="label-en" style="opacity:0.7;">A WORD</div>
+            <div style="text-align:right;">
+              <div class="ko-med" style="font-size:17px;">움직임</div>
+              <div style="font-family:'Pretendard',sans-serif; font-size:10px; opacity:0.6; margin-top:2px; letter-spacing:0.05em;">Moves</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- family + contact -->
+      <section style="background:#F8F6F0; padding:48px 24px 32px;">
+        <div class="label-en" style="margin-bottom:18px;">· FAMILY</div>
+        <div style="border:1px solid var(--ink); padding:22px 20px; background:#fff; margin-bottom:18px;">
+          <div class="ko-light" style="font-size:13px; color:#666; margin-bottom:6px;">
+            <span style="color:var(--ink);">윤재경</span>
+            <span style="margin:0 6px; opacity:0.5;">·</span>
+            <span style="color:var(--ink);">공명아</span>
+            <span style="margin-left:6px;">의 딸</span>
+          </div>
+          <div class="display" style="line-height:0.9; color:var(--ink); font-size:40px;">채원</div>
+        </div>
+
+        <div class="label-en" style="margin-bottom:12px;">· CONTACT</div>
+        <div class="contact-row">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:4px;">
+              <span class="ko-med" style="font-size:15px; color:var(--ink);">윤채원</span>
+              <span class="label-en" style="font-size:10px;">신부</span>
+              <span style="background:var(--lime); color:var(--ink); font-family:'Pretendard',sans-serif; font-size:9px; font-weight:700; padding:2px 6px; letter-spacing:0.14em; border-radius:2px;">PRIMARY</span>
+            </div>
+            <div class="num-mono" style="font-size:12px; color:#666;">010-6335-6095</div>
+          </div>
+          <div class="contact-actions">
+            <div class="contact-icon">💬</div>
+            <div class="contact-icon dark" style="color:var(--lime);">📞</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:4px;">
+              <span class="ko-med" style="font-size:15px; color:var(--ink);">윤재경</span>
+              <span class="label-en" style="font-size:10px;">아버지</span>
+            </div>
+            <div class="num-mono" style="font-size:12px; color:#666;">010-6284-9577</div>
+          </div>
+          <div class="contact-actions">
+            <div class="contact-icon">💬</div>
+            <div class="contact-icon dark" style="color:var(--lime);">📞</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div>
+            <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:4px;">
+              <span class="ko-med" style="font-size:15px; color:var(--ink);">공명아</span>
+              <span class="label-en" style="font-size:10px;">어머니</span>
+            </div>
+            <div class="num-mono" style="font-size:12px; color:#666;">010-4780-6095</div>
+          </div>
+          <div class="contact-actions">
+            <div class="contact-icon">💬</div>
+            <div class="contact-icon dark" style="color:var(--lime);">📞</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- account CTA -->
+      <section style="background:#F8F6F0; padding:12px 24px 56px;">
+        <div style="width:100%; border:1px solid var(--ink); background:var(--lime); padding:20px 18px; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div class="label-en" style="margin-bottom:4px;">BRIDE SIDE</div>
+            <div class="ko-med" style="font-size:15px; color:var(--ink);">마음 전하실 곳 (신부측)</div>
+          </div>
+          <span style="font-size:22px;">→</span>
+        </div>
+      </section>
+
+      <!-- bottom band: go to groom -->
+      <section style="background:var(--ink); padding:40px 24px 28px;">
+        <div class="label-en" style="margin-bottom:10px; color:var(--lime); opacity:0.7;">· HIS STORY</div>
+        <div class="display" style="color:var(--lime); line-height:0.88; display:flex; align-items:flex-end; gap:8px; font-size:40px;">
+          최해성
+          <span style="font-size:20px; transform:translateY(-8px); opacity:0.7;">↗</span>
+        </div>
+        <div style="font-size:18px; color:var(--lime); opacity:0.7; margin-top:4px; font-weight:400;">Read Haeseong's story →</div>
+      </section>
+
+      <!-- back to main -->
+      <section style="background:#F8F6F0; padding:36px 24px 80px; text-align:center;">
+        <div style="display:inline-block; border:1px solid var(--ink); color:var(--ink); padding:14px 28px; border-radius:99px; font-family:'Pretendard',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.18em;">← 메인으로 돌아가기</div>
+      </section>
+
+    </div><!-- /frame-bride -->
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FRAME 04 · NUMBERS
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="frame-col">
+    <div class="frame-tag">04 · Numbers · 함께한 시간</div>
+    <div class="frame" id="frame-numbers">
+
+      <!-- topbar (lime) -->
+      <div style="padding:22px 20px 14px; background:rgba(212,230,7,0.95); display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(17,17,17,0.18);">
+        <div class="back-btn"><span style="font-size:18px; line-height:1;">←</span> MAIN</div>
+        <div class="label-en">OUR STORY</div>
+      </div>
+
+      <!-- hero -->
+      <section style="background:var(--lime); padding:8px 24px 32px;">
+        <div class="label-en" style="margin-bottom:10px;">· NUMBERS</div>
+        <div class="display" style="line-height:0.86; color:var(--ink); font-size:56px; margin-bottom:22px; letter-spacing:-0.02em;">
+          The Two
+        </div>
+        <div style="position:relative; overflow:hidden; aspect-ratio:4/5;">
+          <img src="img/couple-main.jpg" alt="couple" style="width:100%; height:100%; object-fit:cover; object-position:center 35%;"/>
+        </div>
+      </section>
+
+      <!-- stats -->
+      <section style="background:var(--lime); padding:24px 24px 56px;">
+        <!-- 1914 -->
+        <div style="padding-bottom:28px; border-bottom:1px solid var(--ink);">
+          <div class="display" style="font-size:88px; color:var(--ink); line-height:0.95; letter-spacing:-0.02em; margin-bottom:14px;">1914</div>
+          <div class="ko-bold" style="font-size:18px; color:var(--ink); margin-bottom:10px; line-height:1.3;">처음 만난 날부터 결혼하는 날까지</div>
+          <div class="ko-light" style="font-size:14px; color:var(--ink); opacity:0.85; line-height:1.65;">
+            <div>1,914일을 함께 걸어왔습니다</div>
+            <div>그 모든 날이 오늘을 만들었습니다</div>
+          </div>
+        </div>
+        <!-- 1 -->
+        <div style="padding-top:28px; padding-bottom:28px; border-bottom:1px solid var(--ink);">
+          <div class="display" style="font-size:88px; color:var(--ink); line-height:0.95; letter-spacing:-0.02em; margin-bottom:14px;">1</div>
+          <div class="ko-bold" style="font-size:18px; color:var(--ink); margin-bottom:10px; line-height:1.3;">이제, 하나가 됩니다</div>
+          <div class="ko-light" style="font-size:14px; color:var(--ink); opacity:0.85; line-height:1.65;">
+            <div>각자의 이야기를 써온 두 사람이</div>
+            <div>오늘부터 같은 페이지를 씁니다</div>
+          </div>
+        </div>
+        <!-- ∞ -->
+        <div style="padding-top:28px;">
+          <div class="display" style="font-size:88px; color:var(--ink); line-height:0.95; letter-spacing:-0.02em; margin-bottom:14px;">∞</div>
+          <div class="ko-bold" style="font-size:18px; color:var(--ink); margin-bottom:10px; line-height:1.3;">오늘부터, 영원히</div>
+          <div class="ko-light" style="font-size:14px; color:var(--ink); opacity:0.85; line-height:1.65;">
+            <div>서로를 완성하기보다,</div>
+            <div>함께 무한히 삶을 만들어가려 합니다</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- back to main -->
+      <section style="background:#F8F6F0; padding:36px 24px 80px; text-align:center;">
+        <div style="display:inline-block; border:1px solid var(--ink); color:var(--ink); padding:14px 28px; border-radius:99px; font-family:'Pretendard',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.18em;">← 메인으로 돌아가기</div>
+      </section>
+
+    </div><!-- /frame-numbers -->
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FRAME 05 · MAP SHEET
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="frame-col">
+    <div class="frame-tag">05 · Map Sheet</div>
+    <div class="frame" id="frame-map" style="background:#fff;">
+
+      <div style="padding:20px 22px 28px;">
+        <!-- handle -->
+        <div style="width:38px; height:4px; border-radius:99px; background:rgba(0,0,0,0.18); margin:4px auto 16px;"></div>
+        <!-- header -->
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
+          <div class="label-en">Location · 오시는 길</div>
+          <div style="font-size:22px; color:#111; line-height:1; padding:4px; opacity:0.5;">×</div>
+        </div>
+
+        <div class="display" style="font-size:36px; line-height:1; margin-bottom:6px;">삼성전자 서초사옥</div>
+        <div class="ko-reg" style="font-size:14px; color:#444; margin-bottom:18px;">5층 웨딩홀 · 서울 서초구 서초대로74길 11</div>
+
+        <!-- mock map -->
+        <div style="width:100%; aspect-ratio:4/3; border-radius:14px; overflow:hidden; background:#E9EBE4; position:relative; margin-bottom:18px; border:1px solid rgba(0,0,0,0.06);">
+          <svg viewBox="0 0 320 240" style="width:100%; height:100%;">
+            <rect width="320" height="240" fill="#E9EBE4"/>
+            <path d="M0 130 L320 110" stroke="#D2D4CB" stroke-width="16"/>
+            <path d="M180 0 L210 240" stroke="#D2D4CB" stroke-width="12"/>
+            <path d="M0 60 L320 90" stroke="#E2E4DB" stroke-width="6"/>
+            <path d="M40 0 L70 240" stroke="#E2E4DB" stroke-width="6"/>
+            <rect x="90" y="20" width="60" height="40" fill="#DFE0D7" rx="3"/>
+            <rect x="230" y="20" width="60" height="40" fill="#DFE0D7" rx="3"/>
+            <rect x="90" y="140" width="60" height="40" fill="#DFE0D7" rx="3"/>
+            <rect x="158" y="98" width="44" height="34" fill="#111" rx="2"/>
+            <text x="180" y="120" fill="#D4E607" font-family="sans-serif" font-weight="700" font-size="9" text-anchor="middle">SAMSUNG</text>
+            <g transform="translate(180,90)">
+              <path d="M0,-22 C-10,-22 -16,-14 -16,-6 C-16,4 0,18 0,18 C0,18 16,4 16,-6 C16,-14 10,-22 0,-22 Z" fill="#E60707" stroke="#111" stroke-width="1.4"/>
+              <circle r="4" fill="#111" cy="-6"/>
+            </g>
+          </svg>
+          <div style="position:absolute; bottom:10px; left:10px; background:#111; color:#D4E607; padding:5px 10px; font-family:'Pretendard',sans-serif; font-size:10px; letter-spacing:0.18em; border-radius:99px; font-weight:600;">VENUE · 5F WEDDING HALL</div>
+        </div>
+
+        <!-- address copy -->
+        <div style="width:100%; border:1px solid #111; background:#fff; padding:14px 16px; border-radius:12px; display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+          <span class="ko-reg" style="font-size:14px;">서울 서초구 서초대로74길 11</span>
+          <span class="label-en">COPY</span>
+        </div>
+
+        <!-- nav apps -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:18px;">
+          <div style="background:#D4E607; color:#111; text-align:center; padding:12px 0; border-radius:10px; font-family:'Pretendard',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.1em;">NAVER</div>
+          <div style="background:#D4E607; color:#111; text-align:center; padding:12px 0; border-radius:10px; font-family:'Pretendard',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.1em;">KAKAO</div>
+          <div style="background:#D4E607; color:#111; text-align:center; padding:12px 0; border-radius:10px; font-family:'Pretendard',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.1em;">TMAP</div>
+        </div>
+
+        <div class="label-en" style="margin-bottom:10px;">HOW TO COME</div>
+        <div style="display:grid; gap:10px;">
+          <div style="display:flex; gap:12px;">
+            <div class="num-mono" style="font-size:13px; font-weight:700; width:56px; padding-top:2px;">지하철</div>
+            <div class="ko-reg" style="font-size:13px; color:#333; line-height:1.5;">강남역 2호선, 신분당선 8번 출구 도보 5분</div>
+          </div>
+          <div class="hr"></div>
+          <div style="display:flex; gap:12px;">
+            <div class="num-mono" style="font-size:13px; font-weight:700; width:56px; padding-top:2px;">주차</div>
+            <div class="ko-reg" style="font-size:13px; color:#333; line-height:1.5;">사옥 지하주차장 3시간 무료</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /frame-map -->
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FRAME 06 · RSVP SHEET
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="frame-col">
+    <div class="frame-tag">06 · RSVP Sheet</div>
+    <div class="frame" id="frame-rsvp" style="background:#fff;">
+      <div style="padding:20px 22px 28px;">
+        <!-- handle -->
+        <div style="width:38px; height:4px; border-radius:99px; background:rgba(0,0,0,0.18); margin:4px auto 16px;"></div>
+        <!-- header -->
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
+          <div class="label-en">RSVP · 참석 의사 전달</div>
+          <div style="font-size:22px; opacity:0.5;">×</div>
+        </div>
+
+        <div class="display" style="font-size:44px; line-height:0.9; margin-bottom:4px;">함께해<br/>주실 건가요?</div>
+        <div class="ko-reg" style="color:#555; font-size:13px; margin-bottom:22px;">식사 준비에 도움이 됩니다. 부담 없이 알려주세요.</div>
+
+        <!-- attending -->
+        <div class="label-en" style="margin-bottom:8px;">참석 여부</div>
+        <div style="display:flex; gap:8px; margin-bottom:18px;">
+          <div style="flex:1; padding:12px 0; border-radius:10px; border:1.5px solid var(--ink); background:var(--lime); font-weight:700; font-size:13px; font-family:'Pretendard',sans-serif; text-align:center;">참석합니다</div>
+          <div style="flex:1; padding:12px 0; border-radius:10px; border:1px solid rgba(0,0,0,0.18); background:#fff; font-size:13px; font-family:'Pretendard',sans-serif; text-align:center;">참석이 어려워요</div>
+        </div>
+
+        <!-- 인원 -->
+        <div class="label-en" style="margin-bottom:8px;">참석 인원 (본인 포함)</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; background:#F4F2EB; border-radius:12px; padding:12px 16px; margin-bottom:18px;">
+          <div style="width:32px; height:32px; border-radius:99px; border:1px solid var(--ink); background:#fff; display:flex; align-items:center; justify-content:center; font-size:18px;">−</div>
+          <div class="display" style="font-size:28px;">1<span style="font-size:14px; color:#777; margin-left:6px;">명</span></div>
+          <div style="width:32px; height:32px; border-radius:99px; border:1px solid var(--ink); background:var(--lime); display:flex; align-items:center; justify-content:center; font-size:18px;">＋</div>
+        </div>
+
+        <!-- 구분 -->
+        <div class="label-en" style="margin-bottom:8px;">구분</div>
+        <div style="display:flex; gap:8px; margin-bottom:18px;">
+          <div style="flex:1; padding:12px 0; border-radius:10px; border:1.5px solid var(--ink); background:var(--lime); font-weight:700; font-size:13px; font-family:'Pretendard',sans-serif; text-align:center;">신랑측</div>
+          <div style="flex:1; padding:12px 0; border-radius:10px; border:1px solid rgba(0,0,0,0.18); background:#fff; font-size:13px; font-family:'Pretendard',sans-serif; text-align:center;">신부측</div>
+        </div>
+
+        <!-- 식사 -->
+        <div class="label-en" style="margin-bottom:8px;">식사 여부</div>
+        <div style="display:flex; gap:8px; margin-bottom:18px;">
+          <div style="flex:1; padding:12px 0; border-radius:10px; border:1.5px solid var(--ink); background:var(--lime); font-weight:700; font-size:13px; font-family:'Pretendard',sans-serif; text-align:center;">예정</div>
+          <div style="flex:1; padding:12px 0; border-radius:10px; border:1px solid rgba(0,0,0,0.18); background:#fff; font-size:13px; font-family:'Pretendard',sans-serif; text-align:center;">안 함</div>
+        </div>
+
+        <!-- 성함 -->
+        <div class="label-en" style="margin-bottom:8px;">성함</div>
+        <div style="width:100%; padding:14px 16px; border:1px solid rgba(0,0,0,0.18); border-radius:12px; font-size:15px; font-family:'Pretendard',sans-serif; margin-bottom:22px; background:#fff; color:#aaa;">홍길동</div>
+
+        <!-- CTA -->
+        <div style="width:100%; padding:16px 0; border-radius:99px; background:var(--ink); color:var(--lime); text-align:center; font-family:'Pretendard',sans-serif; font-weight:700; font-size:13px; letter-spacing:0.15em;">SEND RSVP →</div>
+      </div>
+    </div><!-- /frame-rsvp -->
+  </div>
+
+</div><!-- /canvas -->
+
+<!-- instructions overlay -->
+<div style="position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.82); color:#fff; padding:12px 20px; border-radius:12px; font-family:'Bricolage Grotesque',sans-serif; font-size:12px; letter-spacing:0.08em; display:flex; align-items:center; gap:14px; backdrop-filter:blur(8px); z-index:999;">
+  <span>6개 화면 · 390px 프레임</span>
+  <span style="opacity:0.4;">|</span>
+  <span style="opacity:0.7;">Figma: 우클릭 → Save as PNG 또는 html.to.design URL 입력</span>
+</div>
+
+</body>
+</html>

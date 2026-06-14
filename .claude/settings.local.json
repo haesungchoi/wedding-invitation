@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/Downloads/mobile wedding invitation \\(1\\)/img/memories\")",
+      "Bash(mv \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/Downloads/mobile wedding invitation \\(1\\)/tmp_upload/IMG_0975.JPG\" \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/Downloads/mobile wedding invitation \\(1\\)/img/memories/photo-1.jpg\")",
+      "Bash(mv \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/Downloads/mobile wedding invitation \\(1\\)/tmp_upload/IMG_0976.JPG\" \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/Downloads/mobile wedding invitation \\(1\\)/img/memories/photo-2.jpg\")",
+      "Bash(python3 -c ' *)",
+      "Bash(python3)"
+    ]
+  }
+}
