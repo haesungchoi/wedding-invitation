@@ -252,74 +252,8 @@ function App() {
   );
 
   return (
-    <div className="stage">
-      {tweaks.showFrame ? (
-        <IOSDevice width={390} height={830}>
-          {stageInner}
-        </IOSDevice>
-      ) : (
-        <div style={{
-          width: 390, height: 830, position: 'relative',
-          overflow: 'hidden', borderRadius: 12,
-          boxShadow: '0 20px 60px rgba(0,0,0,0.18)',
-        }}>
-          {stageInner}
-        </div>
-      )}
-
-      {/* Tweaks panel */}
-      <TweaksPanel title="Tweaks">
-        <TweakSection label="Font" />
-        <TweakRadio
-          label="영문 폰트"
-          value={tweaks.displayFont}
-          options={[
-            { value: 'bricolage', label: 'Bricolage' },
-            { value: 'gravitas',  label: 'Gravitas One' },
-            { value: 'limelight', label: 'Limelight' },
-          ]}
-          onChange={v => setTweaks('displayFont', v)}
-        />
-
-        <TweakSection label="Palette" />
-        <TweakSelect
-          label="컬러 팔레트"
-          value={tweaks.palette}
-          options={[
-            { value: 'lime',    label: 'Neon Lime' },
-            { value: 'butter',  label: 'Butter Yellow' },
-            { value: 'cobalt',  label: 'Cobalt Pop' },
-            { value: 'blossom', label: 'Blossom Pink' },
-          ]}
-          onChange={v => setTweaks('palette', v)}
-        />
-
-        <TweakSection label="Photo" />
-        <TweakToggle
-          label="흑백 처리"
-          value={tweaks.bw}
-          onChange={v => setTweaks('bw', v)}
-        />
-
-        <TweakSection label="Preview" />
-        <TweakToggle
-          label="iPhone 프레임"
-          value={tweaks.showFrame}
-          onChange={v => setTweaks('showFrame', v)}
-        />
-
-        <TweakSection label="Jump to" />
-        <TweakRadio
-          label="화면"
-          value={modal || 'main'}
-          options={[
-            { value: 'main',     label: 'Main' },
-            { value: 'memories', label: '추억' },
-            { value: 'numbers',  label: 'Story' },
-          ]}
-          onChange={v => goTo(v)}
-        />
-      </TweaksPanel>
+    <div style={{ position: 'fixed', inset: 0, overflow: 'hidden' }}>
+      {stageInner}
     </div>
   );
 }
