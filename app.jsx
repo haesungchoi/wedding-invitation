@@ -42,20 +42,29 @@ function App() {
   const sheetClosingViaSwipe = React.useRef(false);
 
   const onSheetTouchStart = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const localY = e.touches[0].clientY - rect.top;
-    if (localY < 50) {
-      sheetDragRef.current = { active: true, startY: e.touches[0].clientY, startTime: Date.now(), delta: 0 };
-      setIsDraggingSheet(true);
-    }
+    sheetDragRef.current = { active: false, startY: e.touches[0].clientY, startTime: Date.now(), delta: 0 };
   };
 
   const onSheetTouchMove = (e) => {
-    if (!sheetDragRef.current.active) return;
     const delta = e.touches[0].clientY - sheetDragRef.current.startY;
-    if (delta > 0) {
-      sheetDragRef.current.delta = delta;
-      setSheetDragY(delta);
+
+    if (sheetDragRef.current.active) {
+      if (delta > 0) {
+        sheetDragRef.current.delta = delta;
+        setSheetDragY(delta);
+      }
+      return;
+    }
+
+    // 아래로 스와이프 + 콘텐츠가 맨 위에 있을 때만 sheet drag 활성화
+    if (delta > 8) {
+      const scrollEl = e.currentTarget.querySelector('.inv-screen');
+      if (!scrollEl || scrollEl.scrollTop <= 0) {
+        sheetDragRef.current.active = true;
+        setIsDraggingSheet(true);
+        sheetDragRef.current.delta = delta;
+        setSheetDragY(delta);
+      }
     }
   };
 

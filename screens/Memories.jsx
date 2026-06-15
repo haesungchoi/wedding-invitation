@@ -681,9 +681,19 @@ function StoryViewer({ images, onClose }) {
   const [progress, setProgress] = React.useState(0);
   const [dir, setDir] = React.useState(1);
   const timerRef = React.useRef(null);
+  const touchRef = React.useRef(null);
   const DURATION = 4000;
 
+  const goPrev = () => {
+    if (idx === 0) return;
+    cancelAnimationFrame(timerRef.current);
+    setDir(-1);
+    setIdx(i => i - 1);
+    setProgress(0);
+  };
+
   const goNext = React.useCallback(() => {
+    cancelAnimationFrame(timerRef.current);
     setDir(1);
     setIdx(i => {
       if (i + 1 >= images.length) { onClose(); return i; }
@@ -706,23 +716,46 @@ function StoryViewer({ images, onClose }) {
     return () => cancelAnimationFrame(timerRef.current);
   }, [idx, goNext]);
 
-  const handleTap = (e) => {
-    const x = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
-    const half = e.currentTarget.getBoundingClientRect().width / 2;
-    if (x < half) { setDir(-1); setIdx(i => Math.max(0, i - 1)); setProgress(0); }
-    else { goNext(); }
+  const onTouchStart = (e) => {
+    const t = e.touches[0];
+    touchRef.current = { x: t.clientX, y: t.clientY, t: Date.now() };
+  };
+
+  const onTouchEnd = (e) => {
+    if (!touchRef.current) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchRef.current.x;
+    const dy = t.clientY - touchRef.current.y;
+    const dt = Date.now() - touchRef.current.t;
+    touchRef.current = null;
+
+    // 아래로 스와이프 → 닫기
+    if (dy > 55 && Math.abs(dx) < 100) {
+      onClose();
+      return;
+    }
+
+    // 빠른 탭 → 이전/다음
+    if (Math.abs(dx) < 12 && Math.abs(dy) < 12 && dt < 280) {
+      const w = e.currentTarget.getBoundingClientRect().width;
+      if (t.clientX < w * 0.38) goPrev();
+      else goNext();
+    }
   };
 
   return (
-    <div onClick={handleTap} onTouchEnd={handleTap}
+    <div
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
       style={{
         position:'absolute', inset:0, background:'#000', zIndex:300,
-        display:'flex', flexDirection:'column',
+        display:'flex', flexDirection:'column', userSelect:'none',
       }}>
+
       {/* progress bars */}
-      <div style={{ display:'flex', gap:3, padding:'12px 10px 8px', zIndex:2 }}>
+      <div style={{ display:'flex', gap:3, padding:'14px 10px 8px', zIndex:2 }}>
         {images.map((_, i) => (
-          <div key={i} style={{ flex:1, height:2, background:'rgba(255,255,255,0.35)', borderRadius:99, overflow:'hidden' }}>
+          <div key={i} style={{ flex:1, height:2, background:'rgba(255,255,255,0.3)', borderRadius:99, overflow:'hidden' }}>
             <div style={{
               height:'100%', borderRadius:99, background:'#fff',
               width: i < idx ? '100%' : i === idx ? `${progress}%` : '0%',
@@ -731,16 +764,46 @@ function StoryViewer({ images, onClose }) {
           </div>
         ))}
       </div>
-      {/* close */}
-      <button onClick={e => { e.stopPropagation(); onClose(); }}
-        style={{ position:'absolute', top:18, right:14, background:'none', border:'none', cursor:'pointer', color:'#fff', fontSize:24, zIndex:3, lineHeight:1 }}>×</button>
-      {/* image */}
-      <div style={{ flex:1, overflow:'hidden', display:'flex' }}>
+
+      {/* X 닫기 버튼 — touchEnd stopPropagation으로 parent 이벤트 차단 */}
+      <button
+        onTouchEnd={e => { e.stopPropagation(); onClose(); }}
+        onClick={e => { e.stopPropagation(); onClose(); }}
+        style={{
+          position:'absolute', top:14, right:12,
+          width:36, height:36, borderRadius:'50%',
+          background:'rgba(0,0,0,0.35)', border:'none', cursor:'pointer',
+          color:'#fff', fontSize:20, zIndex:3,
+          display:'flex', alignItems:'center', justifyContent:'center',
+          WebkitTapHighlightColor:'transparent',
+        }}>×</button>
+
+      {/* 좌/우 탭 힌트 오버레이 (시각적 가이드, pointer-events 없음) */}
+      <div style={{
+        position:'absolute', top:'50%', left:16, transform:'translateY(-50%)',
+        color:'rgba(255,255,255,0.25)', fontSize:22, zIndex:2, pointerEvents:'none', lineHeight:1,
+      }}>‹</div>
+      <div style={{
+        position:'absolute', top:'50%', right:16, transform:'translateY(-50%)',
+        color:'rgba(255,255,255,0.25)', fontSize:22, zIndex:2, pointerEvents:'none', lineHeight:1,
+      }}>›</div>
+
+      {/* 이미지 */}
+      <div style={{ flex:1, overflow:'hidden', display:'flex', alignItems:'center' }}>
         <img key={idx} src={images[idx]} alt="" style={{
-          width:'100%', objectFit:'contain',
-          animation: `${dir > 0 ? 'story-enter-right' : 'story-enter-left'} 240ms cubic-bezier(.25,.46,.45,.94) both`,
+          width:'100%', height:'100%', objectFit:'contain',
+          animation: `${dir > 0 ? 'story-enter-right' : 'story-enter-left'} 220ms cubic-bezier(.25,.46,.45,.94) both`,
+          pointerEvents:'none',
         }}/>
       </div>
+
+      {/* 하단 스와이프 힌트 */}
+      <div style={{
+        textAlign:'center', padding:'10px 0 16px',
+        color:'rgba(255,255,255,0.3)',
+        fontFamily:"'Pretendard',sans-serif", fontSize:11, letterSpacing:'0.1em',
+        pointerEvents:'none',
+      }}>아래로 스와이프하여 닫기</div>
     </div>
   );
 }
@@ -754,6 +817,8 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   const screenRef = React.useRef(null);
   const topbarRef = React.useRef(null);
   const [topbarH, setTopbarH] = React.useState(52);
+
+  const proposeImages = Array.from({length:14}, (_,i) => `img/memories/propose-newyork/newyork-${i+1}.jpg`);
 
   const highlights = [
     { label: '2026', images: [] },
@@ -789,12 +854,12 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
     {
       id:'mem-3', date:'2026. 09. 12', likes:'5,204', photoCount:6,
       images:[
+        'img/memories/studio-bride/bride-0.jpg',
         'img/memories/studio-bride/bride-1.jpg',
         'img/memories/studio-bride/bride-2.jpg',
         'img/memories/studio-bride/bride-3.jpg',
         'img/memories/studio-bride/bride-4.jpg',
         'img/memories/studio-bride/bride-5.jpg',
-        'img/memories/studio-bride/bride-6.jpg',
       ],
       caption:'평생 이렇게 예쁠 수 있을까. 드레스보다 눈이 더 빛났던 그 순간, 시간이 멈췄으면 했어. 👰',
     },
@@ -840,7 +905,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
     setTimeout(() => {
       const screen = screenRef.current;
       const el = document.getElementById('post-' + id);
-      if (screen && el) screen.scrollTop = el.offsetTop - 60;
+      if (screen && el) screen.scrollTop = el.offsetTop - topbarH - 48;
     }, 80);
   };
 
@@ -852,7 +917,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   ];
 
   return (
-    <div className="inv-screen" data-screen-label="02 Memories · 우리의 추억" ref={screenRef} style={{ background: '#fff', position:'relative' }}>
+    <div className="inv-screen" data-screen-label="02 Memories · 우리의 추억" ref={screenRef} style={{ background: '#fff' }}>
       {storyImages && <StoryViewer images={storyImages} onClose={() => setStoryImages(null)} />}
 
       {/* ── topbar ─────────────────────────────────────── */}
@@ -874,7 +939,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
       <div style={{ background:'#fff', padding:'20px 16px 0' }}>
         <div style={{ display:'flex', alignItems:'center', gap:20 }}>
           {/* avatar ring — Instagram gradient story ring */}
-          <button className="tap" style={{ background:'none', border:'none', padding:0, cursor:'pointer', borderRadius:'50%', flexShrink:0 }}>
+          <button className="tap" onClick={() => setStoryImages(proposeImages)} style={{ background:'none', border:'none', padding:0, cursor:'pointer', borderRadius:'50%', flexShrink:0 }}>
             <div style={{ padding:2.5, borderRadius:'50%', background:'linear-gradient(45deg,#fcaf45,#f77737,#f56040,#fd1d1d,#e1306c,#c13584,#833ab4,#5851db)' }}>
               <div style={{ padding:2.5, borderRadius:'50%', background:'#fff' }}>
                 <div style={{ width:72, height:72, borderRadius:'50%', background:lime, color:ink, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Bricolage Grotesque',sans-serif", fontWeight:700, fontSize:18 }}>H&C</div>
