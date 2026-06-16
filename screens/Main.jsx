@@ -26,16 +26,28 @@ function MainScreen({ goTo, openSheet, tweaks }) {
   const weddingTextRef = React.useRef(null);
   const photoRef = React.useRef(null);
 
-  React.useEffect(() => {
+  // 세로 'WEDDING INVITATION' 헤드라인의 높이를 사진 카드 위치에 맞춰 정렬한다.
+  // getBoundingClientRect는 fade-up 진입 애니메이션의 transform·스크롤 위치까지
+  // 반영해 첫 진입 시 잘못된 값을 읽으므로, transform과 무관한 offset 기반으로 계산하고
+  // useLayoutEffect로 첫 페인트 전에 확정한다. 폰트가 늦게 로드되면 위쪽 이름 텍스트의
+  // 높이가 바뀌므로 fonts.ready에서 한 번 더 정렬한다.
+  React.useLayoutEffect(() => {
+    const offsetWithin = (el, ancestor) => {
+      let y = 0;
+      while (el && el !== ancestor) { y += el.offsetTop; el = el.offsetParent; }
+      return y;
+    };
     const align = () => {
-      if (!weddingTextRef.current || !photoRef.current) return;
-      const section = weddingTextRef.current.closest('section');
+      const text = weddingTextRef.current;
+      const photo = photoRef.current;
+      if (!text || !photo) return;
+      const section = text.closest('section');
       if (!section) return;
-      const sectionTop = section.getBoundingClientRect().top;
-      const photoBottom = photoRef.current.getBoundingClientRect().bottom;
-      weddingTextRef.current.style.height = `${Math.round(photoBottom - sectionTop - 70)}px`;
+      const h = offsetWithin(photo, section) + photo.offsetHeight - 70;
+      if (h > 0) text.style.height = `${Math.round(h)}px`;
     };
     align();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
     const t = setTimeout(align, 700);
     window.addEventListener('resize', align);
     return () => { clearTimeout(t); window.removeEventListener('resize', align); };

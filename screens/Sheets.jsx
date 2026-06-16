@@ -399,7 +399,7 @@ function AccountSheet({ open, onClose, side }) {
         </div>
       </div>
       <button
-      onClick={() => copy(a.no, `${gkey}-${idx}`)}
+      onClick={() => copy(`${a.bank} ${a.no}`, `${gkey}-${idx}`)}
       className="tap"
       style={{
         background: copied === `${gkey}-${idx}`
