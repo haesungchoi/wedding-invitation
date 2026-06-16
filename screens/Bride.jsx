@@ -42,6 +42,7 @@ function BrideScreen({ goTo, openSheet, tweaks }) {
           aspectRatio: '3/4'
         }}>
           <img src="img/bride.jpg" alt="bride"
+          loading="lazy" decoding="async"
           className={tweaks.bw ? 'bw kenburns' : 'kenburns'}
           style={{
             width: '100%', height: '100%', objectFit: 'cover',

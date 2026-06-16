@@ -170,6 +170,7 @@ function MainScreen({ goTo, openSheet, tweaks }) {
             aspectRatio: '4/5', maxHeight: 280
           }}>
             <img src="img/couple-main.jpg" alt="couple"
+            fetchPriority="high" decoding="async"
             className={tweaks.bw ? 'bw kenburns' : 'kenburns'}
             style={{
               width: '100%', height: '100%', objectFit: 'cover',

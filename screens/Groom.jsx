@@ -42,6 +42,7 @@ function GroomScreen({ goTo, openSheet, tweaks }) {
           aspectRatio: '3/4'
         }}>
           <img src="img/groom.jpg" alt="groom"
+          loading="lazy" decoding="async"
           className={tweaks.bw ? 'bw kenburns' : 'kenburns'}
           style={{
             width: '100%', height: '100%', objectFit: 'cover',

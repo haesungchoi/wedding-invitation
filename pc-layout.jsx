@@ -160,6 +160,7 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant }) {
         className="tap"
         style={{ position: 'relative', overflow: 'hidden', padding: 0, border: 'none', cursor: 'pointer', display: 'block', width: '100%', height: '100%' }}>
         <img src="img/couple-main.jpg" alt="couple"
+          fetchPriority="high" decoding="async"
           className={tweaks.bw ? 'bw kenburns' : 'kenburns'}
           style={{
             position: 'absolute', inset: 0,
@@ -434,6 +435,7 @@ function PCNumbersSection({ lime, ink, tweaks, variant }) {
           {/* photo */}
           <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 8 }}>
             <img src="img/couple-main.jpg" alt="couple"
+              loading="lazy" decoding="async"
               className={tweaks.bw ? 'bw' : ''}
               style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }} />
             <div style={{

@@ -124,7 +124,7 @@ function PhotoCarousel({ postId, photoCount, images = [] }) {
               overflow:'hidden',
             }}>
               {images[i] ? (
-                <img src={images[i]} alt=""
+                <img src={images[i]} alt="" loading="lazy" decoding="async"
                   style={{ width:'100%', height:'auto', display:'block' }} />
               ) : (
                 <image-slot
@@ -545,7 +545,7 @@ function GuestbookTab({ lime, ink }) {
           {photo ? (
             <div style={{ display:'flex', gap:8, alignItems:'flex-start' }}>
               <div style={{ position:'relative' }}>
-                <img src={photo} alt="preview" style={{ width:90, height:90, objectFit:'cover', borderRadius:12, border:'1px solid rgba(17,17,17,0.10)' }}/>
+                <img src={photo} alt="preview" loading="lazy" decoding="async" style={{ width:90, height:90, objectFit:'cover', borderRadius:12, border:'1px solid rgba(17,17,17,0.10)' }}/>
                 <button type="button" onClick={() => setPhoto(null)}
                   style={{ position:'absolute', top:-6, right:-6, width:22, height:22, borderRadius:'50%', background:ink, color:'#fff', border:'none', cursor:'pointer', fontSize:13, display:'flex', alignItems:'center', justifyContent:'center', fontWeight:700, lineHeight:1 }}>×</button>
               </div>
@@ -655,7 +655,7 @@ function GuestbookTab({ lime, ink }) {
                   )}
 
                   {msg.photo && (
-                    <img src={msg.photo} alt="" style={{ marginTop:10, width:120, height:120, objectFit:'cover', borderRadius:8, border:'1px solid rgba(17,17,17,0.08)' }}/>
+                    <img src={msg.photo} alt="" loading="lazy" decoding="async" style={{ marginTop:10, width:120, height:120, objectFit:'cover', borderRadius:8, border:'1px solid rgba(17,17,17,0.08)' }}/>
                   )}
                 </div>
               </div>
@@ -790,7 +790,7 @@ function StoryViewer({ images, onClose }) {
 
       {/* 이미지 */}
       <div style={{ flex:1, overflow:'hidden', display:'flex', alignItems:'center' }}>
-        <img key={idx} src={images[idx]} alt="" style={{
+        <img key={idx} src={images[idx]} alt="" loading="lazy" decoding="async" style={{
           width:'100%', height:'100%', objectFit:'contain',
           animation: `${dir > 0 ? 'story-enter-right' : 'story-enter-left'} 220ms cubic-bezier(.25,.46,.45,.94) both`,
           pointerEvents:'none',
@@ -996,7 +996,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
                     background: hasImages ? 'transparent' : '#F4F2EB',
                   }}>
                     {hasImages
-                      ? <img src={h.images[0]} alt={h.label} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>
+                      ? <img src={h.images[0]} alt={h.label} loading="lazy" decoding="async" style={{ width:'100%', height:'100%', objectFit:'cover' }}/>
                       : <span style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontWeight:600, fontSize:20, color:'#888' }}>+</span>
                     }
                   </div>
