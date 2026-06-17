@@ -110,7 +110,7 @@ function PhotoCarousel({ postId, photoCount, images = [] }) {
             scrollSnapType:'x mandatory',
             scrollBehavior:'smooth',
             WebkitOverflowScrolling:'touch',
-            touchAction:'pan-x pinch-zoom',
+            touchAction:'pan-x pan-y pinch-zoom',
             overscrollBehaviorX:'contain',
             msOverflowStyle:'none',
             scrollbarWidth:'none',
