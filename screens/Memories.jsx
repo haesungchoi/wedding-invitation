@@ -975,7 +975,9 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
           <button className="tap" onClick={() => setStoryImages(proposeImages)} style={{ background:'none', border:'none', padding:0, cursor:'pointer', borderRadius:'50%', flexShrink:0 }}>
             <div style={{ padding:2.5, borderRadius:'50%', background:'linear-gradient(45deg,#fcaf45,#f77737,#f56040,#fd1d1d,#e1306c,#c13584,#833ab4,#5851db)' }}>
               <div style={{ padding:2.5, borderRadius:'50%', background:'#fff' }}>
-                <div style={{ width:72, height:72, borderRadius:'50%', background:lime, color:ink, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Bricolage Grotesque',sans-serif", fontWeight:700, fontSize:18 }}>H&C</div>
+                <img src="img/couple-main.jpg" alt="채원 ♥ 해성" loading="lazy" decoding="async" draggable={false}
+                  className={tweaks.bw ? 'bw' : ''}
+                  style={{ width:72, height:72, borderRadius:'50%', objectFit:'cover', objectPosition:'center 35%', display:'block' }} />
               </div>
             </div>
           </button>
