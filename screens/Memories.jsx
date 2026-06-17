@@ -73,19 +73,52 @@ function SendIcon() {
 /* ─── Photo Carousel ────────────────────────────────────────── */
 function PhotoCarousel({ postId, photoCount, images = [] }) {
   const [slide, setSlide] = React.useState(0);
-  const stripRef = React.useRef(null);
+  const [dragDx, setDragDx] = React.useState(0);
+  const trackRef = React.useRef(null);
+  const startX = React.useRef(0);
+  const startY = React.useRef(0);
+  const dir = React.useRef(null);   // 'x' | 'y' | null — 첫 제스처 방향 잠금
+  const widthRef = React.useRef(0);
 
-  const onScroll = () => {
-    const el = stripRef.current;
-    if (!el) return;
-    const idx = Math.round(el.scrollLeft / el.clientWidth);
-    setSlide(idx);
+  const goTo = i => setSlide(Math.max(0, Math.min(photoCount - 1, i)));
+
+  // 세로 스와이프는 touch-action:pan-y 로 브라우저가 페이지 스크롤을 처리하고,
+  // 가로 스와이프만 JS가 처리해 슬라이드를 넘긴다. (네이티브 가로 스크롤 컨테이너가
+  // iOS에서 세로 스크롤을 가로채던 문제를 근본적으로 제거)
+  const onTouchStart = e => {
+    if (photoCount < 2) return;
+    const t = e.touches[0];
+    startX.current = t.clientX;
+    startY.current = t.clientY;
+    dir.current = null;
+    widthRef.current = trackRef.current ? trackRef.current.clientWidth : 0;
   };
-
-  const goTo = i => {
-    const el = stripRef.current;
-    if (!el) return;
-    el.scrollLeft = i * el.clientWidth;
+  const onTouchMove = e => {
+    if (photoCount < 2) return;
+    const t = e.touches[0];
+    const dx = t.clientX - startX.current;
+    const dy = t.clientY - startY.current;
+    if (dir.current === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+      dir.current = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    }
+    if (dir.current === 'x') {
+      // 양 끝에서는 저항감을 주어 더 못 넘어가게 함
+      let d = dx;
+      if ((slide === 0 && dx > 0) || (slide === photoCount - 1 && dx < 0)) d = dx * 0.35;
+      setDragDx(d);
+    }
+    // dir === 'y' 이면 손대지 않음 → 브라우저가 세로 페이지 스크롤을 그대로 처리
+  };
+  const onTouchEnd = () => {
+    if (photoCount < 2) return;
+    if (dir.current === 'x') {
+      const w = widthRef.current || 1;
+      const threshold = Math.max(40, w * 0.2);
+      if (dragDx <= -threshold) goTo(slide + 1);
+      else if (dragDx >= threshold) goTo(slide - 1);
+    }
+    dir.current = null;
+    setDragDx(0);
   };
 
   // 이미지가 있으면 원본 비율, 없으면 4:5 플레이스홀더
@@ -98,33 +131,33 @@ function PhotoCarousel({ postId, photoCount, images = [] }) {
         ...(hasPreset ? {} : { aspectRatio:'4/5' }),
         overflow:'hidden', background:'#F4F2EB',
       }}>
-        <div ref={stripRef} onScroll={onScroll}
+        <div ref={trackRef}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchEnd}
           className="carousel-strip"
           style={{
             ...(hasPreset
               ? { position:'relative', width:'100%' }
               : { position:'absolute', inset:0 }),
             display:'flex',
-            overflowX:'scroll',
-            overflowY:'hidden',
-            scrollSnapType:'x mandatory',
-            scrollBehavior:'smooth',
-            WebkitOverflowScrolling:'touch',
-            touchAction:'pan-x pan-y pinch-zoom',
-            overscrollBehaviorX:'contain',
-            msOverflowStyle:'none',
-            scrollbarWidth:'none',
+            touchAction:'pan-y',
+            transform:`translateX(calc(${-slide * 100}% + ${dragDx}px))`,
+            transition: dragDx === 0 ? 'transform .35s cubic-bezier(.32,.72,0,1)' : 'none',
+            willChange:'transform',
           }}>
           {Array.from({ length: photoCount }, (_, i) => (
             <div key={i} style={{
               ...(hasPreset
                 ? { flex:'0 0 100%', minWidth:0 }
                 : { minWidth:'100%', height:'100%' }),
-              scrollSnapAlign:'start', flexShrink:0,
+              flexShrink:0,
               overflow:'hidden',
             }}>
               {images[i] ? (
                 <img src={images[i]} alt="" loading="lazy" decoding="async"
+                  draggable={false}
                   style={{ width:'100%', height:'auto', display:'block' }} />
               ) : (
                 <image-slot
