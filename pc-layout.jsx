@@ -635,7 +635,7 @@ function PCClosingSection({ lime, ink, openSheet, variant }) {
           fontFamily: "'Pretendard', sans-serif", fontWeight: 500,
           lineHeight: 1.1, letterSpacing: '-0.4px', color: ink, marginBottom: 48,
         }}>
-          두 사람의 결혼을<br />축하해주세요
+          보내주시는 따뜻한 축하에 감사하며,<br />함께 잘 살아가겠습니다
         </div>
         <div style={{ height: 1, background: ink, marginBottom: 22 }} />
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 52 }}>
