@@ -1059,9 +1059,8 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
           {posts.map((p, i) => (
             <button key={p.id} onClick={() => openPostInFeed(p.id)} className="tap"
               style={{ padding:0, border:'none', cursor:'pointer', aspectRatio:'4/5', background:'#F4F2EB', position:'relative', overflow:'hidden' }}>
-              <image-slot id={`${p.id}-p0`} shape="rect" fit="cover" placeholder="탭하여 추가"
-                src={p.images && p.images[0]}
-                style={{ width:'100%', height:'100%', display:'block', pointerEvents:'none' }}></image-slot>
+              <img src={p.images && p.images[0]} alt="" loading="lazy" decoding="async" draggable={false}
+                style={{ width:'100%', height:'100%', objectFit:'cover', display:'block', pointerEvents:'none' }} />
               {p.photoCount > 1 && <CarouselBadge/>}
               <div style={{ position:'absolute', bottom:5, right:6, fontFamily:"'Bricolage Grotesque',sans-serif", fontSize:9, fontWeight:700, color:'rgba(255,255,255,0.9)', textShadow:'0 1px 3px rgba(0,0,0,0.5)' }}>
                 {String(i+1).padStart(2,'0')}

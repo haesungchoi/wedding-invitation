@@ -35,6 +35,10 @@ function App() {
   const [sheet, setSheet] = React.useState(null);
   const [tweaks, setTweaks] = useTweaks(TWEAK_DEFAULTS);
   const transitionLock = React.useRef(false);
+  // 오버레이(map/following/account 등) 시트를 닫은 직후, 닫는 탭에서 파생되는
+  // ghost-click(합성 클릭)이 그 아래 드러난 Memories의 'MAIN' 백버튼이나 배경에
+  // 떨어져 화면이 통째로 빠져나가던 문제 방지용 — 닫은 직후 잠깐 Main 이탈을 막는다.
+  const sheetClosedAtRef = React.useRef(0);
 
   const [sheetDragY, setSheetDragY] = React.useState(0);
   const [isDraggingSheet, setIsDraggingSheet] = React.useState(false);
@@ -99,11 +103,18 @@ function App() {
   // Apple-style sheet transition. Pushed-back root + sheet slides up from below.
   const SHEET_MS = 480;
 
+  // 시트가 닫혀 null이 되는 순간을 기록 (ghost-click 쿨다운 기준점)
+  React.useEffect(() => {
+    if (!sheet) sheetClosedAtRef.current = Date.now();
+  }, [sheet]);
+
   const goTo = (next) => {
     if (transitionLock.current) return;
 
     if (next === 'main') {
       if (!modal) return;
+      // 오버레이 시트를 닫은 직후의 ghost-click/잔여 탭으로 인한 오작동 차단
+      if (Date.now() - sheetClosedAtRef.current < 500) return;
       transitionLock.current = true;
       setClosingModal(true);
       setTimeout(() => {
