@@ -741,7 +741,8 @@ function GuestbookTab({ lime, ink }) {
 }
 
 /* ─── Story Viewer ─────────────────────────────────────────── */
-function StoryViewer({ images, onClose }) {
+function StoryViewer({ groups, startGroupIdx = 0, onClose }) {
+  const [groupIdx, setGroupIdx] = React.useState(startGroupIdx);
   const [idx, setIdx] = React.useState(0);
   const [progress, setProgress] = React.useState(0);
   const [dir, setDir] = React.useState(1);
@@ -749,23 +750,35 @@ function StoryViewer({ images, onClose }) {
   const touchRef = React.useRef(null);
   const DURATION = 4000;
 
+  const images = groups[groupIdx]?.images || [];
+
   const goPrev = () => {
-    if (idx === 0) return;
+    if (idx === 0 && groupIdx === 0) return;
     cancelAnimationFrame(timerRef.current);
     setDir(-1);
-    setIdx(i => i - 1);
     setProgress(0);
+    if (idx > 0) {
+      setIdx(idx - 1);
+    } else {
+      const prevImgs = groups[groupIdx - 1].images;
+      setGroupIdx(groupIdx - 1);
+      setIdx(prevImgs.length - 1);
+    }
   };
 
   const goNext = React.useCallback(() => {
     cancelAnimationFrame(timerRef.current);
     setDir(1);
-    setIdx(i => {
-      if (i + 1 >= images.length) { onClose(); return i; }
-      return i + 1;
-    });
     setProgress(0);
-  }, [images.length, onClose]);
+    if (idx + 1 < images.length) {
+      setIdx(idx + 1);
+    } else if (groupIdx + 1 < groups.length) {
+      setGroupIdx(groupIdx + 1);
+      setIdx(0);
+    } else {
+      onClose();
+    }
+  }, [idx, images.length, groupIdx, groups.length, onClose]);
 
   React.useEffect(() => {
     setProgress(0);
@@ -889,7 +902,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   const lime = tweaks.lime;
   const ink  = tweaks.ink;
   const [tab, setTab] = React.useState('grid');
-  const [storyImages, setStoryImages] = React.useState(null);
+  const [story, setStory] = React.useState(null);
   const screenRef = React.useRef(null);
   const topbarRef = React.useRef(null);
   const [topbarH, setTopbarH] = React.useState(52);
@@ -907,6 +920,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
       images: Array.from({length:11}, (_,i) => `img/highlights/2021/${i+1}.jpg`),
     },
   ];
+  const validHighlights = highlights.filter(h => h.images.length > 0);
 
   React.useEffect(() => {
     if (topbarRef.current) setTopbarH(topbarRef.current.offsetHeight);
@@ -994,7 +1008,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
 
   return (
     <div className="inv-screen" data-screen-label="02 Memories · 우리의 추억" ref={screenRef} style={{ background: '#fff' }}>
-      {storyImages && <StoryViewer images={storyImages} onClose={() => setStoryImages(null)} />}
+      {story && <StoryViewer groups={story.groups} startGroupIdx={story.startGroupIdx} onClose={() => setStory(null)} />}
 
       {/* ── topbar ─────────────────────────────────────── */}
       <div ref={topbarRef} style={{
@@ -1015,7 +1029,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
       <div style={{ background:'#fff', padding:'20px 16px 0' }}>
         <div style={{ display:'flex', alignItems:'center', gap:20 }}>
           {/* avatar ring — Instagram gradient story ring */}
-          <button className="tap" onClick={() => setStoryImages(proposeImages)} style={{ background:'none', border:'none', padding:0, cursor:'pointer', borderRadius:'50%', flexShrink:0 }}>
+          <button className="tap" onClick={() => setStory({ groups: [{ images: proposeImages }], startGroupIdx: 0 })} style={{ background:'none', border:'none', padding:0, cursor:'pointer', borderRadius:'50%', flexShrink:0 }}>
             <div style={{ padding:2.5, borderRadius:'50%', background:'linear-gradient(45deg,#fcaf45,#f77737,#f56040,#fd1d1d,#e1306c,#c13584,#833ab4,#5851db)' }}>
               <div style={{ padding:2.5, borderRadius:'50%', background:'#fff' }}>
                 <img src="img/couple-main.jpg" alt="채원 ♥ 해성" loading="lazy" decoding="async" draggable={false}
@@ -1064,7 +1078,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
             const hasImages = h.images.length > 0;
             return (
               <div key={i} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:5, flexShrink:0 }}>
-                <button className="tap" onClick={() => hasImages && setStoryImages(h.images)}
+                <button className="tap" onClick={() => { if (!hasImages) return; setStory({ groups: validHighlights, startGroupIdx: validHighlights.indexOf(h) }); }}
                   style={{ padding:0, border:'none', background:'none', cursor: hasImages ? 'pointer' : 'default' }}>
                   <div style={{
                     width:56, height:56, borderRadius:'50%',

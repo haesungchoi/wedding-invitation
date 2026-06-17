@@ -135,14 +135,13 @@ function Sheet({ open, onClose, children, title, accent, pc }) {
 
 }
 
-function MapSheet({ open, onClose }) {
-  const lat = 37.4920,lng = 127.0265; // 삼성 서초사옥 근사값
+function MapSheet({ open, onClose, pc }) {
   const naverUrl = `https://map.naver.com/p/search/삼성전자 서초사옥`;
   const kakaoUrl = `https://map.kakao.com/?q=삼성전자 서초사옥`;
   const tmapUrl = `tmap://search?name=삼성전자 서초사옥`;
 
   return (
-    <Sheet open={open} onClose={onClose} title="Location · 오시는 길">
+    <Sheet open={open} onClose={onClose} title="Location · 오시는 길" pc={pc}>
       <div style={{ fontFamily: "'Pretendard'" }}>
         <div className="display" style={{ fontSize: 36, lineHeight: 1, marginBottom: 6 }}>
           삼성전자 서초사옥
@@ -153,7 +152,7 @@ function MapSheet({ open, onClose }) {
 
         {/* Map */}
         <div style={{
-          width: '100%', aspectRatio: '4/3', borderRadius: 14, overflow: 'hidden',
+          width: pc ? '260px' : '100%', aspectRatio: '4/3', borderRadius: 14, overflow: 'hidden',
           background: '#EAEAE4', position: 'relative', marginBottom: 18,
           border: '1px solid rgba(0,0,0,0.06)'
         }}>
@@ -259,7 +258,7 @@ function MapSheet({ open, onClose }) {
 
 }
 
-function RSVPSheet({ open, onClose }) {
+function RSVPSheet({ open, onClose, pc }) {
   const [attending, setAttending] = React.useState(null);
   const [side, setSide] = React.useState('groom');
   const [meal, setMeal] = React.useState(true);
@@ -269,7 +268,7 @@ function RSVPSheet({ open, onClose }) {
 
   if (submitted) {
     return (
-      <Sheet open={open} onClose={onClose} title="RSVP · 참석 의사 전달">
+      <Sheet open={open} onClose={onClose} title="RSVP · 참석 의사 전달" pc={pc}>
         <div style={{ textAlign: 'center', padding: '24px 0 8px' }}>
           <div className="display" style={{ fontSize: 64, color: '#111', lineHeight: 1 }}>THANK<br />YOU</div>
           <div className="ko-reg" style={{ marginTop: 18, color: '#555', fontSize: 14, lineHeight: 1.6 }}>
@@ -299,7 +298,7 @@ function RSVPSheet({ open, onClose }) {
 
 
   return (
-    <Sheet open={open} onClose={onClose} title="RSVP · 참석 의사 전달">
+    <Sheet open={open} onClose={onClose} title="RSVP · 참석 의사 전달" pc={pc}>
       <div className="display" style={{ fontSize: 44, lineHeight: 0.9, marginBottom: 4 }}>
         함께해<br />주실 건가요?
       </div>
@@ -364,7 +363,7 @@ function RSVPSheet({ open, onClose }) {
 
 }
 
-function AccountSheet({ open, onClose, side }) {
+function AccountSheet({ open, onClose, side, pc }) {
   // side: 'groom' | 'bride' | 'both'
   const groom = [
   { role: '신랑', name: '최해성', bank: '우리은행',   no: '1002-9666-38828' },
@@ -419,7 +418,7 @@ function AccountSheet({ open, onClose, side }) {
   const showBride = side === 'bride' || side === 'both';
 
   return (
-    <Sheet open={open} onClose={onClose} title="마음 전하실 곳">
+    <Sheet open={open} onClose={onClose} title="마음 전하실 곳" pc={pc}>
       <div className="ko-reg" style={{ color: '#555', fontSize: 13, marginBottom: 22, lineHeight: 1.6 }}>
         참석이 어려우신 분들을 위해 마련했습니다<br />
         축하의 마음을 담아 보내주신 정성, 감사히 받겠습니다
@@ -452,7 +451,7 @@ function AccountSheet({ open, onClose, side }) {
 
 }
 
-function ShareSheet({ open, onClose }) {
+function ShareSheet({ open, onClose, pc }) {
   const [copied, setCopied] = React.useState(false);
   const link = 'https://haeseong-chaewon.wedding';
 
@@ -468,7 +467,7 @@ function ShareSheet({ open, onClose }) {
 
 
   return (
-    <Sheet open={open} onClose={onClose} title="Share · 공유하기">
+    <Sheet open={open} onClose={onClose} title="Share · 공유하기" pc={pc}>
       <div className="display" style={{ fontSize: 36, lineHeight: 0.95, marginBottom: 18 }}>
         함께<br />나눠주세요
       </div>
@@ -490,7 +489,7 @@ function ShareSheet({ open, onClose }) {
 
 }
 
-function CalendarSheet({ open, onClose }) {
+function CalendarSheet({ open, onClose, pc }) {
   const [saved, setSaved] = React.useState(null);
 
   const text  = encodeURIComponent('채원 ♡ 해성 결혼식');
@@ -539,7 +538,7 @@ function CalendarSheet({ open, onClose }) {
   };
 
   return (
-    <Sheet open={open} onClose={onClose} title="캘린더에 저장">
+    <Sheet open={open} onClose={onClose} title="캘린더에 저장" pc={pc}>
       <div className="display" style={{ fontSize: 38, lineHeight: 0.95, marginBottom: 6 }}>
         2026년<br />9월 12일 토
       </div>

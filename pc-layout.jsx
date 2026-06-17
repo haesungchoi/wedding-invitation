@@ -139,7 +139,6 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant }) {
             {[
               { label: 'LOCATION →', action: () => openSheet('map') },
               { label: 'ACCOUNTS →', action: () => openSheet('account-both') },
-              { label: 'RSVP →',     action: () => openSheet('rsvp'), dark: true },
             ].map(b => (
               <button key={b.label} onClick={b.action} style={{
                 background: b.dark ? ink : 'transparent',
@@ -273,7 +272,7 @@ function PCTheDaySection({ ink, variant }) {
 /* ─── MEMORIES Section ──────────────────────────────────────── */
 function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
   const [tab, setTab] = React.useState('grid');
-  const [storyImages, setStoryImages] = React.useState(null);
+  const [story, setStory] = React.useState(null);
   const px = variant === 'pc' ? 80 : 48;
   const gridCols = variant === 'pc' ? 6 : 3;
 
@@ -287,6 +286,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
     { label: '2022', images: Array.from({length:11}, (_,i) => `img/highlights/2022/${i+1}.jpg`) },
     { label: '2021', images: Array.from({length:11}, (_,i) => `img/highlights/2021/${i+1}.jpg`) },
   ];
+  const validHighlights = highlights.filter(h => h.images.length > 0);
 
   const posts = [
     {
@@ -360,9 +360,9 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
   return (
     <section id="wide-memories" style={{ background: '#fff', borderTop: '1px solid rgba(17,17,17,0.07)' }}>
       {/* StoryViewer — fixed overlay over the full viewport */}
-      {storyImages && (
+      {story && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 500 }}>
-          <StoryViewer images={storyImages} onClose={() => setStoryImages(null)} />
+          <StoryViewer groups={story.groups} startGroupIdx={story.startGroupIdx} onClose={() => setStory(null)} />
         </div>
       )}
 
@@ -373,7 +373,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
         {/* avatar + stats + bio row */}
         <div style={{ display: 'flex', alignItems: 'center', gap: variant === 'pc' ? 44 : 24, flexWrap: 'wrap', marginBottom: 16 }}>
           {/* avatar — couple photo + Instagram gradient ring */}
-          <button className="tap" onClick={() => setStoryImages(proposeImages)}
+          <button className="tap" onClick={() => setStory({ groups: [{ images: proposeImages }], startGroupIdx: 0 })}
             style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', borderRadius: '50%', flexShrink: 0 }}>
             <div style={{ padding: variant === 'pc' ? 3 : 2.5, borderRadius: '50%', background: 'linear-gradient(45deg,#fcaf45,#f77737,#f56040,#fd1d1d,#e1306c,#c13584,#833ab4,#5851db)' }}>
               <div style={{ padding: variant === 'pc' ? 3 : 2.5, borderRadius: '50%', background: '#fff' }}>
@@ -431,7 +431,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
             const hasImages = h.images.length > 0;
             return (
               <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-                <button className="tap" onClick={() => hasImages && setStoryImages(h.images)}
+                <button className="tap" onClick={() => { if (!hasImages) return; setStory({ groups: validHighlights, startGroupIdx: validHighlights.indexOf(h) }); }}
                   style={{ padding: 0, border: 'none', background: 'none', cursor: hasImages ? 'pointer' : 'default' }}>
                   <div style={{
                     width: variant === 'pc' ? 64 : 56, height: variant === 'pc' ? 64 : 56, borderRadius: '50%',
@@ -618,17 +618,6 @@ function PCVenueSection({ lime, ink, openSheet, variant }) {
             </button>
           ))}
         </div>
-        <button onClick={() => openSheet('rsvp')} className="tap" style={{
-          display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between',
-          border: 'none', background: ink,
-          padding: `${variant === 'pc' ? 26 : 20}px 28px`, cursor: 'pointer',
-        }}>
-          <div>
-            <div className="label-en" style={{ marginBottom: 8, color: lime }}>RSVP</div>
-            <div style={{ fontFamily: "'Pretendard'", fontSize: variant === 'pc' ? 22 : 17, fontWeight: 500, color: lime }}>참석 의사 전달</div>
-          </div>
-          <div style={{ fontFamily: "'Martian Mono'", fontSize: 10, color: lime, letterSpacing: '0.14em', fontWeight: 700 }}>SEND RSVP →</div>
-        </button>
       </div>
     </section>
   );
@@ -659,11 +648,6 @@ function PCClosingSection({ lime, ink, openSheet, variant }) {
             padding: '12px 28px', borderRadius: 99, cursor: 'pointer',
             fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.14em', fontWeight: 700,
           }}>SHARE ↗</button>
-          <button onClick={() => openSheet('rsvp')} style={{
-            background: 'transparent', color: ink, border: `1px solid ${ink}`,
-            padding: '12px 28px', borderRadius: 99, cursor: 'pointer',
-            fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.14em', fontWeight: 700,
-          }}>RSVP →</button>
         </div>
       </div>
     </section>
@@ -682,7 +666,6 @@ function WideApp({ tweaks, openSheet, variant }) {
       <PCTickerBand />
       <PCTheDaySection  ink={ink} variant={variant} />
       <PCMemoriesSection lime={lime} ink={ink} tweaks={tweaks} variant={variant} openSheet={openSheet} />
-      <PCNumbersSection  lime={lime} ink={ink} tweaks={tweaks} variant={variant} />
       <PCVenueSection    lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
       <PCClosingSection  lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
     </div>
