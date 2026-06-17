@@ -152,7 +152,7 @@ function MapSheet({ open, onClose, pc }) {
 
         {/* Map */}
         <div style={{
-          width: pc ? '260px' : '100%', aspectRatio: '4/3', borderRadius: 14, overflow: 'hidden',
+          width: '100%', aspectRatio: '4/3', borderRadius: 14, overflow: 'hidden',
           background: '#EAEAE4', position: 'relative', marginBottom: 18,
           border: '1px solid rgba(0,0,0,0.06)'
         }}>
@@ -214,7 +214,7 @@ function MapSheet({ open, onClose, pc }) {
           className="tap"
           onClick={() => {navigator.clipboard?.writeText('서울 서초구 서초대로74길 11');}}
           style={{
-            width: pc ? '260px' : '100%', border: '1px solid #111', background: '#fff',
+            width: '100%', border: '1px solid #111', background: '#fff',
             padding: '14px 16px', borderRadius: 12, display: 'flex',
             alignItems: 'center', justifyContent: 'space-between',
             marginBottom: 10, cursor: 'pointer'

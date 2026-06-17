@@ -813,7 +813,22 @@ function StoryViewer({ groups, startGroupIdx = 0, onClose }) {
       return;
     }
 
-    // 빠른 탭 → 이전/다음
+    // 수평 스와이프 → 그룹(하이라이트) 간 이동
+    if (Math.abs(dx) > 60 && Math.abs(dy) < 80) {
+      cancelAnimationFrame(timerRef.current);
+      setProgress(0);
+      if (dx < 0) {
+        // 왼쪽 스와이프 → 다음 그룹
+        if (groupIdx + 1 < groups.length) { setDir(1); setGroupIdx(groupIdx + 1); setIdx(0); }
+        else { onClose(); }
+      } else {
+        // 오른쪽 스와이프 → 이전 그룹
+        if (groupIdx > 0) { setDir(-1); setGroupIdx(groupIdx - 1); setIdx(0); }
+      }
+      return;
+    }
+
+    // 빠른 탭 → 현재 그룹 내 이전/다음 사진
     if (Math.abs(dx) < 12 && Math.abs(dy) < 12 && dt < 280) {
       const w = e.currentTarget.getBoundingClientRect().width;
       if (t.clientX < w * 0.38) goPrev();
