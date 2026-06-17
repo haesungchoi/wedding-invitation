@@ -662,8 +662,8 @@ function WideApp({ tweaks, openSheet, variant }) {
   return (
     <div style={{ minHeight: '100vh', background: '#F8F6F0' }}>
       <PCHeader       lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
-      <PCHeroSection  lime={lime} ink={ink} tweaks={tweaks} openSheet={openSheet} variant={variant} />
       <PCTickerBand lime={lime} ink={ink} />
+      <PCHeroSection  lime={lime} ink={ink} tweaks={tweaks} openSheet={openSheet} variant={variant} />
       <PCTheDaySection  ink={ink} variant={variant} />
       <PCMemoriesSection lime={lime} ink={ink} tweaks={tweaks} variant={variant} openSheet={openSheet} />
       <PCVenueSection    lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
