@@ -185,13 +185,13 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant }) {
 }
 
 /* ─── Ticker Band (separator) ───────────────────────────────── */
-function PCTickerBand() {
+function PCTickerBand({ lime, ink }) {
   const items = Array.from({ length: 10 }, (_, i) => i);
   return (
-    <div className="ticker-wrap" style={{ height: 44, padding: '12px 0' }}>
+    <div className="ticker-wrap" style={{ height: 44, padding: '12px 0', background: lime }}>
       <div className="ticker-track">
-        {items.map(i => <span key={'a' + i} className="ticker-item" style={{ fontSize: 12 }}>Welcome to our wedding ✦</span>)}
-        {items.map(i => <span key={'b' + i} className="ticker-item" style={{ fontSize: 12 }}>Welcome to our wedding ✦</span>)}
+        {items.map(i => <span key={'a' + i} className="ticker-item" style={{ fontSize: 12, color: ink }}>Welcome to our wedding ✦</span>)}
+        {items.map(i => <span key={'b' + i} className="ticker-item" style={{ fontSize: 12, color: ink }}>Welcome to our wedding ✦</span>)}
       </div>
     </div>
   );
@@ -663,7 +663,7 @@ function WideApp({ tweaks, openSheet, variant }) {
     <div style={{ minHeight: '100vh', background: '#F8F6F0' }}>
       <PCHeader       lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
       <PCHeroSection  lime={lime} ink={ink} tweaks={tweaks} openSheet={openSheet} variant={variant} />
-      <PCTickerBand />
+      <PCTickerBand lime={lime} ink={ink} />
       <PCTheDaySection  ink={ink} variant={variant} />
       <PCMemoriesSection lime={lime} ink={ink} tweaks={tweaks} variant={variant} openSheet={openSheet} />
       <PCVenueSection    lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
