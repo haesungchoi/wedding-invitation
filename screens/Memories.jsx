@@ -805,31 +805,31 @@ function StoryViewer({ groups, startGroupIdx = 0, onClose }) {
     const dx = t.clientX - touchRef.current.x;
     const dy = t.clientY - touchRef.current.y;
     const dt = Date.now() - touchRef.current.t;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
     touchRef.current = null;
 
-    // 아래로 스와이프 → 닫기
-    if (dy > 55 && Math.abs(dx) < 100) {
+    // 아래로 스와이프 (세로가 가로보다 우세) → 닫기
+    if (dy > 50 && absDy > absDx) {
       onClose();
       return;
     }
 
-    // 수평 스와이프 → 그룹(하이라이트) 간 이동
-    if (Math.abs(dx) > 60 && Math.abs(dy) < 80) {
+    // 수평 스와이프 (가로가 세로보다 우세, 40px 이상) → 그룹(하이라이트) 간 이동
+    if (absDx > 40 && absDx > absDy) {
       cancelAnimationFrame(timerRef.current);
       setProgress(0);
       if (dx < 0) {
-        // 왼쪽 스와이프 → 다음 그룹
         if (groupIdx + 1 < groups.length) { setDir(1); setGroupIdx(groupIdx + 1); setIdx(0); }
         else { onClose(); }
       } else {
-        // 오른쪽 스와이프 → 이전 그룹
         if (groupIdx > 0) { setDir(-1); setGroupIdx(groupIdx - 1); setIdx(0); }
       }
       return;
     }
 
     // 빠른 탭 → 현재 그룹 내 이전/다음 사진
-    if (Math.abs(dx) < 12 && Math.abs(dy) < 12 && dt < 280) {
+    if (absDx < 12 && absDy < 12 && dt < 280) {
       const w = e.currentTarget.getBoundingClientRect().width;
       if (t.clientX < w * 0.38) goPrev();
       else goNext();
@@ -852,7 +852,7 @@ function StoryViewer({ groups, startGroupIdx = 0, onClose }) {
       style={{
         position:'absolute', inset:0, background:'#000', zIndex:300,
         display:'flex', flexDirection:'column', userSelect:'none',
-        cursor: 'pointer',
+        cursor: 'pointer', touchAction: 'none',
       }}>
 
       {/* progress bars */}
