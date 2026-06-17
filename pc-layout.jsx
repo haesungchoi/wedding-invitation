@@ -271,24 +271,83 @@ function PCTheDaySection({ ink, variant }) {
 }
 
 /* ─── MEMORIES Section ──────────────────────────────────────── */
-function PCMemoriesSection({ lime, ink, tweaks, variant }) {
+function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
   const [tab, setTab] = React.useState('grid');
+  const [storyImages, setStoryImages] = React.useState(null);
   const px = variant === 'pc' ? 80 : 48;
-  const gridCols = variant === 'pc' ? 4 : 3;
+  const gridCols = variant === 'pc' ? 6 : 3;
+
+  const proposeImages = Array.from({length:14}, (_,i) => `img/memories/propose-newyork/newyork-${i+1}.jpg`);
+
+  const highlights = [
+    { label: '2026', images: [] },
+    { label: '2025', images: Array.from({length:11}, (_,i) => `img/highlights/2025/${i+1}.jpg`) },
+    { label: '2024', images: Array.from({length:10}, (_,i) => `img/highlights/2024/${i+1}.jpg`) },
+    { label: '2023', images: Array.from({length:17}, (_,i) => `img/highlights/2023/${i+1}.jpg`) },
+    { label: '2022', images: Array.from({length:11}, (_,i) => `img/highlights/2022/${i+1}.jpg`) },
+    { label: '2021', images: Array.from({length:11}, (_,i) => `img/highlights/2021/${i+1}.jpg`) },
+  ];
 
   const posts = [
-    { id: 'wm-1', date: '2019. 09. 14', likes: '1,914', photoCount: 2, images: ['img/memories/photo-1.jpg', 'img/memories/photo-2.jpg'], caption: '처음 만난 날. 그 날의 설렘이 오늘까지 이어졌어.' },
-    { id: 'wm-2', date: '2020. 02. 14', likes: '2,048', photoCount: 3, caption: '첫 발렌타인. 작은 초콜릿 하나에도 두근거렸던 날.' },
-    { id: 'wm-3', date: '2021. 07. 24', likes: '3,201', photoCount: 2, caption: '처음으로 떠난 여행. 바다보다 네가 더 빛났어.' },
-    { id: 'wm-4', date: '2022. 12. 31', likes: '4,096', photoCount: 1, caption: '연말, 우리만의 자정. 새해가 되어도 계속 이 손 잡을게.' },
-    { id: 'wm-5', date: '2024. 03. 22', likes: '5,120', photoCount: 4, caption: '벚꽃 아래 함께한 오후. 매년 이 자리에 오자.' },
-    { id: 'wm-6', date: '2026. 09. 12', likes: '9,126', photoCount: 3, caption: '오늘, 드디어 하나가 됩니다. 앞으로의 모든 날도 함께.' },
+    {
+      id:'mem-1', date:'2026. 09. 12', likes:'9,126', photoCount:4,
+      images:[
+        'img/memories/studio-couple/couple-1.jpg',
+        'img/memories/studio-couple/couple-2.jpg',
+        'img/memories/studio-couple/couple-3.jpg',
+        'img/memories/studio-couple/couple-4.jpg',
+      ],
+      caption:'드디어 이 날이 왔다. 서로를 바라보는 그 눈빛만으로도, 오늘이 평생 기억될 하루라는 걸 알았어. 💍',
+    },
+    {
+      id:'mem-2', date:'2026. 09. 12', likes:'3,862', photoCount:1, images:['img/memories/studio-groom/groom-1.jpg'],
+      caption:'인생에서 가장 멋진 정장을 입은 날. 어깨에 힘 좀 줬다. 이 설렘, 절대 잊지 못할 거야. 🤵',
+    },
+    {
+      id:'mem-3', date:'2026. 09. 12', likes:'5,204', photoCount:6,
+      images:[
+        'img/memories/studio-bride/bride-0.jpg',
+        'img/memories/studio-bride/bride-1.jpg',
+        'img/memories/studio-bride/bride-2.jpg',
+        'img/memories/studio-bride/bride-3.jpg',
+        'img/memories/studio-bride/bride-4.jpg',
+        'img/memories/studio-bride/bride-5.jpg',
+      ],
+      caption:'평생 이렇게 예쁠 수 있을까. 드레스보다 눈이 더 빛났던 그 순간, 시간이 멈췄으면 했어. 👰',
+    },
+    {
+      id:'mem-4', date:'2025. 11. 08', likes:'4,477', photoCount:1,
+      images:['img/memories/snap-shanghai/shanghai-1.jpg'],
+      caption:'상하이의 빛 아래, 너와 함께라면 어디든 영화였어. 바람도 우릴 축하해 주는 것 같았던 날. 🌆',
+    },
+    {
+      id:'mem-5', date:'2025. 10. 18', likes:'3,991', photoCount:5,
+      images:[
+        'img/memories/snap-gyeongju/gyeongju-1.jpg',
+        'img/memories/snap-gyeongju/gyeongju-2.jpg',
+        'img/memories/snap-gyeongju/gyeongju-3.jpg',
+        'img/memories/snap-gyeongju/gyeongju-4.jpg',
+        'img/memories/snap-gyeongju/gyeongju-5.jpg',
+      ],
+      caption:'경주의 가을 빛이 우릴 감쌌던 날. 천년의 고요 속에서, 우리만의 이야기를 새겼어. 🍂',
+    },
+    {
+      id:'mem-6', date:'2026. 09. 12', likes:'6,012', photoCount:2,
+      images:[
+        'img/memories/wedding-ng/ng-1.jpg',
+        'img/memories/wedding-ng/ng-2.jpg',
+      ],
+      caption:'1. 경호원인지 신랑인지 본인도 모르는 표정으로 서 있었음 🕶️  2. 눈을 희번떡 — 작가님이 제일 많이 웃었던 컷 👁️👁️  공개 못 할 줄 알았는데 이게 더 우리답다.',
+    },
   ];
 
   const interests = [
-    { id: 'wi-1', label: '여행', sub: 'Travel' }, { id: 'wi-2', label: '음악', sub: 'Music' },
-    { id: 'wi-3', label: '카페', sub: 'Café' },   { id: 'wi-4', label: '영화', sub: 'Film' },
-    { id: 'wi-5', label: '자연', sub: 'Nature' }, { id: 'wi-6', label: '음식', sub: 'Food' },
+    { id: 'wi-1', label: '여행', sub: 'Travel' },
+    { id: 'wi-2', label: '음악', sub: 'Music' },
+    { id: 'wi-3', label: '카페', sub: 'Café',   src: 'img/memories/repost-cafe/cafe-1.jpg' },
+    { id: 'wi-4', label: '영화', sub: 'Film' },
+    { id: 'wi-5', label: '자연', sub: 'Nature' },
+    { id: 'wi-6', label: '음식', sub: 'Food',   src: 'img/memories/repost-food/food-1.jpg' },
   ];
 
   const TABS = [
@@ -300,30 +359,97 @@ function PCMemoriesSection({ lime, ink, tweaks, variant }) {
 
   return (
     <section id="wide-memories" style={{ background: '#fff', borderTop: '1px solid rgba(17,17,17,0.07)' }}>
+      {/* StoryViewer — fixed overlay over the full viewport */}
+      {storyImages && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 500 }}>
+          <StoryViewer images={storyImages} onClose={() => setStoryImages(null)} />
+        </div>
+      )}
+
       {/* Profile header */}
-      <div style={{ padding: `${variant === 'pc' ? 52 : 36}px ${px}px 28px`, borderBottom: '1px solid rgba(17,17,17,0.08)' }}>
+      <div style={{ padding: `${variant === 'pc' ? 52 : 36}px ${px}px 20px`, borderBottom: '1px solid rgba(17,17,17,0.08)' }}>
         <div className="label-en" style={{ marginBottom: 28 }}>· 우리의 추억</div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: variant === 'pc' ? 44 : 24, flexWrap: 'wrap' }}>
-          {/* avatar */}
-          <div style={{ padding: 3, borderRadius: '50%', background: `linear-gradient(135deg,${lime},${ink})`, flexShrink: 0 }}>
-            <div style={{ width: variant === 'pc' ? 92 : 68, height: variant === 'pc' ? 92 : 68, borderRadius: '50%', background: lime, color: ink, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Bricolage Grotesque',sans-serif", fontWeight: 700, fontSize: variant === 'pc' ? 20 : 16, border: '4px solid #fff' }}>H&C</div>
-          </div>
+
+        {/* avatar + stats + bio row */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: variant === 'pc' ? 44 : 24, flexWrap: 'wrap', marginBottom: 16 }}>
+          {/* avatar — couple photo + Instagram gradient ring */}
+          <button className="tap" onClick={() => setStoryImages(proposeImages)}
+            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', borderRadius: '50%', flexShrink: 0 }}>
+            <div style={{ padding: variant === 'pc' ? 3 : 2.5, borderRadius: '50%', background: 'linear-gradient(45deg,#fcaf45,#f77737,#f56040,#fd1d1d,#e1306c,#c13584,#833ab4,#5851db)' }}>
+              <div style={{ padding: variant === 'pc' ? 3 : 2.5, borderRadius: '50%', background: '#fff' }}>
+                <img src="img/couple-main.jpg" alt="채원 ♥ 해성"
+                  loading="lazy" decoding="async"
+                  className={tweaks.bw ? 'bw' : ''}
+                  style={{ width: variant === 'pc' ? 92 : 68, height: variant === 'pc' ? 92 : 68, borderRadius: '50%', objectFit: 'cover', objectPosition: 'center 35%', display: 'block' }} />
+              </div>
+            </div>
+          </button>
+
           {/* stats */}
           <div style={{ display: 'flex', gap: variant === 'pc' ? 44 : 24 }}>
-            {[{ n: posts.length, l: '게시물' }, { n: '1914', l: '함께한 날' }, { n: '1', l: '하나가 됩니다' }].map((s, i) => (
+            {[{ n: posts.length, l: '게시물' }, { n: '∞', l: '함께할 날' }, { n: '1', l: '영원히' }].map((s, i) => (
               <div key={i} style={{ textAlign: 'center' }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontWeight: 700, fontSize: variant === 'pc' ? 26 : 20, color: ink, lineHeight: 1 }}>{s.n}</div>
                 <div style={{ fontFamily: "'Pretendard',sans-serif", fontSize: 11, color: '#666', marginTop: 4 }}>{s.l}</div>
               </div>
             ))}
           </div>
+
           {/* bio */}
           <div style={{ marginLeft: variant === 'pc' ? 24 : 4 }}>
-            <div style={{ fontFamily: "'Pretendard',sans-serif", fontWeight: 700, fontSize: 15, color: ink }}>해성 ♡ 채원</div>
+            <div style={{ fontFamily: "'Pretendard',sans-serif", fontWeight: 700, fontSize: 15, color: ink }}>채원 ♡ 해성</div>
             <div style={{ fontFamily: "'Pretendard',sans-serif", fontSize: 13, color: '#444', lineHeight: 1.7, marginTop: 4 }}>
-              2019.09.14 — 2026.09.12<br />두 사람의 이야기가 하나가 되는 날
+              2026.09.12<br />두 사람의 이야기가 하나가 되는 날
             </div>
           </div>
+        </div>
+
+        {/* action buttons */}
+        <div style={{ display: 'flex', gap: 8, marginBottom: 20, maxWidth: 480 }}>
+          <button className="tap" onClick={() => openSheet && openSheet('following')}
+            style={{ flex: 1, padding: '8px 0', background: 'rgba(17,17,17,0.07)', border: '1px solid rgba(17,17,17,0.14)', borderRadius: 9, fontFamily: "'Pretendard',sans-serif", fontWeight: 600, fontSize: 13, color: ink, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+            팔로잉 <span style={{ fontSize: 10 }}>▾</span>
+          </button>
+          <button className="tap" onClick={() => setTab('mention')}
+            style={{ flex: 2, padding: '8px 0', background: 'rgba(17,17,17,0.07)', border: '1px solid rgba(17,17,17,0.14)', borderRadius: 9, fontFamily: "'Pretendard',sans-serif", fontWeight: 600, fontSize: 13, color: ink, cursor: 'pointer' }}>
+            축하메시지 보내기
+          </button>
+          <button className="tap"
+            style={{ width: 40, background: 'rgba(17,17,17,0.07)', border: '1px solid rgba(17,17,17,0.14)', borderRadius: 9, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={ink} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <line x1="19" y1="8" x2="19" y2="14"/>
+              <line x1="22" y1="11" x2="16" y2="11"/>
+            </svg>
+          </button>
+        </div>
+
+        {/* highlights */}
+        <div style={{ display: 'flex', gap: variant === 'pc' ? 20 : 14, overflowX: 'auto', paddingBottom: 4 }}>
+          {highlights.map((h, i) => {
+            const hasImages = h.images.length > 0;
+            return (
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+                <button className="tap" onClick={() => hasImages && setStoryImages(h.images)}
+                  style={{ padding: 0, border: 'none', background: 'none', cursor: hasImages ? 'pointer' : 'default' }}>
+                  <div style={{
+                    width: variant === 'pc' ? 64 : 56, height: variant === 'pc' ? 64 : 56, borderRadius: '50%',
+                    border: hasImages ? `2px solid ${ink}` : '1.5px solid rgba(17,17,17,0.14)',
+                    overflow: 'hidden', flexShrink: 0,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: hasImages ? 'transparent' : '#F4F2EB',
+                  }}>
+                    {hasImages
+                      ? <img src={h.images[0]} alt={h.label} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      : <span style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontWeight: 600, fontSize: 22, color: '#888' }}>+</span>
+                    }
+                  </div>
+                </button>
+                <div style={{ fontFamily: "'Pretendard',sans-serif", fontSize: 10, color: '#444', whiteSpace: 'nowrap' }}>{h.label}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -344,9 +470,8 @@ function PCMemoriesSection({ lime, ink, tweaks, variant }) {
           {posts.map((p, i) => (
             <button key={p.id} onClick={() => setTab('feed')} className="tap"
               style={{ padding: 0, border: 'none', cursor: 'pointer', aspectRatio: '4/5', background: '#F4F2EB', position: 'relative', overflow: 'hidden' }}>
-              <image-slot id={p.id + '-g'} shape="rect" fit="cover" placeholder="탭하여 추가"
-                src={p.images && p.images[0]}
-                style={{ width: '100%', height: '100%', display: 'block', pointerEvents: 'none' }}></image-slot>
+              <img src={p.images && p.images[0]} alt="" loading="lazy" decoding="async"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', pointerEvents: 'none' }} />
               {p.photoCount > 1 && <CarouselBadge />}
               <div style={{ position: 'absolute', bottom: 6, right: 8, fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 9, fontWeight: 700, color: 'rgba(255,255,255,0.9)', textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                 {String(i + 1).padStart(2, '0')}
@@ -370,7 +495,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant }) {
               </div>
             ))}
           </div>
-          <div style={{ marginTop: 40, background: lime, padding: '48px 0', textAlign: 'center', borderRadius: 12, maxWidth: 1200, margin: '40px auto 0' }}>
+          <div style={{ background: lime, padding: '48px 0', textAlign: 'center', borderRadius: 12, maxWidth: 1200, margin: '40px auto 0' }}>
             <div style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 30, fontWeight: 400, color: ink, lineHeight: 1 }}>TO BE CONTINUED</div>
           </div>
         </div>
@@ -387,6 +512,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant }) {
             {interests.map(it => (
               <div key={it.id} style={{ aspectRatio: '4/5', background: '#F4F2EB', position: 'relative', overflow: 'hidden' }}>
                 <image-slot id={it.id} shape="rect" fit="cover" placeholder="탭하여 추가"
+                  src={it.src}
                   style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
                 <div style={{ position: 'absolute', top: 6, right: 6, width: 18, height: 18, borderRadius: '50%', background: 'rgba(255,255,255,0.88)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round">
@@ -407,7 +533,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant }) {
 
       {/* GUESTBOOK */}
       {tab === 'mention' && (
-        <div style={{ maxWidth: 720, margin: '0 auto', padding: `48px ${px}px 80px` }}>
+        <div style={{ maxWidth: 720, margin: '0 auto', padding: '48px 24px 80px' }}>
           <GuestbookTab lime={lime} ink={ink} />
         </div>
       )}
@@ -555,7 +681,7 @@ function WideApp({ tweaks, openSheet, variant }) {
       <PCHeroSection  lime={lime} ink={ink} tweaks={tweaks} openSheet={openSheet} variant={variant} />
       <PCTickerBand />
       <PCTheDaySection  ink={ink} variant={variant} />
-      <PCMemoriesSection lime={lime} ink={ink} tweaks={tweaks} variant={variant} />
+      <PCMemoriesSection lime={lime} ink={ink} tweaks={tweaks} variant={variant} openSheet={openSheet} />
       <PCNumbersSection  lime={lime} ink={ink} tweaks={tweaks} variant={variant} />
       <PCVenueSection    lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
       <PCClosingSection  lime={lime} ink={ink} openSheet={openSheet} variant={variant} />

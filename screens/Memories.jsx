@@ -121,16 +121,48 @@ function PhotoCarousel({ postId, photoCount, images = [] }) {
     setDragDx(0);
   };
 
+  // 마우스 드래그 (PC) — touch 이벤트와 중복 방지를 위해 pointerType 체크
+  const onPointerDown = e => {
+    if (e.pointerType === 'touch' || photoCount < 2) return;
+    startX.current = e.clientX;
+    dir.current = 'x';
+    widthRef.current = e.currentTarget.clientWidth;
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = e => {
+    if (e.pointerType === 'touch' || dir.current !== 'x') return;
+    const dx = e.clientX - startX.current;
+    let d = dx;
+    if ((slide === 0 && dx > 0) || (slide === photoCount - 1 && dx < 0)) d = dx * 0.35;
+    setDragDx(d);
+  };
+  const onPointerUp = e => {
+    if (e.pointerType === 'touch' || dir.current !== 'x') return;
+    dir.current = null;
+    const dx = e.clientX - startX.current;
+    const w = widthRef.current || 1;
+    const threshold = Math.max(40, w * 0.2);
+    if (dx <= -threshold) goTo(slide + 1);
+    else if (dx >= threshold) goTo(slide - 1);
+    setDragDx(0);
+  };
+
   // 이미지가 있으면 원본 비율, 없으면 4:5 플레이스홀더
   const hasPreset = images.length > 0 && images.some(Boolean);
 
   return (
     <div style={{ position:'relative' }}>
-      <div style={{
-        position:'relative', width:'100%',
-        ...(hasPreset ? {} : { aspectRatio:'4/5' }),
-        overflow:'hidden', background:'#F4F2EB',
-      }}>
+      <div
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        style={{
+          position:'relative', width:'100%',
+          ...(hasPreset ? {} : { aspectRatio:'4/5' }),
+          overflow:'hidden', background:'#F4F2EB',
+          cursor: photoCount > 1 ? 'grab' : 'default',
+        }}>
         <div ref={trackRef}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
@@ -776,13 +808,23 @@ function StoryViewer({ images, onClose }) {
     }
   };
 
+  // 마우스 클릭 (PC) — 좌 38% 클릭 → 이전, 우 62% 클릭 → 다음
+  const onPointerUp = e => {
+    if (e.pointerType !== 'mouse') return;
+    const w = e.currentTarget.getBoundingClientRect().width;
+    if (e.clientX < w * 0.38) goPrev();
+    else goNext();
+  };
+
   return (
     <div
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
+      onPointerUp={onPointerUp}
       style={{
         position:'absolute', inset:0, background:'#000', zIndex:300,
         display:'flex', flexDirection:'column', userSelect:'none',
+        cursor: 'pointer',
       }}>
 
       {/* progress bars */}
@@ -798,8 +840,9 @@ function StoryViewer({ images, onClose }) {
         ))}
       </div>
 
-      {/* X 닫기 버튼 — touchEnd stopPropagation으로 parent 이벤트 차단 */}
+      {/* X 닫기 버튼 — touch/pointer/click 모두 상위 네비게이션 이벤트 차단 */}
       <button
+        onPointerUp={e => { e.stopPropagation(); onClose(); }}
         onTouchEnd={e => { e.stopPropagation(); onClose(); }}
         onClick={e => { e.stopPropagation(); onClose(); }}
         style={{
@@ -1122,5 +1165,5 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
 }
 
 Object.assign(window, { MemoriesScreen, FollowingSheet, MemoryPost, PhotoCarousel, CarouselBadge, GuestbookTab,
-  HeartIcon, CommentIcon, SendIcon,
+  HeartIcon, CommentIcon, SendIcon, StoryViewer,
   TabIconGrid, TabIconFeed, TabIconRepost, TabIconMention });
