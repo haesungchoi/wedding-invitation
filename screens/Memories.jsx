@@ -311,8 +311,8 @@ function FollowingSheet({ open, onClose, lime, ink, onOpenMap, onOpenAccount, on
 
   const items = [
     { label: '친한 친구 리스트에 추가', icon: 'star-filled', action: () => showToast('이미 친한 친구잖아요 😄') },
-    { label: '결혼식 캘린더에 저장',    icon: 'star-empty',  action: () => { onClose(); onOpenCalendar(); } },
-    { label: '오시는 길 보기',          icon: 'chevron',     action: () => { onClose(); onOpenMap(); } },
+    { label: '결혼식 캘린더에 저장',    icon: 'star-empty',  action: () => onOpenCalendar() },
+    { label: '오시는 길 보기',          icon: 'chevron',     action: () => onOpenMap() },
     { label: '팔로우 취소',             red: true,           action: () => showToast('그럴 수는 없어요 💍') },
   ];
 

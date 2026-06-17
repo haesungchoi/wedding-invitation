@@ -216,7 +216,8 @@ function App() {
       </div>
       <div
         className={`page-scrim ${rootPushed ? 'page-scrim-on' : ''}`}
-        onClick={() => modal && goTo('main')}
+        style={sheet ? { pointerEvents: 'none' } : undefined}
+        onClick={() => { if (modal && !sheet && !closingModal) goTo('main'); }}
       />
 
       {/* Modal sheet — Apple-style slide up from bottom */}
