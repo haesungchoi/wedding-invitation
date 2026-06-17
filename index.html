@@ -220,10 +220,11 @@
   .modal-sheet {
     position: absolute;
     left: 0; right: 0;
-    top: 18px;  /* small gap so root peeks behind, iOS style */
+    top: 0;     /* 평소엔 화면 맨 위까지 채워 뒤 Main(page-root)이 안 비치게.
+                   닫을 때 아래로 슬라이드하며 뒤 배경이 드러난다(투명 아님). */
     bottom: 0;
     background: #E9E7DF;
-    border-radius: 14px 14px 0 0;
+    border-radius: 0;
     box-shadow: 0 -10px 40px rgba(0,0,0,0.22);
     overflow: hidden;
     z-index: 3;
