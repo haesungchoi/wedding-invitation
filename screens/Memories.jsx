@@ -795,11 +795,15 @@ function StoryViewer({ groups, startGroupIdx = 0, onClose }) {
   }, [idx, goNext]);
 
   const onTouchStart = (e) => {
+    e.stopPropagation();
     const t = e.touches[0];
     touchRef.current = { x: t.clientX, y: t.clientY, t: Date.now() };
   };
 
+  const onTouchMove = (e) => { e.stopPropagation(); };
+
   const onTouchEnd = (e) => {
+    e.stopPropagation();
     if (!touchRef.current) return;
     const t = e.changedTouches[0];
     const dx = t.clientX - touchRef.current.x;
@@ -847,6 +851,7 @@ function StoryViewer({ groups, startGroupIdx = 0, onClose }) {
   return (
     <div
       onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
       onPointerUp={onPointerUp}
       style={{
