@@ -1043,7 +1043,6 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
       <div ref={topbarRef} style={{
         position:'sticky', top:0, zIndex:20,
         background:'#fff', borderBottom:'1px solid rgba(17,17,17,0.10)',
-        willChange:'transform',
       }}>
         {/* nav row — grabber pill 없이 최상단부터 채움 (인스타그램 앱 느낌) */}
         {feedActive ? (
