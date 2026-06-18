@@ -87,6 +87,7 @@ function PhotoCarousel({ postId, photoCount, images = [], onSwipeBack }) {
   // iOS에서 세로 스크롤을 가로채던 문제를 근본적으로 제거)
   const onTouchStart = e => {
     if (photoCount < 2 && !onSwipeBack) return;
+    e.stopPropagation();
     const t = e.touches[0];
     startX.current = t.clientX;
     startY.current = t.clientY;
@@ -256,8 +257,17 @@ function CarouselBadge() {
 function MemoryPost({ id, date, caption, likes, photoCount = 1, images = [], lime, ink, onSwipeBack }) {
   const [liked, setLiked] = React.useState(false);
   const likeN = parseInt(likes.replace(',',''));
+  const swipeX = React.useRef(null);
+  const onPostTouchStart = e => { swipeX.current = e.touches[0].clientX; };
+  const onPostTouchEnd = e => {
+    if (swipeX.current === null) return;
+    const dx = e.changedTouches[0].clientX - swipeX.current;
+    swipeX.current = null;
+    if (dx > 60 && onSwipeBack) onSwipeBack();
+  };
   return (
-    <div id={'post-' + id} style={{ background:'#fff', borderBottom:'1px solid rgba(17,17,17,0.08)' }}>
+    <div id={'post-' + id} onTouchStart={onPostTouchStart} onTouchEnd={onPostTouchEnd}
+      style={{ background:'#fff', borderBottom:'1px solid rgba(17,17,17,0.08)' }}>
       {/* header */}
       <div style={{ display:'flex', alignItems:'center', gap:10, padding:'10px 14px' }}>
         <div style={{
