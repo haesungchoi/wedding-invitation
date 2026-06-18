@@ -350,10 +350,9 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
   ];
 
   const TABS = [
-    { key: 'grid',    Icon: TabIconGrid,    label: 'GRID' },
-    { key: 'feed',    Icon: TabIconFeed,    label: 'FEED' },
-    { key: 'repost',  Icon: TabIconRepost,  label: 'REPOST' },
-    { key: 'mention', Icon: TabIconMention, label: 'GUESTBOOK' },
+    { key: 'grid',    Icon: TabIconGrid },
+    { key: 'repost',  Icon: TabIconRepost },
+    { key: 'mention', Icon: TabIconMention },
   ];
 
   return (
@@ -454,34 +453,16 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
 
       {/* Tab nav */}
       <div style={{ display: 'flex', justifyContent: 'center', borderBottom: '1px solid rgba(17,17,17,0.08)' }}>
-        {TABS.map(({ key, Icon, label }) => (
+        {TABS.map(({ key, Icon }) => (
           <button key={key} onClick={() => setTab(key)} className="tap"
-            style={{ padding: `14px ${variant === 'pc' ? 32 : 20}px`, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, borderBottom: tab === key ? `2px solid ${ink}` : '2px solid transparent', transition: 'border-color .15s' }}>
+            style={{ padding: `14px ${variant === 'pc' ? 40 : 28}px`, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', borderBottom: tab === key ? `2px solid ${ink}` : '2px solid transparent', transition: 'border-color .15s' }}>
             <Icon active={tab === key} ink={ink} />
-            <span style={{ fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.14em', fontWeight: 600, color: tab === key ? ink : '#aaa' }}>{label}</span>
           </button>
         ))}
       </div>
 
-      {/* GRID */}
+      {/* GRID → Feed view */}
       {tab === 'grid' && (
-        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${gridCols}, 1fr)`, gap: 2, background: '#ddd' }}>
-          {posts.map((p, i) => (
-            <button key={p.id} onClick={() => setTab('feed')} className="tap"
-              style={{ padding: 0, border: 'none', cursor: 'pointer', aspectRatio: '4/5', background: '#F4F2EB', position: 'relative', overflow: 'hidden' }}>
-              <img src={p.images && p.images[0]} alt="" loading="lazy" decoding="async"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', pointerEvents: 'none' }} />
-              {p.photoCount > 1 && <CarouselBadge />}
-              <div style={{ position: 'absolute', bottom: 6, right: 8, fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 9, fontWeight: 700, color: 'rgba(255,255,255,0.9)', textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                {String(i + 1).padStart(2, '0')}
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* FEED */}
-      {tab === 'feed' && (
         <div style={{ padding: `40px ${px}px 80px`, background: '#FAFAFA' }}>
           <div style={{
             display: 'grid',
