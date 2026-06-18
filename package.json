@@ -4,7 +4,7 @@
   "description": "",
   "main": "image-slot.js",
   "scripts": {
-    "build": "babel ios-frame.jsx tweaks-panel.jsx pc-layout.jsx app.jsx --out-dir dist --presets @babel/preset-react && babel screens/Main.jsx screens/Memories.jsx screens/Sheets.jsx screens/Numbers.jsx screens/Dove.jsx --out-dir dist/screens --presets @babel/preset-react"
+    "build": "babel ios-frame.jsx tweaks-panel.jsx pc-layout.jsx app.jsx --out-dir dist && babel screens/Main.jsx screens/Memories.jsx screens/Sheets.jsx screens/Numbers.jsx screens/Dove.jsx --out-dir dist/screens"
   },
   "repository": {
     "type": "git",
