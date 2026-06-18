@@ -1,3 +1,16 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "liveServer.settings.ignoreFiles": [
+        ".git/**",
+        ".vscode/**",
+        "img-original/**",
+        "uploads/**",
+        "node_modules/**",
+        "**/*.icloud",
+        "**/.DS_Store",
+        "live-sync.sh",
+        "live-sync.ps1",
+        "**/*.md"
+    ],
+    "liveServer.settings.wait": 300
 }

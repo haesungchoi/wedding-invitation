@@ -27,10 +27,12 @@ function MainScreen({ goTo, openSheet, tweaks }) {
   const photoRef = React.useRef(null);
 
   // 세로 'WEDDING INVITATION' 헤드라인의 높이를 사진 카드 위치에 맞춰 정렬한다.
-  // getBoundingClientRect는 fade-up 진입 애니메이션의 transform·스크롤 위치까지
-  // 반영해 첫 진입 시 잘못된 값을 읽으므로, transform과 무관한 offset 기반으로 계산하고
-  // useLayoutEffect로 첫 페인트 전에 확정한다. 폰트가 늦게 로드되면 위쪽 이름 텍스트의
-  // 높이가 바뀌므로 fonts.ready에서 한 번 더 정렬한다.
+  // 이 헤드라인은 transform: rotate(180deg)(중심 기준)이라 '높이'가 곧 화면상 위치다.
+  // 그런데 정렬 기준이 되는 사진 위치는 위쪽 이름 텍스트 높이에 의존하고, 그 텍스트는
+  // font-display:swap 폰트가 '첫 페인트 이후' 늦게 교체되며 reflow된다 → 높이 재계산 →
+  // 회전 중심 이동 → 글자가 위아래로 '튕겨' 보였다.
+  // 해결: 폰트로 위치가 확정될 때까지 헤드라인을 opacity:0으로 숨겨 중간 점프를 가리고,
+  //       reflow가 끝난 다음 프레임에 '한 번' 정렬한 뒤 부드럽게 표시한다.
   React.useLayoutEffect(() => {
     const offsetWithin = (el, ancestor) => {
       let y = 0;
@@ -46,9 +48,25 @@ function MainScreen({ goTo, openSheet, tweaks }) {
       const h = offsetWithin(photo, section) + photo.offsetHeight - 70;
       if (h > 0) text.style.height = `${Math.round(h)}px`;
     };
+    let revealed = false;
+    const finalize = () => {
+      align();
+      if (!revealed && weddingTextRef.current) {
+        revealed = true;
+        weddingTextRef.current.style.opacity = '0.95';
+      }
+    };
+    // 첫 페인트 전: 폰트가 아직이라 위치가 미확정 → 숨긴 채 임시 정렬만 해 둔다.
     align();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
-    const t = setTimeout(align, 700);
+    // 폰트 swap reflow가 끝난 '다음 프레임'에 최종 정렬 + 노출(중간 상태는 안 보임).
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => requestAnimationFrame(finalize));
+    } else {
+      requestAnimationFrame(finalize);
+    }
+    // 폰트 이벤트가 끝내 안 오는 경우 대비 안전망.
+    const t = setTimeout(finalize, 800);
+    // 리사이즈/회전 시에는 이미 노출된 상태이므로 위치만 다시 맞춘다.
     window.addEventListener('resize', align);
     return () => { clearTimeout(t); window.removeEventListener('resize', align); };
   }, []);
@@ -91,7 +109,7 @@ function MainScreen({ goTo, openSheet, tweaks }) {
         {/* big rotated WEDDING INVITATION on right edge */}
         <div ref={weddingTextRef} className="vertical-headline agrandir" style={{
           position: 'absolute', right: -1, top: 70,
-          fontSize: 64, color: ink, lineHeight: 0.85, opacity: 0.95, height: "640px", fontFamily: "'Martian Mono', monospace", fontWeight: "400", fontStretch: '100%', letterSpacing: '0em'
+          fontSize: 64, color: ink, lineHeight: 0.85, opacity: 0, transition: 'opacity 0.45s ease', height: "640px", fontFamily: "'Martian Mono', monospace", fontWeight: "400", fontStretch: '100%', letterSpacing: '0em'
         }}>
           WEDDING<br />INVITATION
         </div>
