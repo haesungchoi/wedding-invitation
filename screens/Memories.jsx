@@ -1192,7 +1192,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
         <div style={{ background:'#fff' }}>
           {posts.map(p => <MemoryPost key={p.id} lime={lime} ink={ink} {...p} onSwipeBack={backFromFeed}/>)}
           <div style={{ background:lime, padding:'40px 24px 80px', textAlign:'center' }}>
-            <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontSize:28, fontWeight:400, color:ink, lineHeight:1, marginBottom:16 }}>TO BE<br/>CONTINUED</div>
+            <div style={{ fontFamily:"'Grand Hotel',cursive", fontSize:44, color:ink, lineHeight:1, marginBottom:16 }}>Lovestagram</div>
           </div>
         </div>
       )}
