@@ -1720,8 +1720,24 @@ function MemoriesScreen({
   const [feedActive, setFeedActive] = React.useState(false);
   const [feedScrollTo, setFeedScrollTo] = React.useState(null);
   const [story, setStory] = React.useState(null);
-  const [heartKey, setHeartKey] = React.useState(0);
-  const burstHeart = () => setHeartKey(k => k + 1);
+  const [hearts, setHearts] = React.useState([]);
+  const burstHeart = () => {
+    const id = Date.now() + Math.random();
+    // 누를 때마다 위치·크기·기울기를 살짝 랜덤하게 → 연타하면 하트가 화면에 흩뿌려진다
+    const x = Math.random() * 50 - 25; // -25 ~ 25 vw
+    const y = Math.random() * 30 - 15; // -15 ~ 15 vh
+    const rot = Math.random() * 40 - 20; // -20 ~ 20deg
+    const size = 70 + Math.random() * 60; // 70 ~ 130px
+    setHearts(hs => [...hs, {
+      id,
+      x,
+      y,
+      rot,
+      size
+    }]);
+    // 애니메이션(1.4s)이 끝나면 스스로 제거 → 오버레이가 남아 클릭을 막지 않음
+    setTimeout(() => setHearts(hs => hs.filter(h => h.id !== id)), 1400);
+  };
   const screenRef = React.useRef(null);
   const topbarRef = React.useRef(null);
   const [topbarH, setTopbarH] = React.useState(52);
@@ -2159,23 +2175,30 @@ function MemoriesScreen({
     y1: "11",
     x2: "16",
     y2: "11"
-  })))), heartKey > 0 && /*#__PURE__*/React.createElement("div", {
-    key: heartKey,
+  })))), hearts.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'fixed',
       inset: 0,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 999
+      overflow: 'hidden',
+      zIndex: 999,
+      pointerEvents: 'none'
+    }
+  }, hearts.map(h => /*#__PURE__*/React.createElement("span", {
+    key: h.id,
+    style: {
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: `translate(-50%,-50%) translate(${h.x}vw, ${h.y}vh) rotate(${h.rot}deg)`
     }
   }, /*#__PURE__*/React.createElement("span", {
     className: "heart-burst",
     style: {
-      fontSize: 100,
+      display: 'inline-block',
+      fontSize: h.size,
       lineHeight: 1
     }
-  }, "❤️")), /*#__PURE__*/React.createElement("div", {
+  }, "❤️")))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: 12,
