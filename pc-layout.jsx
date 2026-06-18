@@ -2,7 +2,7 @@
 // Usage: <WideApp tweaks={...} openSheet={fn} variant="pc"|"tablet" />
 
 /* ─── Header ────────────────────────────────────────────────── */
-function PCHeader({ lime, ink, openSheet, variant }) {
+function PCHeader({ lime, ink, openSheet, variant, onOpenMemories }) {
   const [scrolled, setScrolled] = React.useState(false);
   React.useEffect(() => {
     const h = () => setScrolled(window.scrollY > 80);
@@ -14,8 +14,8 @@ function PCHeader({ lime, ink, openSheet, variant }) {
   const px = variant === 'pc' ? 64 : 32;
 
   const navItems = [
-    { label: 'THE DAY',   id: 'wide-day' },
-    { label: '우리의 추억', id: 'wide-memories' },
+    { label: 'THE DAY',   onClick: () => document.getElementById('wide-day')?.scrollIntoView({ behavior: 'smooth' }) },
+    { label: '우리의 추억', onClick: onOpenMemories },
   ];
 
   return (
@@ -37,7 +37,7 @@ function PCHeader({ lime, ink, openSheet, variant }) {
       <nav style={{ display: 'flex', alignItems: 'center', gap: variant === 'pc' ? 28 : 16 }}>
         {navItems.map(item => (
           <button key={item.label}
-            onClick={() => document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={item.onClick}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
               fontFamily: "'Martian Mono', monospace",
@@ -58,7 +58,7 @@ function PCHeader({ lime, ink, openSheet, variant }) {
 }
 
 /* ─── Hero Section ──────────────────────────────────────────── */
-function PCHeroSection({ lime, ink, tweaks, openSheet, variant }) {
+function PCHeroSection({ lime, ink, tweaks, openSheet, variant, onOpenMemories }) {
   const wedding = new Date('2026-09-12T13:00:00+09:00');
   const days = Math.max(0, Math.ceil((wedding - new Date()) / (86400 * 1000)));
   const nameSize = variant === 'pc' ? 112 : 76;
@@ -97,7 +97,7 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant }) {
             }}>윤채원</div>
             <div style={{
               fontFamily: "'Martian Mono', monospace",
-              fontSize: variant === 'pc' ? 15 : 12, color: ink, opacity: 0.65,
+              fontSize: variant === 'pc' ? 26 : 18, color: ink, opacity: 0.65,
               marginTop: 5, marginLeft: 3,
             }}>Chaewon Yun</div>
           </div>
@@ -118,7 +118,7 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant }) {
             }}>최해성</div>
             <div style={{
               fontFamily: "'Martian Mono', monospace",
-              fontSize: variant === 'pc' ? 15 : 12, color: ink, opacity: 0.65,
+              fontSize: variant === 'pc' ? 26 : 18, color: ink, opacity: 0.65,
               marginTop: 5, marginLeft: 3,
             }}>Haeseong Choi</div>
           </div>
@@ -153,9 +153,9 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant }) {
         </div>
       </div>
 
-      {/* Right: full-bleed photo — click to jump to memories */}
+      {/* Right: full-bleed photo — click to open memories */}
       <button
-        onClick={() => document.getElementById('wide-memories')?.scrollIntoView({ behavior: 'smooth' })}
+        onClick={onOpenMemories}
         className="tap"
         style={{ position: 'relative', overflow: 'hidden', padding: 0, border: 'none', cursor: 'pointer', display: 'block', width: '100%', height: '100%' }}>
         <img src="img/couple-main.jpg" alt="couple"
@@ -205,7 +205,7 @@ function PCTheDaySection({ ink, variant }) {
 
   return (
     <section id="wide-day" style={{ background: '#F8F6F0', padding: `${py}px ${px}px` }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div>
         <div className="label-en" style={{ marginBottom: variant === 'pc' ? 56 : 36 }}>· THE DAY</div>
 
         <div style={{
@@ -657,16 +657,32 @@ function PCClosingSection({ lime, ink, openSheet, variant }) {
 
 /* ─── Root ──────────────────────────────────────────────────── */
 function WideApp({ tweaks, openSheet, variant }) {
+  const [showMemories, setShowMemories] = React.useState(false);
   const lime = tweaks.lime;
   const ink  = tweaks.ink;
 
+  const openMemories = () => setShowMemories(true);
+  const closeMemories = () => setShowMemories(false);
+
   return (
     <div style={{ minHeight: '100vh', background: '#F8F6F0' }}>
-      <PCHeader       lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
-      <PCTickerBand lime={lime} ink={ink} />
-      <PCHeroSection  lime={lime} ink={ink} tweaks={tweaks} openSheet={openSheet} variant={variant} />
+      {showMemories && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 300, background: '#fff', overflowY: 'auto' }}>
+          <button onClick={closeMemories} style={{
+            position: 'fixed', top: variant === 'pc' ? 20 : 14, left: variant === 'pc' ? 28 : 16,
+            zIndex: 301, background: 'rgba(248,246,240,0.92)', border: `1px solid ${ink}`,
+            borderRadius: 99, padding: '8px 18px', cursor: 'pointer',
+            fontFamily: "'Martian Mono', monospace", fontSize: 9, fontWeight: 700,
+            letterSpacing: '0.14em', color: ink,
+            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+          }}>← BACK</button>
+          <PCMemoriesSection lime={lime} ink={ink} tweaks={tweaks} variant={variant} openSheet={openSheet} />
+        </div>
+      )}
+      <PCHeader       lime={lime} ink={ink} openSheet={openSheet} variant={variant} onOpenMemories={openMemories} />
+      <PCHeroSection  lime={lime} ink={ink} tweaks={tweaks} openSheet={openSheet} variant={variant} onOpenMemories={openMemories} />
+      <PCTickerBand   lime={lime} ink={ink} />
       <PCTheDaySection  ink={ink} variant={variant} />
-      <PCMemoriesSection lime={lime} ink={ink} tweaks={tweaks} variant={variant} openSheet={openSheet} />
       <PCVenueSection    lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
       <PCClosingSection  lime={lime} ink={ink} openSheet={openSheet} variant={variant} />
     </div>
