@@ -272,10 +272,11 @@ function MemoryPost({ id, date, caption, likes, photoCount = 1, images = [], lim
       <div style={{ display:'flex', alignItems:'center', gap:10, padding:'10px 14px' }}>
         <div style={{
           width:34, height:34, borderRadius:'50%', flexShrink:0,
-          background:lime, color:ink, border:`1.5px solid ${ink}`,
-          display:'flex', alignItems:'center', justifyContent:'center',
-          fontFamily:"'Bricolage Grotesque',sans-serif", fontWeight:700, fontSize:11,
-        }}>H&C</div>
+          border:`1.5px solid ${ink}`, overflow:'hidden',
+        }}>
+          <img src="img/couple-main.jpg" alt="채원 ♥ 해성" loading="lazy" decoding="async"
+            style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 20%' }}/>
+        </div>
         <div style={{ flex:1 }}>
           <div style={{ fontFamily:"'Pretendard',sans-serif", fontWeight:700, fontSize:13, color:ink }}>chaewon_and_haeseong</div>
           <div style={{ fontFamily:"'Pretendard',sans-serif", fontSize:11, color:'#888', marginTop:1 }}>{date}</div>
