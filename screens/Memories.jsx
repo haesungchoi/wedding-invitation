@@ -994,10 +994,12 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
       caption:'경주의 가을 빛이 우릴 감쌌던 날. 천년의 고요 속에서, 우리만의 이야기를 새겼어. 🍂',
     },
     {
-      id:'mem-6', date:'2026. 09. 12', likes:'6,012', photoCount:2,
+      id:'mem-6', date:'2026. 09. 12', likes:'6,012', photoCount:4,
       images:[
         'img/memories/wedding-ng/ng-1.jpg',
         'img/memories/wedding-ng/ng-2.jpg',
+        'img/memories/wedding-ng/ng-3.jpg',
+        'img/memories/wedding-ng/ng-4.jpg',
       ],
       caption:'1. 경호원인지 신랑인지 본인도 모르는 표정으로 서 있었음 🕶️  2. 눈을 희번떡 — 작가님이 제일 많이 웃었던 컷 👁️👁️  공개 못 할 줄 알았는데 이게 더 우리답다.',
     },
