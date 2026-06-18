@@ -932,6 +932,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   const proposeImages = Array.from({length:14}, (_,i) => `img/memories/propose-newyork/newyork-${i+1}.jpg`);
 
   const highlights = [
+    { label: '2026', images: [] },
     {
       label: '2021',
       images: Array.from({length:11}, (_,i) => `img/highlights/2021/${i+1}.jpg`),
@@ -940,7 +941,6 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
     { label: '2023', images: Array.from({length:17}, (_,i) => `img/highlights/2023/${i+1}.jpg`) },
     { label: '2024', images: Array.from({length:10}, (_,i) => `img/highlights/2024/${i+1}.jpg`) },
     { label: '2025', images: Array.from({length:11}, (_,i) => `img/highlights/2025/${i+1}.jpg`) },
-    { label: '2026', images: [] },
   ];
   const validHighlights = highlights.filter(h => h.images.length > 0);
 
