@@ -85,8 +85,9 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant, onOpenMemories }
       }}>
         <div style={{
           fontFamily: "'Martian Mono', monospace",
-          fontSize: 9, letterSpacing: '0.2em', fontWeight: 600, color: ink, opacity: 0.6,
-        }}>WEDDING INVITATION 2026</div>
+          fontSize: variant === 'pc' ? 12 : 10, letterSpacing: '0.2em', fontWeight: 600, color: ink, opacity: 0.6,
+          lineHeight: 1.7,
+        }}>WEDDING<br />INVITATION</div>
 
         {/* names */}
         <div>
@@ -126,14 +127,11 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant, onOpenMemories }
 
         {/* date + CTAs */}
         <div style={{ borderTop: `1px solid ${ink}`, paddingTop: 22 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 16 }}>
+          <div style={{ marginBottom: 16 }}>
             <div style={{
               fontFamily: "'Martian Mono', monospace",
               fontSize: variant === 'pc' ? 17 : 13, color: ink, fontWeight: 300,
             }}>2026.09.12</div>
-            <div style={{ fontFamily: "'Pretendard', sans-serif", fontSize: 12, color: ink, opacity: 0.55 }}>
-              D-{days}
-            </div>
           </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {[
@@ -244,10 +242,10 @@ function PCTheDaySection({ ink, variant }) {
             {
               label: '· FAMILY',
               style: { gridColumn: variant === 'pc' ? 'auto' : '1 / -1' },
-              body: <div style={{ fontFamily: "'Pretendard'", fontSize: 15, lineHeight: 1.95, color: '#444' }}>
-                <div><span style={{ color: ink, fontWeight: 600 }}>최교선 · 구지영</span>의 아들 해성</div>
-                <div style={{ height: 1, background: 'rgba(17,17,17,0.1)', margin: '8px 0' }} />
-                <div><span style={{ color: ink, fontWeight: 600 }}>윤재경 · 공명아</span>의 딸 채원</div>
+              body: <div style={{ fontFamily: "'Pretendard'", fontSize: variant === 'pc' ? 21 : 17, fontWeight: 400, lineHeight: 1.55, color: ink }}>
+                <div><span style={{ fontWeight: 600 }}>최교선 · 구지영</span><span style={{ color: '#555', fontSize: variant === 'pc' ? 17 : 14 }}>의 아들 해성</span></div>
+                <div style={{ height: 1, background: 'rgba(17,17,17,0.1)', margin: '10px 0' }} />
+                <div><span style={{ fontWeight: 600 }}>윤재경 · 공명아</span><span style={{ color: '#555', fontSize: variant === 'pc' ? 17 : 14 }}>의 딸 채원</span></div>
               </div>,
             },
           ].map(col => (
