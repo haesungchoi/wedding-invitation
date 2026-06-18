@@ -232,21 +232,24 @@ function MapSheet({ open, onClose, pc }) {
         </button>
 
         {/* nav apps */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 18 }}>
-          {[
-          { name: 'NAVER', url: naverUrl },
-          { name: 'KAKAO', url: kakaoUrl },
-          { name: 'TMAP', url: tmapUrl }].
-          map((b) =>
-          <a key={b.name} href={b.url} target="_blank" rel="noreferrer" className="tap"
-          style={{
-            background: '#D4E607', color: '#111', textAlign: 'center',
-            padding: '12px 0', borderRadius: 10, fontFamily: "'Pretendard', sans-serif",
-            fontWeight: 700, fontSize: 12, letterSpacing: '0.1em',
-            textDecoration: 'none'
-          }}>{b.name}</a>
-          )}
-        </div>
+        {(() => {
+          const apps = pc
+            ? [{ name: 'NAVER', url: naverUrl }, { name: 'KAKAO', url: kakaoUrl }]
+            : [{ name: 'NAVER', url: naverUrl }, { name: 'KAKAO', url: kakaoUrl }, { name: 'TMAP', url: tmapUrl }];
+          return (
+            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${apps.length}, 1fr)`, gap: 8, marginBottom: 18 }}>
+              {apps.map(b =>
+                <a key={b.name} href={b.url} target="_blank" rel="noreferrer" className="tap"
+                  style={{
+                    background: '#D4E607', color: '#111', textAlign: 'center',
+                    padding: '12px 0', borderRadius: 10, fontFamily: "'Pretendard', sans-serif",
+                    fontWeight: 700, fontSize: 12, letterSpacing: '0.1em',
+                    textDecoration: 'none'
+                  }}>{b.name}</a>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Transit info */}
         <div className="label-en" style={{ marginBottom: 10 }}>HOW TO COME</div>
