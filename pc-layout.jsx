@@ -276,7 +276,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
   const px = variant === 'pc' ? 80 : 48;
   const gridCols = variant === 'pc' ? 6 : 3;
 
-  const proposeImages = Array.from({length:14}, (_,i) => `img/memories/propose-newyork/newyork-${i+1}.jpg`);
+  const proposeImages = ['img/memories/propose-newyork/newyork-1.jpg', 'img/memories/propose-newyork/newyork-2.jpg'];
 
   const highlights = [
     { label: '2021', images: Array.from({length:11}, (_,i) => `img/highlights/2021/${i+1}.jpg`) },

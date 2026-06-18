@@ -940,7 +940,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   const topbarRef = React.useRef(null);
   const [topbarH, setTopbarH] = React.useState(52);
 
-  const proposeImages = Array.from({length:14}, (_,i) => `img/memories/propose-newyork/newyork-${i+1}.jpg`);
+  const proposeImages = ['img/memories/propose-newyork/newyork-1.jpg', 'img/memories/propose-newyork/newyork-2.jpg'];
 
   const highlights = [
     {
