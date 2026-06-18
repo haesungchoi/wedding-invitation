@@ -86,7 +86,7 @@ function PhotoCarousel({ postId, photoCount, images = [], onSwipeBack }) {
   // 가로 스와이프만 JS가 처리해 슬라이드를 넘긴다. (네이티브 가로 스크롤 컨테이너가
   // iOS에서 세로 스크롤을 가로채던 문제를 근본적으로 제거)
   const onTouchStart = e => {
-    if (photoCount < 2) return;
+    if (photoCount < 2 && !onSwipeBack) return;
     const t = e.touches[0];
     startX.current = t.clientX;
     startY.current = t.clientY;
@@ -94,7 +94,7 @@ function PhotoCarousel({ postId, photoCount, images = [], onSwipeBack }) {
     widthRef.current = trackRef.current ? trackRef.current.clientWidth : 0;
   };
   const onTouchMove = e => {
-    if (photoCount < 2) return;
+    if (photoCount < 2 && !onSwipeBack) return;
     const t = e.touches[0];
     const dx = t.clientX - startX.current;
     const dy = t.clientY - startY.current;
@@ -102,12 +102,10 @@ function PhotoCarousel({ postId, photoCount, images = [], onSwipeBack }) {
       dir.current = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
     }
     if (dir.current === 'x') {
-      // 양 끝에서는 저항감을 주어 더 못 넘어가게 함
       let d = dx;
       if ((slide === 0 && dx > 0) || (slide === photoCount - 1 && dx < 0)) d = dx * 0.35;
       setDragDx(d);
     }
-    // dir === 'y' 이면 손대지 않음 → 브라우저가 세로 페이지 스크롤을 그대로 처리
   };
   const onTouchEnd = () => {
     if (dir.current === 'x') {
