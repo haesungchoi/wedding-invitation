@@ -1039,21 +1039,20 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
     <div className="inv-screen" data-screen-label="02 Memories · 우리의 추억" data-feed-active={feedActive ? 'true' : undefined} ref={screenRef} style={{ background: '#fff' }}>
       {story && <StoryViewer groups={story.groups} startGroupIdx={story.startGroupIdx} onClose={() => setStory(null)} />}
 
-      {/* ── topbar (grabber pill 포함) ──────────────────── */}
+      {/* ── topbar ─────────────────────────────────────── */}
       <div ref={topbarRef} style={{
         position:'sticky', top:0, zIndex:20,
         background:'#fff', borderBottom:'1px solid rgba(17,17,17,0.10)',
+        willChange:'transform',
       }}>
-        {/* grabber pill — 스티키 헤더에 통합해서 스크롤 시 사진이 절대 비치지 않음 */}
-        <div style={{ padding:'10px 0 4px', display:'flex', justifyContent:'center' }}>
-          <div style={{ width:36, height:5, borderRadius:99, background:'rgba(17,17,17,0.28)' }}/>
-        </div>
-        {/* nav row */}
+        {/* nav row — grabber pill 없이 최상단부터 채움 (인스타그램 앱 느낌) */}
         {feedActive ? (
-          <div style={{ padding:'4px 16px 12px', display:'flex', alignItems:'center' }}>
+          <div style={{ padding:'14px 16px 12px', display:'flex', alignItems:'center' }}>
             <button onClick={backFromFeed} className="tap"
-              style={{ background:'transparent', border:'none', cursor:'pointer', display:'flex', alignItems:'center', padding:'8px 12px 8px 4px', margin:'-8px -12px -8px -4px', color:ink }}>
-              <span style={{ fontSize:24, lineHeight:1 }}>‹</span>
+              style={{ background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', padding:'8px 14px 8px 4px', margin:'-8px -14px -8px -4px', color:ink }}>
+              <svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke={ink} strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 2L2 10l8 8"/>
+              </svg>
             </button>
             <div style={{ flex:1, textAlign:'center' }}>
               <div style={{ fontFamily:"'Pretendard',sans-serif", fontWeight:700, fontSize:15, color:ink, lineHeight:1.2 }}>게시물</div>
@@ -1062,7 +1061,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
             <div style={{ width:44 }}/>
           </div>
         ) : (
-          <div style={{ padding:'4px 16px 12px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+          <div style={{ padding:'14px 16px 12px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
             <button onClick={() => goTo('main')} className="tap"
               style={{ background:'transparent', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:6, padding:'8px 16px 8px 4px', margin:'-8px -16px -8px -4px', color:ink, fontFamily:"'Pretendard',sans-serif", fontWeight:600, fontSize:11, letterSpacing:'0.16em' }}>
               <span style={{ fontSize:18, lineHeight:1 }}>←</span> MAIN
@@ -1179,7 +1178,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
 
       {/* ── FEED ───────────────────────────────────────── */}
       {feedActive && (
-        <div style={{ background:'#FAFAFA' }}>
+        <div style={{ background:'#fff' }}>
           {posts.map(p => <MemoryPost key={p.id} lime={lime} ink={ink} {...p}/>)}
           <div style={{ background:lime, padding:'40px 24px 80px', textAlign:'center' }}>
             <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontSize:28, fontWeight:400, color:ink, lineHeight:1, marginBottom:16 }}>TO BE<br/>CONTINUED</div>
