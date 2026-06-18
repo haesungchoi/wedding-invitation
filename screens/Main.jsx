@@ -152,14 +152,14 @@ function MainScreen({ goTo, openSheet, tweaks }) {
 
           {/* buttons column — aligns with 윤채원 */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
-            <button onClick={() => scrollToSection('section-location', () => openSheet('map'))} className="tap"
+            <button onClick={() => openSheet('map')} className="tap"
             style={{
               border: `1px solid ${ink}`, background: 'transparent',
               padding: '5px 8px', borderRadius: 99, cursor: 'pointer',
               fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.14em',
               fontWeight: 300
             }}>LOCATION</button>
-            <button onClick={() => scrollToSection('section-accounts', () => openSheet('account-both'))} className="tap"
+            <button onClick={() => openSheet('account-both')} className="tap"
             style={{
               border: `1px solid ${ink}`, background: 'transparent',
               padding: '5px 8px', borderRadius: 99, cursor: 'pointer',
