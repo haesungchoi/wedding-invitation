@@ -289,7 +289,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
 
   const posts = [
     {
-      id:'mem-1', date:'2026', likes:'9,126', photoCount:4,
+      id:'mem-1', date:'2026.03.15', likes:'9,126', photoCount:4,
       images:[
         'img/memories/studio-couple/couple-1.jpg',
         'img/memories/studio-couple/couple-2.jpg',
@@ -299,11 +299,11 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
       caption:'해성 & 채원',
     },
     {
-      id:'mem-2', date:'2026', likes:'3,862', photoCount:1, images:['img/memories/studio-groom/groom-1.jpg'],
+      id:'mem-2', date:'2026.03.15', likes:'3,862', photoCount:1, images:['img/memories/studio-groom/groom-1.jpg'],
       caption:'해성',
     },
     {
-      id:'mem-3', date:'2026', likes:'5,204', photoCount:6,
+      id:'mem-3', date:'2026.03.15', likes:'5,204', photoCount:6,
       images:[
         'img/memories/studio-bride/bride-0.jpg',
         'img/memories/studio-bride/bride-1.jpg',
@@ -315,12 +315,12 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
       caption:'채원',
     },
     {
-      id:'mem-4', date:'2026', likes:'4,477', photoCount:1,
+      id:'mem-4', date:'2026.02.12', likes:'4,477', photoCount:1,
       images:['img/memories/snap-shanghai/shanghai-1.jpg'],
       caption:'📍 상하이',
     },
     {
-      id:'mem-5', date:'2026', likes:'3,991', photoCount:5,
+      id:'mem-5', date:'2026.04.24', likes:'3,991', photoCount:5,
       images:[
         'img/memories/snap-gyeongju/gyeongju-1.jpg',
         'img/memories/snap-gyeongju/gyeongju-2.jpg',
@@ -331,7 +331,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
       caption:'📍 경주',
     },
     {
-      id:'mem-6', date:'2021', likes:'6,012', photoCount:4,
+      id:'mem-6', date:'2021.10.30', likes:'6,012', photoCount:4,
       images:[
         'img/memories/wedding-ng/ng-1.jpg',
         'img/memories/wedding-ng/ng-2.jpg',
