@@ -246,19 +246,17 @@
     from { transform: translateY(0); }
     to   { transform: translateY(100%); }
   }
-  /* tiny drag indicator at top of sheet */
+  /* drag handle bar at top of sheet — full-width white bar, pill은 각 화면 헤더에서 직접 렌더링 */
   .sheet-handle {
     position: absolute;
-    top: 8px; left: 50%;
-    transform: translateX(-50%);
-    width: 36px; height: 5px;
-    border-radius: 99px;
-    background: rgba(17,17,17,0.22);
+    top: 0; left: 0; right: 0;
+    height: 28px;
+    background: #ffffff;
     z-index: 10;
     pointer-events: none;
   }
   .modal-sheet .inv-screen {
-    padding-top: 16px;  /* space for handle */
+    padding-top: 0;
   }
 
   /* ──────────────────────────────────────────────────────

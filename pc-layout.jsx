@@ -190,8 +190,8 @@ function PCTickerBand({ lime, ink }) {
   return (
     <div className="ticker-wrap" style={{ height: 44, padding: '12px 0', background: lime }}>
       <div className="ticker-track">
-        {items.map(i => <span key={'a' + i} className="ticker-item" style={{ fontSize: 12, color: ink }}>Welcome to our wedding ✦</span>)}
-        {items.map(i => <span key={'b' + i} className="ticker-item" style={{ fontSize: 12, color: ink }}>Welcome to our wedding ✦</span>)}
+        {items.map(i => <span key={'a' + i} className="ticker-item" style={{ fontSize: 12, color: ink }}>Welcome to our wedding</span>)}
+        {items.map(i => <span key={'b' + i} className="ticker-item" style={{ fontSize: 12, color: ink }}>Welcome to our wedding</span>)}
       </div>
     </div>
   );

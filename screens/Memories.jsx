@@ -922,6 +922,8 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   const lime = tweaks.lime;
   const ink  = tweaks.ink;
   const [tab, setTab] = React.useState('grid');
+  const [feedActive, setFeedActive] = React.useState(false);
+  const [feedScrollTo, setFeedScrollTo] = React.useState(null);
   const [story, setStory] = React.useState(null);
   const screenRef = React.useRef(null);
   const topbarRef = React.useRef(null);
@@ -944,7 +946,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
 
   React.useEffect(() => {
     if (topbarRef.current) setTopbarH(topbarRef.current.offsetHeight);
-  }, []);
+  }, [feedActive]);
 
   const posts = [
     {
@@ -1011,40 +1013,67 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   ];
 
   const openPostInFeed = id => {
-    setTab('feed');
+    setFeedScrollTo(id);
+    setFeedActive(true);
+    if (screenRef.current) screenRef.current.scrollTop = 0;
     setTimeout(() => {
       const screen = screenRef.current;
       const el = document.getElementById('post-' + id);
-      if (screen && el) screen.scrollTop = el.offsetTop - topbarH - 48;
-    }, 80);
+      if (screen && el) screen.scrollTop = el.offsetTop - topbarH;
+    }, 60);
+  };
+
+  const backFromFeed = () => {
+    setFeedActive(false);
+    setFeedScrollTo(null);
+    if (screenRef.current) screenRef.current.scrollTop = 0;
   };
 
   const TABS = [
     { key:'grid',    Icon: TabIconGrid    },
-    { key:'feed',    Icon: TabIconFeed    },
     { key:'repost',  Icon: TabIconRepost  },
     { key:'mention', Icon: TabIconMention },
   ];
 
   return (
-    <div className="inv-screen" data-screen-label="02 Memories · 우리의 추억" ref={screenRef} style={{ background: '#fff' }}>
+    <div className="inv-screen" data-screen-label="02 Memories · 우리의 추억" data-feed-active={feedActive ? 'true' : undefined} ref={screenRef} style={{ background: '#fff' }}>
       {story && <StoryViewer groups={story.groups} startGroupIdx={story.startGroupIdx} onClose={() => setStory(null)} />}
 
-      {/* ── topbar ─────────────────────────────────────── */}
+      {/* ── topbar (grabber pill 포함) ──────────────────── */}
       <div ref={topbarRef} style={{
         position:'sticky', top:0, zIndex:20,
         background:'#fff', borderBottom:'1px solid rgba(17,17,17,0.10)',
-        padding:'14px 16px 12px',
-        display:'flex', alignItems:'center', justifyContent:'space-between',
       }}>
-        <button onClick={() => goTo('main')} className="tap"
-          style={{ background:'transparent', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:6, padding:'10px 16px 10px 4px', margin:'-10px -16px -10px -4px', color:ink, fontFamily:"'Pretendard',sans-serif", fontWeight:600, fontSize:11, letterSpacing:'0.16em' }}>
-          <span style={{ fontSize:18, lineHeight:1 }}>←</span> MAIN
-        </button>
-        <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontWeight:600, fontSize:17, color:ink, letterSpacing:'-0.02em' }}>chaewon_and_haeseong</div>
-        <div style={{ width:48 }}/>
+        {/* grabber pill — 스티키 헤더에 통합해서 스크롤 시 사진이 절대 비치지 않음 */}
+        <div style={{ padding:'10px 0 4px', display:'flex', justifyContent:'center' }}>
+          <div style={{ width:36, height:5, borderRadius:99, background:'rgba(17,17,17,0.28)' }}/>
+        </div>
+        {/* nav row */}
+        {feedActive ? (
+          <div style={{ padding:'4px 16px 12px', display:'flex', alignItems:'center' }}>
+            <button onClick={backFromFeed} className="tap"
+              style={{ background:'transparent', border:'none', cursor:'pointer', display:'flex', alignItems:'center', padding:'8px 12px 8px 4px', margin:'-8px -12px -8px -4px', color:ink }}>
+              <span style={{ fontSize:24, lineHeight:1 }}>‹</span>
+            </button>
+            <div style={{ flex:1, textAlign:'center' }}>
+              <div style={{ fontFamily:"'Pretendard',sans-serif", fontWeight:700, fontSize:15, color:ink, lineHeight:1.2 }}>게시물</div>
+              <div style={{ fontFamily:"'Pretendard',sans-serif", fontSize:12, color:'#888', marginTop:1 }}>chaewon_and_haeseong</div>
+            </div>
+            <div style={{ width:44 }}/>
+          </div>
+        ) : (
+          <div style={{ padding:'4px 16px 12px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+            <button onClick={() => goTo('main')} className="tap"
+              style={{ background:'transparent', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:6, padding:'8px 16px 8px 4px', margin:'-8px -16px -8px -4px', color:ink, fontFamily:"'Pretendard',sans-serif", fontWeight:600, fontSize:11, letterSpacing:'0.16em' }}>
+              <span style={{ fontSize:18, lineHeight:1 }}>←</span> MAIN
+            </button>
+            <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontWeight:600, fontSize:17, color:ink, letterSpacing:'-0.02em' }}>chaewon_and_haeseong</div>
+            <div style={{ width:48 }}/>
+          </div>
+        )}
       </div>
 
+      {!feedActive && (<>
       {/* ── profile header ─────────────────────────────── */}
       <div style={{ background:'#fff', padding:'20px 16px 0' }}>
         <div style={{ display:'flex', alignItems:'center', gap:20 }}>
@@ -1129,9 +1158,10 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
           </button>
         ))}
       </div>
+      </>)}
 
       {/* ── GRID (4:5) ─────────────────────────────────── */}
-      {tab === 'grid' && (
+      {!feedActive && tab === 'grid' && (
         <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:2, background:'#ddd' }}>
           {posts.map((p, i) => (
             <button key={p.id} onClick={() => openPostInFeed(p.id)} className="tap"
@@ -1148,7 +1178,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
       )}
 
       {/* ── FEED ───────────────────────────────────────── */}
-      {tab === 'feed' && (
+      {feedActive && (
         <div style={{ background:'#FAFAFA' }}>
           {posts.map(p => <MemoryPost key={p.id} lime={lime} ink={ink} {...p}/>)}
           <div style={{ background:lime, padding:'40px 24px 80px', textAlign:'center' }}>

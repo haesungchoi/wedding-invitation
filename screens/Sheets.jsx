@@ -107,10 +107,18 @@ function Sheet({ open, onClose, children, title, accent, pc }) {
             cursor: 'grab',
             touchAction: 'none',
             userSelect: 'none',
+            background: '#FFFFFF',
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+            marginLeft: -22,
+            marginRight: -22,
+            paddingLeft: 22,
+            paddingRight: 22,
           }}>
           <div style={{
             width: 38, height: 4, borderRadius: 99,
-            background: 'rgba(0,0,0,0.18)', margin: '0 auto',
+            background: 'rgba(0,0,0,0.32)', margin: '0 auto',
           }} />
         </div>
 
