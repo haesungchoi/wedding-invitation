@@ -256,7 +256,13 @@ function CarouselBadge() {
 /* ─── Feed Post ─────────────────────────────────────────────── */
 function MemoryPost({ id, date, caption, likes, photoCount = 1, images = [], lime, ink, onSwipeBack }) {
   const [liked, setLiked] = React.useState(false);
+  const [heartPop, setHeartPop] = React.useState(false);
   const likeN = parseInt(likes.replace(',',''));
+  const handleLike = () => {
+    setLiked(l => !l);
+    setHeartPop(true);
+    setTimeout(() => setHeartPop(false), 300);
+  };
   const swipeX = React.useRef(null);
   const onPostTouchStart = e => { swipeX.current = e.touches[0].clientX; };
   const onPostTouchEnd = e => {
@@ -289,8 +295,8 @@ function MemoryPost({ id, date, caption, likes, photoCount = 1, images = [], lim
 
       {/* actions */}
       <div style={{ display:'flex', alignItems:'center', gap:14, padding:'10px 14px 6px' }}>
-        <button onClick={() => setLiked(l=>!l)}
-          style={{ background:'none', border:'none', cursor:'pointer', padding:0, display:'flex' }}>
+        <button onClick={handleLike}
+          style={{ background:'none', border:'none', cursor:'pointer', padding:0, display:'flex', transform: heartPop ? 'scale(1.35)' : 'scale(1)', transition:'transform 0.15s' }}>
           <HeartIcon filled={liked}/>
         </button>
         <button style={{ background:'none', border:'none', cursor:'pointer', padding:0, display:'flex' }}>
@@ -936,6 +942,8 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   const [feedActive, setFeedActive] = React.useState(false);
   const [feedScrollTo, setFeedScrollTo] = React.useState(null);
   const [story, setStory] = React.useState(null);
+  const [heartKey, setHeartKey] = React.useState(0);
+  const burstHeart = () => setHeartKey(k => k + 1);
   const screenRef = React.useRef(null);
   const topbarRef = React.useRef(null);
   const [topbarH, setTopbarH] = React.useState(52);
@@ -1122,7 +1130,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
           <button className="tap" onClick={() => setTab('mention')} style={{ flex:1, padding:'7px 0', background:'rgba(17,17,17,0.07)', border:'1px solid rgba(17,17,17,0.14)', borderRadius:9, fontFamily:"'Pretendard',sans-serif", fontWeight:600, fontSize:13, color:ink, cursor:'pointer' }}>
             축하메시지 보내기
           </button>
-          <button className="tap" style={{ width:40, background:'rgba(17,17,17,0.07)', border:'1px solid rgba(17,17,17,0.14)', borderRadius:9, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <button className="tap" onClick={burstHeart} style={{ width:40, background:'rgba(17,17,17,0.07)', border:'1px solid rgba(17,17,17,0.14)', borderRadius:9, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={ink} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
               <circle cx="9" cy="7" r="4"/>
@@ -1131,6 +1139,11 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
             </svg>
           </button>
         </div>
+        {heartKey > 0 && (
+          <div key={heartKey} style={{ position:'fixed', inset:0, display:'flex', alignItems:'center', justifyContent:'center', zIndex:999 }}>
+            <span className="heart-burst" style={{ fontSize:100, lineHeight:1 }}>❤️</span>
+          </div>
+        )}
         {/* highlights */}
         <div style={{ display:'flex', gap:12, overflowX:'auto', paddingBottom:14 }}>
           {highlights.map((h, i) => {

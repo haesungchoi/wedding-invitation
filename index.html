@@ -477,6 +477,13 @@
     from { transform: translateX(-100%); }
     to   { transform: translateX(0); }
   }
+  @keyframes heartBurst {
+    0%   { opacity: 0; transform: scale(0.2); }
+    35%  { opacity: 1; transform: scale(1.2); }
+    60%  { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.85); }
+  }
+  .heart-burst { animation: heartBurst 1.4s ease-out forwards; pointer-events: none; }
 </style>
 </head>
 <body>

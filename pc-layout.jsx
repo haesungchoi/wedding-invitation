@@ -271,6 +271,8 @@ function PCTheDaySection({ ink, variant }) {
 function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
   const [tab, setTab] = React.useState('grid');
   const [story, setStory] = React.useState(null);
+  const [heartKey, setHeartKey] = React.useState(0);
+  const burstHeart = () => setHeartKey(k => k + 1);
   const px = variant === 'pc' ? 80 : 48;
   const gridCols = variant === 'pc' ? 6 : 3;
 
@@ -412,7 +414,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
             style={{ flex: 2, padding: '8px 0', background: 'rgba(17,17,17,0.07)', border: '1px solid rgba(17,17,17,0.14)', borderRadius: 9, fontFamily: "'Pretendard',sans-serif", fontWeight: 600, fontSize: 13, color: ink, cursor: 'pointer' }}>
             축하메시지 보내기
           </button>
-          <button className="tap"
+          <button className="tap" onClick={burstHeart}
             style={{ width: 40, background: 'rgba(17,17,17,0.07)', border: '1px solid rgba(17,17,17,0.14)', borderRadius: 9, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={ink} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
@@ -422,6 +424,11 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
             </svg>
           </button>
         </div>
+        {heartKey > 0 && (
+          <div key={heartKey} style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 999 }}>
+            <span className="heart-burst" style={{ fontSize: 120, lineHeight: 1 }}>❤️</span>
+          </div>
+        )}
 
         {/* highlights */}
         <div style={{ display: 'flex', gap: variant === 'pc' ? 20 : 14, overflowX: 'auto', paddingBottom: 4 }}>
