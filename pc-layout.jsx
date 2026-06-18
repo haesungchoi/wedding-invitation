@@ -466,7 +466,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
         <div style={{ padding: `40px ${px}px 80px`, background: '#FAFAFA' }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: variant === 'pc' ? '1fr 1fr' : '1fr',
+            gridTemplateColumns: variant === 'pc' ? '1fr 1fr 1fr' : '1fr',
             gap: 20, maxWidth: 1200, margin: '0 auto',
           }}>
             {posts.map(p => (
@@ -476,7 +476,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
             ))}
           </div>
           <div style={{ background: lime, padding: '48px 0', textAlign: 'center', borderRadius: 12, maxWidth: 1200, margin: '40px auto 0' }}>
-            <div style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 30, fontWeight: 400, color: ink, lineHeight: 1 }}>TO BE CONTINUED</div>
+            <div style={{ fontFamily: "'Grand Hotel', cursive", fontSize: 52, color: ink, lineHeight: 1 }}>Lovestagram</div>
           </div>
         </div>
       )}
