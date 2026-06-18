@@ -146,7 +146,7 @@ function Sheet({ open, onClose, children, title, accent, pc }) {
 function MapSheet({ open, onClose, pc }) {
   const naverUrl = `https://map.naver.com/p/search/삼성전자 서초사옥`;
   const kakaoUrl = `https://map.kakao.com/?q=삼성전자 서초사옥`;
-  const tmapUrl = `tmap://search?name=삼성전자 서초사옥`;
+  const tmapUrl = `tmap://search?name=삼성전자 서초사옥 주차장`;
 
   return (
     <Sheet open={open} onClose={onClose} title="Location · 오시는 길" pc={pc}>

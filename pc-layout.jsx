@@ -85,8 +85,8 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant, onOpenMemories }
       }}>
         <div style={{
           fontFamily: "'Martian Mono', monospace",
-          fontSize: variant === 'pc' ? 12 : 10, letterSpacing: '0.2em', fontWeight: 600, color: ink, opacity: 0.6,
-          lineHeight: 1.7,
+          fontSize: variant === 'pc' ? 26 : 18, letterSpacing: '0.2em', fontWeight: 600, color: ink, opacity: 0.6,
+          lineHeight: 1.4,
         }}>WEDDING<br />INVITATION</div>
 
         {/* names */}
@@ -108,7 +108,7 @@ function PCHeroSection({ lime, ink, tweaks, openSheet, variant, onOpenMemories }
             margin: `${variant === 'pc' ? 22 : 14}px 0`, marginLeft: 3,
           }}>
             <span style={{ display: 'inline-block', width: 36, height: 1, background: ink }} />
-            <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: variant === 'pc' ? 22 : 17, color: ink }}>and</span>
+            <span style={{ fontFamily: "'Martian Mono', monospace", fontSize: variant === 'pc' ? 22 : 17, color: ink, opacity: 0.65 }}>and</span>
             <span style={{ display: 'inline-block', width: 36, height: 1, background: ink }} />
           </div>
 
