@@ -1,4 +1,3 @@
-import { jsxDEV as _jsxDEV } from "react/jsx-dev-runtime";
 /* App orchestrator — routes, tweaks, sheets */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -187,166 +186,38 @@ function App() {
 
   // ── Wide layout (PC / Tablet) ─────────────────────────────
   if (viewport !== 'mobile') {
-    return /*#__PURE__*/_jsxDEV("div", {
-      children: [/*#__PURE__*/_jsxDEV(WideApp, {
-        tweaks: effectiveTweaks,
-        openSheet: openSheet,
-        variant: viewport
-      }, void 0, false), /*#__PURE__*/_jsxDEV(MapSheet, {
-        open: sheet === 'map',
-        onClose: closeSheet,
-        pc: true
-      }, void 0, false), /*#__PURE__*/_jsxDEV(RSVPSheet, {
-        open: sheet === 'rsvp',
-        onClose: closeSheet,
-        pc: true
-      }, void 0, false), /*#__PURE__*/_jsxDEV(ShareSheet, {
-        open: sheet === 'share',
-        onClose: closeSheet,
-        pc: true
-      }, void 0, false), /*#__PURE__*/_jsxDEV(AccountSheet, {
-        open: sheet === 'account-groom',
-        onClose: closeSheet,
-        side: "groom",
-        pc: true
-      }, void 0, false), /*#__PURE__*/_jsxDEV(AccountSheet, {
-        open: sheet === 'account-bride',
-        onClose: closeSheet,
-        side: "bride",
-        pc: true
-      }, void 0, false), /*#__PURE__*/_jsxDEV(AccountSheet, {
-        open: sheet === 'account-both',
-        onClose: closeSheet,
-        side: "both",
-        pc: true
-      }, void 0, false), /*#__PURE__*/_jsxDEV(FollowingSheet, {
-        open: sheet === 'following',
-        onClose: closeSheet,
-        lime: effectiveTweaks.lime,
-        ink: effectiveTweaks.ink,
-        onOpenMap: () => openSheet('map'),
-        onOpenAccount: () => openSheet('account-both'),
-        onOpenCalendar: () => openSheet('calendar')
-      }, void 0, false), /*#__PURE__*/_jsxDEV(CalendarSheet, {
-        open: sheet === 'calendar',
-        onClose: closeSheet,
-        pc: true
-      }, void 0, false), /*#__PURE__*/_jsxDEV(TweaksPanel, {
-        title: "Tweaks",
-        children: [/*#__PURE__*/_jsxDEV(TweakSection, {
-          label: "Font"
-        }, void 0, false), /*#__PURE__*/_jsxDEV(TweakRadio, {
-          label: "영문 폰트",
-          value: tweaks.displayFont,
-          options: [{
-            value: 'bricolage',
-            label: 'Bricolage'
-          }, {
-            value: 'gravitas',
-            label: 'Gravitas One'
-          }, {
-            value: 'limelight',
-            label: 'Limelight'
-          }],
-          onChange: v => setTweaks('displayFont', v)
-        }, void 0, false), /*#__PURE__*/_jsxDEV(TweakSection, {
-          label: "Palette"
-        }, void 0, false), /*#__PURE__*/_jsxDEV(TweakSelect, {
-          label: "컬러 팔레트",
-          value: tweaks.palette,
-          options: [{
-            value: 'lime',
-            label: 'Neon Lime'
-          }, {
-            value: 'butter',
-            label: 'Butter Yellow'
-          }, {
-            value: 'cobalt',
-            label: 'Cobalt Pop'
-          }, {
-            value: 'blossom',
-            label: 'Blossom Pink'
-          }],
-          onChange: v => setTweaks('palette', v)
-        }, void 0, false), /*#__PURE__*/_jsxDEV(TweakSection, {
-          label: "Photo"
-        }, void 0, false), /*#__PURE__*/_jsxDEV(TweakToggle, {
-          label: "흑백 처리",
-          value: tweaks.bw,
-          onChange: v => setTweaks('bw', v)
-        }, void 0, false)]
-      }, void 0, true)]
-    }, void 0, true);
-  }
-
-  // ── Mobile layout ─────────────────────────────────────────
-  const rootPushed = modal && !closingModal;
-  const stageInner = /*#__PURE__*/_jsxDEV("div", {
-    style: {
-      position: 'relative',
-      height: '100%',
-      width: '100%',
-      overflow: 'hidden',
-      background: '#000'
-    },
-    children: [/*#__PURE__*/_jsxDEV("div", {
-      className: `page-root ${rootPushed ? 'page-pushed' : ''}`,
-      children: /*#__PURE__*/_jsxDEV(MainScreen, {
-        goTo: goTo,
-        openSheet: openSheet,
-        tweaks: effectiveTweaks
-      }, void 0, false)
-    }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-      className: `page-scrim ${rootPushed ? 'page-scrim-on' : ''}`,
-      style: sheet ? {
-        pointerEvents: 'none'
-      } : undefined,
-      onClick: () => {
-        if (modal && !sheet && !closingModal) goTo('main');
-      }
-    }, void 0, false), modal && /*#__PURE__*/_jsxDEV("div", {
-      className: `modal-sheet ${closingModal ? 'modal-closing' : ''}`,
-      style: sheetDragY > 0 || isDraggingSheet ? {
-        transform: `translateY(${sheetDragY}px)`,
-        transition: isDraggingSheet ? 'none' : 'transform 320ms cubic-bezier(.32,.72,0,1)',
-        animation: 'none'
-      } : undefined,
-      onTouchStart: onSheetTouchStart,
-      onTouchMove: onSheetTouchMove,
-      onTouchEnd: onSheetTouchEnd,
-      onTouchCancel: onSheetTouchEnd,
-      onTransitionEnd: onSheetTransitionEnd,
-      children: [modal === 'memories' && /*#__PURE__*/_jsxDEV(MemoriesScreen, {
-        goTo: goTo,
-        tweaks: effectiveTweaks,
-        openSheet: openSheet
-      }, void 0, false), modal === 'numbers' && /*#__PURE__*/_jsxDEV(NumbersScreen, {
-        goTo: goTo,
-        openSheet: openSheet,
-        tweaks: effectiveTweaks
-      }, void 0, false)]
-    }, void 0, true), /*#__PURE__*/_jsxDEV(MapSheet, {
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(WideApp, {
+      tweaks: effectiveTweaks,
+      openSheet: openSheet,
+      variant: viewport
+    }), /*#__PURE__*/React.createElement(MapSheet, {
       open: sheet === 'map',
-      onClose: closeSheet
-    }, void 0, false), /*#__PURE__*/_jsxDEV(RSVPSheet, {
+      onClose: closeSheet,
+      pc: true
+    }), /*#__PURE__*/React.createElement(RSVPSheet, {
       open: sheet === 'rsvp',
-      onClose: closeSheet
-    }, void 0, false), /*#__PURE__*/_jsxDEV(ShareSheet, {
+      onClose: closeSheet,
+      pc: true
+    }), /*#__PURE__*/React.createElement(ShareSheet, {
       open: sheet === 'share',
-      onClose: closeSheet
-    }, void 0, false), /*#__PURE__*/_jsxDEV(AccountSheet, {
+      onClose: closeSheet,
+      pc: true
+    }), /*#__PURE__*/React.createElement(AccountSheet, {
       open: sheet === 'account-groom',
       onClose: closeSheet,
-      side: "groom"
-    }, void 0, false), /*#__PURE__*/_jsxDEV(AccountSheet, {
+      side: "groom",
+      pc: true
+    }), /*#__PURE__*/React.createElement(AccountSheet, {
       open: sheet === 'account-bride',
       onClose: closeSheet,
-      side: "bride"
-    }, void 0, false), /*#__PURE__*/_jsxDEV(AccountSheet, {
+      side: "bride",
+      pc: true
+    }), /*#__PURE__*/React.createElement(AccountSheet, {
       open: sheet === 'account-both',
       onClose: closeSheet,
-      side: "both"
-    }, void 0, false), /*#__PURE__*/_jsxDEV(FollowingSheet, {
+      side: "both",
+      pc: true
+    }), /*#__PURE__*/React.createElement(FollowingSheet, {
       open: sheet === 'following',
       onClose: closeSheet,
       lime: effectiveTweaks.lime,
@@ -354,19 +225,140 @@ function App() {
       onOpenMap: () => openSheet('map'),
       onOpenAccount: () => openSheet('account-both'),
       onOpenCalendar: () => openSheet('calendar')
-    }, void 0, false), /*#__PURE__*/_jsxDEV(CalendarSheet, {
+    }), /*#__PURE__*/React.createElement(CalendarSheet, {
       open: sheet === 'calendar',
-      onClose: closeSheet
-    }, void 0, false)]
-  }, void 0, true);
-  return /*#__PURE__*/_jsxDEV("div", {
+      onClose: closeSheet,
+      pc: true
+    }), /*#__PURE__*/React.createElement(TweaksPanel, {
+      title: "Tweaks"
+    }, /*#__PURE__*/React.createElement(TweakSection, {
+      label: "Font"
+    }), /*#__PURE__*/React.createElement(TweakRadio, {
+      label: "영문 폰트",
+      value: tweaks.displayFont,
+      options: [{
+        value: 'bricolage',
+        label: 'Bricolage'
+      }, {
+        value: 'gravitas',
+        label: 'Gravitas One'
+      }, {
+        value: 'limelight',
+        label: 'Limelight'
+      }],
+      onChange: v => setTweaks('displayFont', v)
+    }), /*#__PURE__*/React.createElement(TweakSection, {
+      label: "Palette"
+    }), /*#__PURE__*/React.createElement(TweakSelect, {
+      label: "컬러 팔레트",
+      value: tweaks.palette,
+      options: [{
+        value: 'lime',
+        label: 'Neon Lime'
+      }, {
+        value: 'butter',
+        label: 'Butter Yellow'
+      }, {
+        value: 'cobalt',
+        label: 'Cobalt Pop'
+      }, {
+        value: 'blossom',
+        label: 'Blossom Pink'
+      }],
+      onChange: v => setTweaks('palette', v)
+    }), /*#__PURE__*/React.createElement(TweakSection, {
+      label: "Photo"
+    }), /*#__PURE__*/React.createElement(TweakToggle, {
+      label: "흑백 처리",
+      value: tweaks.bw,
+      onChange: v => setTweaks('bw', v)
+    })));
+  }
+
+  // ── Mobile layout ─────────────────────────────────────────
+  const rootPushed = modal && !closingModal;
+  const stageInner = /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      height: '100%',
+      width: '100%',
+      overflow: 'hidden',
+      background: '#000'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: `page-root ${rootPushed ? 'page-pushed' : ''}`
+  }, /*#__PURE__*/React.createElement(MainScreen, {
+    goTo: goTo,
+    openSheet: openSheet,
+    tweaks: effectiveTweaks
+  })), /*#__PURE__*/React.createElement("div", {
+    className: `page-scrim ${rootPushed ? 'page-scrim-on' : ''}`,
+    style: sheet ? {
+      pointerEvents: 'none'
+    } : undefined,
+    onClick: () => {
+      if (modal && !sheet && !closingModal) goTo('main');
+    }
+  }), modal && /*#__PURE__*/React.createElement("div", {
+    className: `modal-sheet ${closingModal ? 'modal-closing' : ''}`,
+    style: sheetDragY > 0 || isDraggingSheet ? {
+      transform: `translateY(${sheetDragY}px)`,
+      transition: isDraggingSheet ? 'none' : 'transform 320ms cubic-bezier(.32,.72,0,1)',
+      animation: 'none'
+    } : undefined,
+    onTouchStart: onSheetTouchStart,
+    onTouchMove: onSheetTouchMove,
+    onTouchEnd: onSheetTouchEnd,
+    onTouchCancel: onSheetTouchEnd,
+    onTransitionEnd: onSheetTransitionEnd
+  }, modal === 'memories' && /*#__PURE__*/React.createElement(MemoriesScreen, {
+    goTo: goTo,
+    tweaks: effectiveTweaks,
+    openSheet: openSheet
+  }), modal === 'numbers' && /*#__PURE__*/React.createElement(NumbersScreen, {
+    goTo: goTo,
+    openSheet: openSheet,
+    tweaks: effectiveTweaks
+  })), /*#__PURE__*/React.createElement(MapSheet, {
+    open: sheet === 'map',
+    onClose: closeSheet
+  }), /*#__PURE__*/React.createElement(RSVPSheet, {
+    open: sheet === 'rsvp',
+    onClose: closeSheet
+  }), /*#__PURE__*/React.createElement(ShareSheet, {
+    open: sheet === 'share',
+    onClose: closeSheet
+  }), /*#__PURE__*/React.createElement(AccountSheet, {
+    open: sheet === 'account-groom',
+    onClose: closeSheet,
+    side: "groom"
+  }), /*#__PURE__*/React.createElement(AccountSheet, {
+    open: sheet === 'account-bride',
+    onClose: closeSheet,
+    side: "bride"
+  }), /*#__PURE__*/React.createElement(AccountSheet, {
+    open: sheet === 'account-both',
+    onClose: closeSheet,
+    side: "both"
+  }), /*#__PURE__*/React.createElement(FollowingSheet, {
+    open: sheet === 'following',
+    onClose: closeSheet,
+    lime: effectiveTweaks.lime,
+    ink: effectiveTweaks.ink,
+    onOpenMap: () => openSheet('map'),
+    onOpenAccount: () => openSheet('account-both'),
+    onOpenCalendar: () => openSheet('calendar')
+  }), /*#__PURE__*/React.createElement(CalendarSheet, {
+    open: sheet === 'calendar',
+    onClose: closeSheet
+  }));
+  return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'fixed',
       inset: 0,
       overflow: 'hidden'
-    },
-    children: stageInner
-  }, void 0, false);
+    }
+  }, stageInner);
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(/*#__PURE__*/_jsxDEV(App, {}, void 0, false));
+root.render(/*#__PURE__*/React.createElement(App, null));
