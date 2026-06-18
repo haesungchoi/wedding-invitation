@@ -71,7 +71,7 @@ function SendIcon() {
 }
 
 /* ─── Photo Carousel ────────────────────────────────────────── */
-function PhotoCarousel({ postId, photoCount, images = [] }) {
+function PhotoCarousel({ postId, photoCount, images = [], onSwipeBack }) {
   const [slide, setSlide] = React.useState(0);
   const [dragDx, setDragDx] = React.useState(0);
   const trackRef = React.useRef(null);
@@ -110,12 +110,14 @@ function PhotoCarousel({ postId, photoCount, images = [] }) {
     // dir === 'y' 이면 손대지 않음 → 브라우저가 세로 페이지 스크롤을 그대로 처리
   };
   const onTouchEnd = () => {
-    if (photoCount < 2) return;
     if (dir.current === 'x') {
       const w = widthRef.current || 1;
       const threshold = Math.max(40, w * 0.2);
-      if (dragDx <= -threshold) goTo(slide + 1);
-      else if (dragDx >= threshold) goTo(slide - 1);
+      if (dragDx <= -threshold && photoCount >= 2) goTo(slide + 1);
+      else if (dragDx >= threshold) {
+        if (slide === 0 && onSwipeBack) onSwipeBack();
+        else if (photoCount >= 2) goTo(slide - 1);
+      }
     }
     dir.current = null;
     setDragDx(0);
@@ -253,7 +255,7 @@ function CarouselBadge() {
 }
 
 /* ─── Feed Post ─────────────────────────────────────────────── */
-function MemoryPost({ id, date, caption, likes, photoCount = 1, images = [], lime, ink }) {
+function MemoryPost({ id, date, caption, likes, photoCount = 1, images = [], lime, ink, onSwipeBack }) {
   const [liked, setLiked] = React.useState(false);
   const likeN = parseInt(likes.replace(',',''));
   return (
@@ -274,7 +276,7 @@ function MemoryPost({ id, date, caption, likes, photoCount = 1, images = [], lim
       </div>
 
       {/* photo carousel */}
-      <PhotoCarousel postId={id} photoCount={photoCount} images={images}/>
+      <PhotoCarousel postId={id} photoCount={photoCount} images={images} onSwipeBack={onSwipeBack}/>
 
       {/* actions */}
       <div style={{ display:'flex', alignItems:'center', gap:14, padding:'10px 14px 6px' }}>
@@ -932,7 +934,6 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   const proposeImages = Array.from({length:14}, (_,i) => `img/memories/propose-newyork/newyork-${i+1}.jpg`);
 
   const highlights = [
-    { label: '2026', images: [] },
     {
       label: '2021',
       images: Array.from({length:11}, (_,i) => `img/highlights/2021/${i+1}.jpg`),
@@ -1180,7 +1181,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
       {/* ── FEED ───────────────────────────────────────── */}
       {feedActive && (
         <div style={{ background:'#fff' }}>
-          {posts.map(p => <MemoryPost key={p.id} lime={lime} ink={ink} {...p}/>)}
+          {posts.map(p => <MemoryPost key={p.id} lime={lime} ink={ink} {...p} onSwipeBack={backFromFeed}/>)}
           <div style={{ background:lime, padding:'40px 24px 80px', textAlign:'center' }}>
             <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontSize:28, fontWeight:400, color:ink, lineHeight:1, marginBottom:16 }}>TO BE<br/>CONTINUED</div>
           </div>
