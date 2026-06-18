@@ -959,21 +959,21 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
 
   const posts = [
     {
-      id:'mem-1', date:'2026. 09. 12', likes:'9,126', photoCount:4,
+      id:'mem-1', date:'2026', likes:'9,126', photoCount:4,
       images:[
         'img/memories/studio-couple/couple-1.jpg',
         'img/memories/studio-couple/couple-2.jpg',
         'img/memories/studio-couple/couple-3.jpg',
         'img/memories/studio-couple/couple-4.jpg',
       ],
-      caption:'드디어 이 날이 왔다. 서로를 바라보는 그 눈빛만으로도, 오늘이 평생 기억될 하루라는 걸 알았어. 💍',
+      caption:'해성 & 채원',
     },
     {
-      id:'mem-2', date:'2026. 09. 12', likes:'3,862', photoCount:1, images:['img/memories/studio-groom/groom-1.jpg'],
-      caption:'인생에서 가장 멋진 정장을 입은 날. 어깨에 힘 좀 줬다. 이 설렘, 절대 잊지 못할 거야. 🤵',
+      id:'mem-2', date:'2026', likes:'3,862', photoCount:1, images:['img/memories/studio-groom/groom-1.jpg'],
+      caption:'해성',
     },
     {
-      id:'mem-3', date:'2026. 09. 12', likes:'5,204', photoCount:6,
+      id:'mem-3', date:'2026', likes:'5,204', photoCount:6,
       images:[
         'img/memories/studio-bride/bride-0.jpg',
         'img/memories/studio-bride/bride-1.jpg',
@@ -982,17 +982,17 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
         'img/memories/studio-bride/bride-4.jpg',
         'img/memories/studio-bride/bride-5.jpg',
       ],
-      caption:'평생 이렇게 예쁠 수 있을까. 드레스보다 눈이 더 빛났던 그 순간, 시간이 멈췄으면 했어. 👰',
+      caption:'채원',
     },
     {
-      id:'mem-4', date:'2025. 11. 08', likes:'4,477', photoCount:1,
+      id:'mem-4', date:'2026', likes:'4,477', photoCount:1,
       images:[
         'img/memories/snap-shanghai/shanghai-1.jpg',
       ],
-      caption:'상하이의 빛 아래, 너와 함께라면 어디든 영화였어. 바람도 우릴 축하해 주는 것 같았던 날. 🌆',
+      caption:'📍 상하이',
     },
     {
-      id:'mem-5', date:'2025. 10. 18', likes:'3,991', photoCount:5,
+      id:'mem-5', date:'2026', likes:'3,991', photoCount:5,
       images:[
         'img/memories/snap-gyeongju/gyeongju-1.jpg',
         'img/memories/snap-gyeongju/gyeongju-2.jpg',
@@ -1000,17 +1000,17 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
         'img/memories/snap-gyeongju/gyeongju-4.jpg',
         'img/memories/snap-gyeongju/gyeongju-5.jpg',
       ],
-      caption:'경주의 가을 빛이 우릴 감쌌던 날. 천년의 고요 속에서, 우리만의 이야기를 새겼어. 🍂',
+      caption:'📍 경주',
     },
     {
-      id:'mem-6', date:'2026. 09. 12', likes:'6,012', photoCount:4,
+      id:'mem-6', date:'2021', likes:'6,012', photoCount:4,
       images:[
         'img/memories/wedding-ng/ng-1.jpg',
         'img/memories/wedding-ng/ng-2.jpg',
         'img/memories/wedding-ng/ng-3.jpg',
         'img/memories/wedding-ng/ng-4.jpg',
       ],
-      caption:'1. 경호원인지 신랑인지 본인도 모르는 표정으로 서 있었음 🕶️  2. 눈을 희번떡 — 작가님이 제일 많이 웃었던 컷 👁️👁️  공개 못 할 줄 알았는데 이게 더 우리답다.',
+      caption:'📍 학교',
     },
   ];
 
