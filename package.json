@@ -1,0 +1,26 @@
+{
+  "name": "wedding-invitation-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "image-slot.js",
+  "scripts": {
+    "build": "babel ios-frame.jsx tweaks-panel.jsx pc-layout.jsx app.jsx --out-dir dist --presets @babel/preset-react && babel screens/Main.jsx screens/Memories.jsx screens/Sheets.jsx screens/Numbers.jsx screens/Dove.jsx --out-dir dist/screens --presets @babel/preset-react"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haesungchoi/wedding-invitation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/haesungchoi/wedding-invitation/issues"
+  },
+  "homepage": "https://github.com/haesungchoi/wedding-invitation#readme",
+  "devDependencies": {
+    "@babel/cli": "^8.0.1",
+    "@babel/core": "^8.0.1",
+    "@babel/preset-react": "^8.0.1"
+  }
+}
