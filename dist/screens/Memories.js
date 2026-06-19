@@ -1837,7 +1837,7 @@ function MemoriesScreen({
     id: 'int-4',
     label: '사진',
     sub: 'Photo',
-    images: []
+    images: ['img/memories/interest-photo/HSC07295.JPG']
   }, {
     id: 'int-5',
     label: '자연',

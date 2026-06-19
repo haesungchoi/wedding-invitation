@@ -588,7 +588,8 @@ function PCMemoriesSection({
   }, {
     id: 'wi-4',
     label: '사진',
-    sub: 'Photo'
+    sub: 'Photo',
+    src: 'img/memories/interest-photo/HSC07295.JPG'
   }, {
     id: 'wi-5',
     label: '자연',

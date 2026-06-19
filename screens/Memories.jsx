@@ -1039,7 +1039,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
     { id:'int-2', label:'음악', sub:'Music',  images:[] },
     { id:'int-3', label:'카페', sub:'Café',   images:['img/memories/repost-cafe/cafe-1.jpg', 'img/memories/repost-cafe/cafe-2.jpg'] },
     // '사진' 카테고리 — HSC 사진은 img/memories/interest-photo/ 에 넣고 아래 배열에 경로를 추가하세요.
-    { id:'int-4', label:'사진', sub:'Photo',  images:[] },
+    { id:'int-4', label:'사진', sub:'Photo',  images:['img/memories/interest-photo/HSC07295.JPG'] },
     { id:'int-5', label:'자연', sub:'Nature', images:[] },
     { id:'int-6', label:'음식', sub:'Food',   images:['img/memories/repost-food/food-1.jpg', 'img/memories/repost-food/food-2.jpg'] },
   ];
