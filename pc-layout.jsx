@@ -346,7 +346,7 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
     { id: 'wi-1', label: '여행', sub: 'Travel' },
     { id: 'wi-2', label: '음악', sub: 'Music' },
     { id: 'wi-3', label: '카페', sub: 'Café',   src: 'img/memories/repost-cafe/cafe-1.jpg' },
-    { id: 'wi-4', label: '영화', sub: 'Film' },
+    { id: 'wi-4', label: '사진', sub: 'Photo' },
     { id: 'wi-5', label: '자연', sub: 'Nature' },
     { id: 'wi-6', label: '음식', sub: 'Food',   src: 'img/memories/repost-food/food-1.jpg' },
   ];

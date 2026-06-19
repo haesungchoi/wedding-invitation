@@ -587,8 +587,8 @@ function PCMemoriesSection({
     src: 'img/memories/repost-cafe/cafe-1.jpg'
   }, {
     id: 'wi-4',
-    label: '영화',
-    sub: 'Film'
+    label: '사진',
+    sub: 'Photo'
   }, {
     id: 'wi-5',
     label: '자연',
