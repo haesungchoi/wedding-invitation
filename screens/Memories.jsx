@@ -940,6 +940,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   const ink  = tweaks.ink;
   const [tab, setTab] = React.useState('grid');
   const [feedActive, setFeedActive] = React.useState(false);
+  const [feedType, setFeedType] = React.useState('posts'); // 'posts' | 'interests'
   const [feedScrollTo, setFeedScrollTo] = React.useState(null);
   const [story, setStory] = React.useState(null);
   const [hearts, setHearts] = React.useState([]);
@@ -1034,15 +1035,27 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
   ];
 
   const interests = [
-    { id:'int-1', label:'여행',   sub:'Travel'   },
-    { id:'int-2', label:'음악',   sub:'Music'    },
-    { id:'int-3', label:'카페',   sub:'Café',    src:'img/memories/repost-cafe/cafe-1.jpg'  },
-    { id:'int-4', label:'영화',   sub:'Film'     },
-    { id:'int-5', label:'자연',   sub:'Nature'   },
-    { id:'int-6', label:'음식',   sub:'Food',    src:'img/memories/repost-food/food-1.jpg'  },
+    { id:'int-1', label:'여행', sub:'Travel', images:[] },
+    { id:'int-2', label:'음악', sub:'Music',  images:[] },
+    { id:'int-3', label:'카페', sub:'Café',   images:['img/memories/repost-cafe/cafe-1.jpg', 'img/memories/repost-cafe/cafe-2.jpg'] },
+    // '사진' 카테고리 — HSC 사진은 img/memories/interest-photo/ 에 넣고 아래 배열에 경로를 추가하세요.
+    { id:'int-4', label:'사진', sub:'Photo',  images:['img/memories/interest-photo/HSC07295.JPG'] },
+    { id:'int-5', label:'자연', sub:'Nature', images:[] },
+    { id:'int-6', label:'음식', sub:'Food',   images:['img/memories/repost-food/food-1.jpg', 'img/memories/repost-food/food-2.jpg'] },
   ];
 
-  const openPostInFeed = id => {
+  // 관심사도 Feed처럼 스크롤되도록 — 각 관심사를 게시물 형태로 변환
+  const interestPosts = interests.map((it, i) => ({
+    id: it.id,
+    date: it.sub,
+    likes: ['1,204','2,318','3,402','4,510','1,890','5,221'][i] || '1,000',
+    photoCount: it.images.length || 1,
+    images: it.images,
+    caption: `${it.label} · 두 사람이 함께 좋아하는 것`,
+  }));
+
+  const openInFeed = (type, id) => {
+    setFeedType(type);
     setFeedScrollTo(id);
     setFeedActive(true);
     if (screenRef.current) screenRef.current.scrollTop = 0;
@@ -1052,6 +1065,10 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
       if (screen && el) screen.scrollTop = el.offsetTop - topbarH;
     }, 60);
   };
+  const openPostInFeed     = id => openInFeed('posts', id);
+  const openInterestInFeed = id => openInFeed('interests', id);
+
+  const feedItems = feedType === 'interests' ? interestPosts : posts;
 
   const backFromFeed = () => {
     setFeedActive(false);
@@ -1217,49 +1234,59 @@ function MemoriesScreen({ goTo, tweaks, openSheet }) {
       {/* ── FEED ───────────────────────────────────────── */}
       {feedActive && (
         <div style={{ background:'#fff' }}>
-          {posts.map(p => <MemoryPost key={p.id} lime={lime} ink={ink} {...p} onSwipeBack={backFromFeed}/>)}
+          {feedItems.map(p => <MemoryPost key={p.id} lime={lime} ink={ink} {...p} onSwipeBack={backFromFeed}/>)}
           <div style={{ background:lime, padding:'40px 24px 80px', textAlign:'center' }}>
             <div style={{ fontFamily:"'Grand Hotel',cursive", fontSize:44, color:ink, lineHeight:1, marginBottom:16 }}>Lovestagram</div>
           </div>
         </div>
       )}
 
-      {/* ── REPOST / 관심사 ────────────────────────────── */}
-      {tab === 'repost' && (
+      {/* ── REPOST / 관심사 (Grid → 탭하면 Feed) ───────── */}
+      {!feedActive && tab === 'repost' && (
         <div>
           <div style={{ background:'#fff', padding:'18px 16px 12px', borderBottom:'1px solid rgba(17,17,17,0.08)' }}>
             <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontSize:22, fontWeight:400, color:ink, letterSpacing:'-0.01em' }}>우리의 관심사</div>
             <div style={{ fontFamily:"'Pretendard',sans-serif", fontSize:13, color:'#666', marginTop:4 }}>두 사람이 함께 좋아하는 것들</div>
           </div>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:2, background:'#ddd' }}>
-            {interests.map((it, i) => (
-              <div key={it.id} style={{ aspectRatio:'4/5', background:'#F4F2EB', position:'relative', overflow:'hidden' }}>
-                <image-slot id={it.id} shape="rect" fit="cover" placeholder="탭하여 추가"
-                  src={it.src}
-                  style={{ width:'100%', height:'100%', display:'block' }}></image-slot>
-                {/* repost badge */}
-                <div style={{ position:'absolute', top:6, right:6, width:18, height:18, borderRadius:'50%', background:'rgba(255,255,255,0.88)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round">
-                    <polyline points="1,4 1,10 7,10"/>
-                    <polyline points="23,20 23,14 17,14"/>
-                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"/>
-                    <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"/>
-                  </svg>
-                </div>
-                {/* label */}
-                <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'20px 8px 8px', background:'linear-gradient(transparent, rgba(0,0,0,0.52))', textAlign:'center' }}>
-                  <div style={{ fontFamily:"'Pretendard',sans-serif", fontWeight:700, fontSize:13, color:'#fff' }}>{it.label}</div>
-                  <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontSize:9, color:'rgba(255,255,255,0.7)', letterSpacing:'0.1em', textTransform:'uppercase' }}>{it.sub}</div>
-                </div>
-              </div>
-            ))}
+            {interests.map((it) => {
+              const thumb = it.images && it.images[0];
+              return (
+                <button key={it.id} onClick={() => openInterestInFeed(it.id)} className="tap"
+                  style={{ padding:0, border:'none', cursor:'pointer', aspectRatio:'4/5', background:'#F4F2EB', position:'relative', overflow:'hidden' }}>
+                  {thumb ? (
+                    <img src={thumb} alt={it.label} loading="lazy" decoding="async" draggable={false}
+                      style={{ width:'100%', height:'100%', objectFit:'cover', display:'block', pointerEvents:'none' }} />
+                  ) : (
+                    <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:'#F4F2EB' }}>
+                      <span style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontWeight:600, fontSize:30, color:'#C9C5B8', lineHeight:1 }}>＋</span>
+                    </div>
+                  )}
+                  {it.images && it.images.length > 1 && <CarouselBadge/>}
+                  {/* repost badge */}
+                  <div style={{ position:'absolute', top:6, left:6, width:18, height:18, borderRadius:'50%', background:'rgba(255,255,255,0.88)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round">
+                      <polyline points="1,4 1,10 7,10"/>
+                      <polyline points="23,20 23,14 17,14"/>
+                      <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"/>
+                      <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"/>
+                    </svg>
+                  </div>
+                  {/* label */}
+                  <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'20px 8px 8px', background:'linear-gradient(transparent, rgba(0,0,0,0.52))', textAlign:'center', pointerEvents:'none' }}>
+                    <div style={{ fontFamily:"'Pretendard',sans-serif", fontWeight:700, fontSize:13, color:'#fff' }}>{it.label}</div>
+                    <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontSize:9, color:'rgba(255,255,255,0.7)', letterSpacing:'0.1em', textTransform:'uppercase' }}>{it.sub}</div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
           <div style={{ height:60 }}/>
         </div>
       )}
 
       {/* ── MENTION / 게스트북 ─────────────────────────── */}
-      {tab === 'mention' && <GuestbookTab lime={lime} ink={ink}/>}
+      {!feedActive && tab === 'mention' && <GuestbookTab lime={lime} ink={ink}/>}
 
     </div>
   );

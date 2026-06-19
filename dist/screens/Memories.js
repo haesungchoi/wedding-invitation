@@ -1718,6 +1718,7 @@ function MemoriesScreen({
   const ink = tweaks.ink;
   const [tab, setTab] = React.useState('grid');
   const [feedActive, setFeedActive] = React.useState(false);
+  const [feedType, setFeedType] = React.useState('posts'); // 'posts' | 'interests'
   const [feedScrollTo, setFeedScrollTo] = React.useState(null);
   const [story, setStory] = React.useState(null);
   const [hearts, setHearts] = React.useState([]);
@@ -1818,31 +1819,48 @@ function MemoriesScreen({
   const interests = [{
     id: 'int-1',
     label: '여행',
-    sub: 'Travel'
+    sub: 'Travel',
+    images: []
   }, {
     id: 'int-2',
     label: '음악',
-    sub: 'Music'
+    sub: 'Music',
+    images: []
   }, {
     id: 'int-3',
     label: '카페',
     sub: 'Café',
-    src: 'img/memories/repost-cafe/cafe-1.jpg'
-  }, {
+    images: ['img/memories/repost-cafe/cafe-1.jpg', 'img/memories/repost-cafe/cafe-2.jpg']
+  },
+  // '사진' 카테고리 — HSC 사진은 img/memories/interest-photo/ 에 넣고 아래 배열에 경로를 추가하세요.
+  {
     id: 'int-4',
-    label: '영화',
-    sub: 'Film'
+    label: '사진',
+    sub: 'Photo',
+    images: ['img/memories/interest-photo/HSC07295.JPG']
   }, {
     id: 'int-5',
     label: '자연',
-    sub: 'Nature'
+    sub: 'Nature',
+    images: []
   }, {
     id: 'int-6',
     label: '음식',
     sub: 'Food',
-    src: 'img/memories/repost-food/food-1.jpg'
+    images: ['img/memories/repost-food/food-1.jpg', 'img/memories/repost-food/food-2.jpg']
   }];
-  const openPostInFeed = id => {
+
+  // 관심사도 Feed처럼 스크롤되도록 — 각 관심사를 게시물 형태로 변환
+  const interestPosts = interests.map((it, i) => ({
+    id: it.id,
+    date: it.sub,
+    likes: ['1,204', '2,318', '3,402', '4,510', '1,890', '5,221'][i] || '1,000',
+    photoCount: it.images.length || 1,
+    images: it.images,
+    caption: `${it.label} · 두 사람이 함께 좋아하는 것`
+  }));
+  const openInFeed = (type, id) => {
+    setFeedType(type);
     setFeedScrollTo(id);
     setFeedActive(true);
     if (screenRef.current) screenRef.current.scrollTop = 0;
@@ -1852,6 +1870,9 @@ function MemoriesScreen({
       if (screen && el) screen.scrollTop = el.offsetTop - topbarH;
     }, 60);
   };
+  const openPostInFeed = id => openInFeed('posts', id);
+  const openInterestInFeed = id => openInFeed('interests', id);
+  const feedItems = feedType === 'interests' ? interestPosts : posts;
   const backFromFeed = () => {
     setFeedActive(false);
     setFeedScrollTo(null);
@@ -2350,7 +2371,7 @@ function MemoriesScreen({
     style: {
       background: '#fff'
     }
-  }, posts.map(p => /*#__PURE__*/React.createElement(MemoryPost, {
+  }, feedItems.map(p => /*#__PURE__*/React.createElement(MemoryPost, {
     key: p.id,
     lime: lime,
     ink: ink,
@@ -2370,7 +2391,7 @@ function MemoriesScreen({
       lineHeight: 1,
       marginBottom: 16
     }
-  }, "Lovestagram"))), tab === 'repost' && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, "Lovestagram"))), !feedActive && tab === 'repost' && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       background: '#fff',
       padding: '18px 16px 12px',
@@ -2398,84 +2419,112 @@ function MemoriesScreen({
       gap: 2,
       background: '#ddd'
     }
-  }, interests.map((it, i) => /*#__PURE__*/React.createElement("div", {
-    key: it.id,
-    style: {
-      aspectRatio: '4/5',
-      background: '#F4F2EB',
-      position: 'relative',
-      overflow: 'hidden'
-    }
-  }, /*#__PURE__*/React.createElement("image-slot", {
-    id: it.id,
-    shape: "rect",
-    fit: "cover",
-    placeholder: "탭하여 추가",
-    src: it.src,
-    style: {
-      width: '100%',
-      height: '100%',
-      display: 'block'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      top: 6,
-      right: 6,
-      width: 18,
-      height: 18,
-      borderRadius: '50%',
-      background: 'rgba(255,255,255,0.88)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("svg", {
-    width: "10",
-    height: "10",
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "#111",
-    strokeWidth: "2.5",
-    strokeLinecap: "round"
-  }, /*#__PURE__*/React.createElement("polyline", {
-    points: "1,4 1,10 7,10"
-  }), /*#__PURE__*/React.createElement("polyline", {
-    points: "23,20 23,14 17,14"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M20.49 9A9 9 0 0 0 5.64 5.64L1 10"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M3.51 15A9 9 0 0 0 18.36 18.36L23 14"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      padding: '20px 8px 8px',
-      background: 'linear-gradient(transparent, rgba(0,0,0,0.52))',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Pretendard',sans-serif",
-      fontWeight: 700,
-      fontSize: 13,
-      color: '#fff'
-    }
-  }, it.label), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Bricolage Grotesque',sans-serif",
-      fontSize: 9,
-      color: 'rgba(255,255,255,0.7)',
-      letterSpacing: '0.1em',
-      textTransform: 'uppercase'
-    }
-  }, it.sub))))), /*#__PURE__*/React.createElement("div", {
+  }, interests.map(it => {
+    const thumb = it.images && it.images[0];
+    return /*#__PURE__*/React.createElement("button", {
+      key: it.id,
+      onClick: () => openInterestInFeed(it.id),
+      className: "tap",
+      style: {
+        padding: 0,
+        border: 'none',
+        cursor: 'pointer',
+        aspectRatio: '4/5',
+        background: '#F4F2EB',
+        position: 'relative',
+        overflow: 'hidden'
+      }
+    }, thumb ? /*#__PURE__*/React.createElement("img", {
+      src: thumb,
+      alt: it.label,
+      loading: "lazy",
+      decoding: "async",
+      draggable: false,
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block',
+        pointerEvents: 'none'
+      }
+    }) : /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#F4F2EB'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: "'Bricolage Grotesque',sans-serif",
+        fontWeight: 600,
+        fontSize: 30,
+        color: '#C9C5B8',
+        lineHeight: 1
+      }
+    }, "＋")), it.images && it.images.length > 1 && /*#__PURE__*/React.createElement(CarouselBadge, null), /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        top: 6,
+        left: 6,
+        width: 18,
+        height: 18,
+        borderRadius: '50%',
+        background: 'rgba(255,255,255,0.88)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: "10",
+      height: "10",
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "#111",
+      strokeWidth: "2.5",
+      strokeLinecap: "round"
+    }, /*#__PURE__*/React.createElement("polyline", {
+      points: "1,4 1,10 7,10"
+    }), /*#__PURE__*/React.createElement("polyline", {
+      points: "23,20 23,14 17,14"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M20.49 9A9 9 0 0 0 5.64 5.64L1 10"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M3.51 15A9 9 0 0 0 18.36 18.36L23 14"
+    }))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        padding: '20px 8px 8px',
+        background: 'linear-gradient(transparent, rgba(0,0,0,0.52))',
+        textAlign: 'center',
+        pointerEvents: 'none'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: "'Pretendard',sans-serif",
+        fontWeight: 700,
+        fontSize: 13,
+        color: '#fff'
+      }
+    }, it.label), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: "'Bricolage Grotesque',sans-serif",
+        fontSize: 9,
+        color: 'rgba(255,255,255,0.7)',
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase'
+      }
+    }, it.sub)));
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
       height: 60
     }
-  })), tab === 'mention' && /*#__PURE__*/React.createElement(GuestbookTab, {
+  })), !feedActive && tab === 'mention' && /*#__PURE__*/React.createElement(GuestbookTab, {
     lime: lime,
     ink: ink
   }));
