@@ -1913,25 +1913,65 @@ function MemoriesScreen({
     if (screenRef.current) screenRef.current.scrollTop = 0;
   };
 
-  // 휴대폰 뒤로가기/가장자리 스와이프를 위임받아 단계별로 닫는다 (스토리 → 피드 → 그리드).
-  // true 반환 시 내부에서 한 단계 처리됨을 의미하고, 그렇지 않으면 상위(앱)에서 main으로 나간다.
+  // 렌더마다 갱신되는 ref — popstate/capture 핸들러(스테일 클로저)에서 항상 최신 값 사용
+  const backFnRef = React.useRef(null);
+  backFnRef.current = () => {
+    if (story) {
+      setStory(null);
+      return true;
+    }
+    if (feedActive) {
+      backFromFeed();
+      return true;
+    }
+    return false;
+  };
+
+  // 휴대폰 뒤로가기(popstate)를 앱 레벨에서 위임받는 핸들러 등록 (한 번만)
   React.useEffect(() => {
     if (!backHandlerRef) return;
-    backHandlerRef.current = () => {
-      if (story) {
-        setStory(null);
-        return true;
-      }
-      if (feedActive) {
-        backFromFeed();
-        return true;
-      }
-      return false;
-    };
+    backHandlerRef.current = () => backFnRef.current?.();
     return () => {
       if (backHandlerRef) backHandlerRef.current = null;
     };
-  }, [backHandlerRef, story, feedActive]);
+  }, [backHandlerRef]);
+
+  // 피드 뷰 내 왼쪽 가장자리 스와이프 감지 — capture 단계로 등록해
+  // 캐러셀의 stopPropagation()을 우회한다 (캡처는 버블보다 먼저 발동)
+  React.useEffect(() => {
+    const el = screenRef.current;
+    if (!el) return;
+    let edge = null;
+    const onStart = e => {
+      const x0 = e.touches[0].clientX;
+      edge = x0 <= 30 ? {
+        x0,
+        y0: e.touches[0].clientY
+      } : null;
+    };
+    const onEnd = e => {
+      if (!edge) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - edge.x0;
+      const dy = Math.abs(t.clientY - edge.y0);
+      edge = null;
+      if (dx > 60 && dx > dy * 1.5) backFnRef.current?.();
+    };
+    el.addEventListener('touchstart', onStart, {
+      capture: true
+    });
+    el.addEventListener('touchend', onEnd, {
+      capture: true
+    });
+    return () => {
+      el.removeEventListener('touchstart', onStart, {
+        capture: true
+      });
+      el.removeEventListener('touchend', onEnd, {
+        capture: true
+      });
+    };
+  }, []);
   const TABS = [{
     key: 'grid',
     Icon: TabIconGrid
