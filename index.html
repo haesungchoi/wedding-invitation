@@ -85,6 +85,9 @@
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    /* 스크롤 체이닝으로 인한 끊김 방지 + 스크롤 영역을 독립 합성 레이어로 승격 */
+    overscroll-behavior: contain;
+    transform: translateZ(0);
   }
   .inv-screen::-webkit-scrollbar { width: 0; height: 0; }
   .label-en {
@@ -455,8 +458,14 @@
   .ticker-track {
     display: flex;
     white-space: nowrap;
+    /* JS(Web Animations API)가 픽셀 단위로 구동한다. JS가 없을 때만 쓰는 폴백. */
     animation: tickerScroll 35s linear infinite;
     will-change: transform;
+  }
+  .ticker-group {
+    display: flex;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .ticker-item {
     font-family: var(--display-font), 'Pretendard', sans-serif;

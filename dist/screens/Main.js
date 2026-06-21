@@ -34,6 +34,52 @@ function MainScreen({
   }, (_, i) => i);
   const weddingTextRef = React.useRef(null);
   const photoRef = React.useRef(null);
+  const tickerTrackRef = React.useRef(null);
+
+  // 상단 티커 마퀴 — Web Animations API로 '픽셀 단위' 구동.
+  // 기존 CSS의 translateX(-50%)는 폰트가 늦게 로드되며 트랙 폭이 바뀌면 -50%가
+  // 다른 픽셀값으로 재계산돼 화면이 '중간부터 보이거나 튀거나 멈춘 듯' 보였다.
+  // 동일한 그룹 2개를 두고 한 그룹 폭(px)만큼만 이동 → 이음매 없는 무한 루프.
+  // 폰트 로드/리사이즈로 폭이 바뀌면 ResizeObserver가 정확한 값으로 다시 계산한다.
+  React.useEffect(() => {
+    const track = tickerTrackRef.current;
+    if (!track || typeof track.animate !== 'function') return; // 폴백: CSS 애니메이션
+    const group = track.firstElementChild;
+    if (!group) return;
+    track.style.animation = 'none'; // CSS 폴백 끄고 JS가 구동
+    const SPEED = 55; // px/초 — 폭과 무관하게 항상 같은 속도
+    let anim = null;
+    const run = () => {
+      const dist = group.offsetWidth; // 레이아웃 폭(조상 transform 영향 없음)
+      if (!dist) return;
+      if (anim) anim.cancel();
+      anim = track.animate([{
+        transform: 'translateX(0px)'
+      }, {
+        transform: `translateX(${-dist}px)`
+      }], {
+        duration: dist / SPEED * 1000,
+        iterations: Infinity,
+        easing: 'linear'
+      });
+    };
+    run();
+    let ro = null,
+      raf = 0;
+    if (window.ResizeObserver) {
+      ro = new ResizeObserver(() => {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(run);
+      });
+      ro.observe(group);
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+    return () => {
+      if (anim) anim.cancel();
+      if (ro) ro.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   // 세로 'WEDDING INVITATION' 헤드라인의 높이를 사진 카드 위치에 맞춰 정렬한다.
   // 이 헤드라인은 transform: rotate(180deg)(중심 기준)이라 '높이'가 곧 화면상 위치다.
@@ -100,20 +146,27 @@ function MainScreen({
       background: lime
     }
   }, /*#__PURE__*/React.createElement("div", {
-    className: "ticker-track"
+    className: "ticker-track",
+    ref: tickerTrackRef
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ticker-group",
+    "aria-hidden": "false"
   }, tickerItems.map(i => /*#__PURE__*/React.createElement("span", {
     key: `a${i}`,
     className: "ticker-item",
     style: {
       color: ink
     }
-  }, tickerText)), tickerItems.map(i => /*#__PURE__*/React.createElement("span", {
+  }, tickerText))), /*#__PURE__*/React.createElement("div", {
+    className: "ticker-group",
+    "aria-hidden": "true"
+  }, tickerItems.map(i => /*#__PURE__*/React.createElement("span", {
     key: `b${i}`,
     className: "ticker-item",
     style: {
       color: ink
     }
-  }, tickerText)))), /*#__PURE__*/React.createElement("div", {
+  }, tickerText))))), /*#__PURE__*/React.createElement("div", {
     className: "inv-screen",
     style: {
       position: 'relative',
