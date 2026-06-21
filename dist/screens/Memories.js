@@ -1470,8 +1470,10 @@ function StoryViewer({
   const [idx, setIdx] = React.useState(0);
   const [progress, setProgress] = React.useState(0);
   const [dir, setDir] = React.useState(1);
+  const [paused, setPaused] = React.useState(false); // 홀드 중 일시정지 (인스타 방식)
   const timerRef = React.useRef(null);
   const touchRef = React.useRef(null);
+  const progressRef = React.useRef(0); // 일시정지 후 이어서 재생하기 위한 현재 진행도
   const DURATION = 4000;
   const images = groups[groupIdx]?.images || [];
   const goPrev = () => {
@@ -1500,12 +1502,22 @@ function StoryViewer({
       onClose();
     }
   }, [idx, images.length, groupIdx, groups.length, onClose]);
+
+  // 새 사진으로 바뀌면 진행도 초기화
   React.useEffect(() => {
+    progressRef.current = 0;
     setProgress(0);
+  }, [idx, groupIdx]);
+
+  // 자동 넘김 타이머 — 홀드 중(paused)에는 멈추고, 손을 떼면 남은 시간부터 이어서 진행
+  React.useEffect(() => {
+    if (paused) return;
+    const startPct = progressRef.current;
     const start = Date.now();
     const tick = () => {
       const elapsed = Date.now() - start;
-      const pct = Math.min(100, elapsed / DURATION * 100);
+      const pct = Math.min(100, startPct + elapsed / DURATION * 100);
+      progressRef.current = pct;
       setProgress(pct);
       if (pct < 100) {
         timerRef.current = requestAnimationFrame(tick);
@@ -1515,7 +1527,7 @@ function StoryViewer({
     };
     timerRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(timerRef.current);
-  }, [idx, goNext]);
+  }, [idx, groupIdx, paused, goNext]);
   const onTouchStart = e => {
     e.stopPropagation();
     const t = e.touches[0];
@@ -1524,12 +1536,19 @@ function StoryViewer({
       y: t.clientY,
       t: Date.now()
     };
+    setPaused(true); // 손가락을 대고 있는 동안 자동 넘김 정지
   };
   const onTouchMove = e => {
     e.stopPropagation();
   };
+  const onTouchCancel = e => {
+    e.stopPropagation();
+    touchRef.current = null;
+    setPaused(false);
+  };
   const onTouchEnd = e => {
     e.stopPropagation();
+    setPaused(false); // 손을 떼면 남은 시간부터 재생 재개
     if (!touchRef.current) return;
     const t = e.changedTouches[0];
     const dx = t.clientX - touchRef.current.x;
@@ -1574,9 +1593,16 @@ function StoryViewer({
     }
   };
 
+  // 마우스 누르고 있는 동안(PC) 자동 넘김 정지
+  const onPointerDown = e => {
+    if (e.pointerType !== 'mouse') return;
+    setPaused(true);
+  };
+
   // 마우스 클릭 (PC) — 좌 38% 클릭 → 이전, 우 62% 클릭 → 다음
   const onPointerUp = e => {
     if (e.pointerType !== 'mouse') return;
+    setPaused(false);
     const w = e.currentTarget.getBoundingClientRect().width;
     if (e.clientX < w * 0.38) goPrev();else goNext();
   };
@@ -1584,9 +1610,13 @@ function StoryViewer({
     onTouchStart: onTouchStart,
     onTouchMove: onTouchMove,
     onTouchEnd: onTouchEnd,
+    onTouchCancel: onTouchCancel,
+    onPointerDown: onPointerDown,
     onPointerUp: onPointerUp,
     style: {
-      position: 'absolute',
+      // 스크롤 중인 .inv-screen이 아니라 모달 프레임(transform 조상)에 고정 →
+      // 그리드가 스크롤된 상태에서도 하단에 빈틈이 생겨 뒤가 비쳐 보이지 않는다.
+      position: 'fixed',
       inset: 0,
       background: '#000',
       zIndex: 300,
@@ -1712,7 +1742,8 @@ function StoryViewer({
 function MemoriesScreen({
   goTo,
   tweaks,
-  openSheet
+  openSheet,
+  backHandlerRef
 }) {
   const lime = tweaks.lime;
   const ink = tweaks.ink;
@@ -1878,6 +1909,26 @@ function MemoriesScreen({
     setFeedScrollTo(null);
     if (screenRef.current) screenRef.current.scrollTop = 0;
   };
+
+  // 휴대폰 뒤로가기/가장자리 스와이프를 위임받아 단계별로 닫는다 (스토리 → 피드 → 그리드).
+  // true 반환 시 내부에서 한 단계 처리됨을 의미하고, 그렇지 않으면 상위(앱)에서 main으로 나간다.
+  React.useEffect(() => {
+    if (!backHandlerRef) return;
+    backHandlerRef.current = () => {
+      if (story) {
+        setStory(null);
+        return true;
+      }
+      if (feedActive) {
+        backFromFeed();
+        return true;
+      }
+      return false;
+    };
+    return () => {
+      if (backHandlerRef) backHandlerRef.current = null;
+    };
+  }, [backHandlerRef, story, feedActive]);
   const TABS = [{
     key: 'grid',
     Icon: TabIconGrid

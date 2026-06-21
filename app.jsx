@@ -156,6 +156,76 @@ function App() {
   const openSheet = (name) => setSheet(name);
   const closeSheet = () => setSheet(null);
 
+  // ── 휴대폰 뒤로가기 버튼 · 가장자리 스와이프(브라우저 back) 지원 ──────────
+  // 최신 상태/콜백을 ref로 들고 있어 popstate 핸들러(빈 deps)에서 stale 값 방지
+  const goToRef        = React.useRef(goTo);        goToRef.current = goTo;
+  const closeSheetRef  = React.useRef(closeSheet);  closeSheetRef.current = closeSheet;
+  const navRef         = React.useRef({ modal, sheet }); navRef.current = { modal, sheet };
+  // Memories 내부의 단계별 back(스토리/피드)을 위임받는 핸들러 — true 반환 시 내부에서 처리됨
+  const screenBackRef  = React.useRef(null);
+  const armedRef       = React.useRef(false); // 히스토리 트랩 항목을 넣어 둔 상태인지
+  const skipPopRef     = React.useRef(0);     // 우리가 의도적으로 호출한 back에서 발생하는 popstate 무시 횟수
+
+  // 최상단 오버레이부터 한 단계 닫는다. 닫은 뒤에도 오버레이가 남아 있으면 true 반환.
+  const stepBack = () => {
+    const { modal: m, sheet: s } = navRef.current;
+    if (s) { closeSheetRef.current(); return !!m; }            // 시트(오버레이) 먼저 닫기
+    if (screenBackRef.current && screenBackRef.current()) return true; // 스토리/피드 → 한 단계 위로
+    if (m) {
+      // 전환 중이거나 ghost-click 쿨다운이면 닫지 못하므로 트랩을 유지
+      if (transitionLock.current || Date.now() - sheetClosedAtRef.current < 500) return true;
+      goToRef.current('main');
+      return false;
+    }
+    return false;
+  };
+
+  // 오버레이(모달·시트)가 열려 있는 동안 히스토리에 트랩 항목 1개를 유지
+  const overlayOpen = !!(modal || sheet);
+  React.useEffect(() => {
+    if (overlayOpen && !armedRef.current) {
+      window.history.pushState({ inviteOverlay: true }, '');
+      armedRef.current = true;
+    } else if (!overlayOpen && armedRef.current) {
+      // UI/제스처로 모두 닫힌 경우 — 우리가 넣은 트랩 항목 제거
+      armedRef.current = false;
+      skipPopRef.current++;
+      window.history.back();
+    }
+  }, [overlayOpen]);
+
+  React.useEffect(() => {
+    const onPop = () => {
+      if (skipPopRef.current > 0) { skipPopRef.current--; return; }
+      // 사용자가 뒤로가기를 눌러 브라우저가 트랩 항목을 소비함
+      armedRef.current = false;
+      const stillOpen = stepBack();
+      if (stillOpen) {
+        // 아직 닫지 않은 오버레이가 남아 있으니 트랩 재무장
+        window.history.pushState({ inviteOverlay: true }, '');
+        armedRef.current = true;
+      }
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  // 모달 시트 왼쪽 가장자리에서 오른쪽으로 스와이프 → 뒤로 (앱 내 제스처)
+  const edgeSwipeRef = React.useRef(null);
+  const onEdgeTouchStart = (e) => {
+    const x0 = e.touches[0].clientX;
+    edgeSwipeRef.current = x0 <= 30 ? { x0, y0: e.touches[0].clientY } : null;
+  };
+  const onEdgeTouchEnd = (e) => {
+    const edge = edgeSwipeRef.current;
+    edgeSwipeRef.current = null;
+    if (!edge || !e.changedTouches || !e.changedTouches[0]) return false;
+    const dx = e.changedTouches[0].clientX - edge.x0;
+    const dy = Math.abs(e.changedTouches[0].clientY - edge.y0);
+    if (dx > 60 && dx > dy * 1.5) { stepBack(); return true; }
+    return false;
+  };
+
   // Sync display font CSS variable
   React.useEffect(() => {
     const fontMap = { bricolage: "'Bricolage Grotesque'", gravitas: "'GravitasOne'", limelight: "'Limelight'" };
@@ -247,13 +317,13 @@ function App() {
             transition: isDraggingSheet ? 'none' : 'transform 320ms cubic-bezier(.32,.72,0,1)',
             animation: 'none',
           } : undefined}
-          onTouchStart={onSheetTouchStart}
+          onTouchStart={(e) => { onEdgeTouchStart(e); onSheetTouchStart(e); }}
           onTouchMove={onSheetTouchMove}
-          onTouchEnd={onSheetTouchEnd}
-          onTouchCancel={onSheetTouchEnd}
+          onTouchEnd={(e) => { if (onEdgeTouchEnd(e)) return; onSheetTouchEnd(e); }}
+          onTouchCancel={(e) => { edgeSwipeRef.current = null; onSheetTouchEnd(e); }}
           onTransitionEnd={onSheetTransitionEnd}
         >
-          {modal === 'memories' && <MemoriesScreen goTo={goTo} tweaks={effectiveTweaks} openSheet={openSheet} />}
+          {modal === 'memories' && <MemoriesScreen goTo={goTo} tweaks={effectiveTweaks} openSheet={openSheet} backHandlerRef={screenBackRef} />}
           {modal === 'numbers'  && <NumbersScreen  goTo={goTo} openSheet={openSheet} tweaks={effectiveTweaks} />}
         </div>
       )}
