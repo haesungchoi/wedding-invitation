@@ -2042,16 +2042,18 @@ function MemoriesScreen({
     style: {
       fontFamily: "'Pretendard',sans-serif",
       fontWeight: 700,
-      fontSize: 15,
+      fontSize: 'min(15px, 3.8vw)',
       color: ink,
-      lineHeight: 1.2
+      lineHeight: 1.2,
+      whiteSpace: 'nowrap'
     }
   }, "게시물"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Pretendard',sans-serif",
-      fontSize: 12,
+      fontSize: 'min(12px, 3.1vw)',
       color: '#888',
-      marginTop: 1
+      marginTop: 1,
+      whiteSpace: 'nowrap'
     }
   }, "chaewon_and_haeseong")), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2079,21 +2081,23 @@ function MemoriesScreen({
       color: ink,
       fontFamily: "'Pretendard',sans-serif",
       fontWeight: 600,
-      fontSize: 11,
-      letterSpacing: '0.16em'
+      fontSize: 'min(11px, 2.8vw)',
+      letterSpacing: '0.16em',
+      whiteSpace: 'nowrap'
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: 18,
+      fontSize: 'min(18px, 4.6vw)',
       lineHeight: 1
     }
   }, "←"), " MAIN"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Bricolage Grotesque',sans-serif",
       fontWeight: 600,
-      fontSize: 17,
+      fontSize: 'min(17px, 4.4vw)',
       color: ink,
-      letterSpacing: '-0.02em'
+      letterSpacing: '-0.02em',
+      whiteSpace: 'nowrap'
     }
   }, "chaewon_and_haeseong"), /*#__PURE__*/React.createElement("div", {
     style: {

@@ -109,7 +109,7 @@ function MainScreen({ goTo, openSheet, tweaks }) {
         {/* big rotated WEDDING INVITATION on right edge */}
         <div ref={weddingTextRef} className="vertical-headline agrandir" style={{
           position: 'absolute', right: -1, top: 70,
-          fontSize: 64, color: ink, lineHeight: 0.85, opacity: 0, transition: 'opacity 0.45s ease', height: "640px", fontFamily: "'Martian Mono', monospace", fontWeight: "400", fontStretch: '100%', letterSpacing: '0em'
+          fontSize: 'min(64px, 16.4vw)', color: ink, lineHeight: 0.85, opacity: 0, transition: 'opacity 0.45s ease', height: "640px", fontFamily: "'Martian Mono', monospace", fontWeight: "400", fontStretch: '100%', letterSpacing: '0em'
         }}>
           WEDDING<br />INVITATION
         </div>
@@ -192,7 +192,7 @@ function MainScreen({ goTo, openSheet, tweaks }) {
           className="fade-up delay-3 tap"
           style={{
             marginTop: 38, position: 'relative',
-            marginLeft: -4, marginRight: 30,
+            marginLeft: -4, marginRight: 68,
             display: 'block', width: 'auto',
             padding: 0, border: 'none', background: 'transparent',
             cursor: 'pointer', textAlign: 'left'
@@ -250,25 +250,25 @@ function MainScreen({ goTo, openSheet, tweaks }) {
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           marginBottom: 8, fontWeight: "400", lineHeight: 0.85,
         }}>
-          <div className="display" style={{ color: ink, fontSize: "120px", fontFamily: "'Martian Mono', monospace", fontStretch: '112.5%' }}>09</div>
-          <div className="display" style={{ color: ink, fontSize: "120px", fontFamily: "'Martian Mono', monospace", fontStretch: '112.5%' }}>12</div>
+          <div className="display" style={{ color: ink, fontSize: 'min(120px, 30.8vw)', fontFamily: "'Martian Mono', monospace", fontStretch: '112.5%' }}>09</div>
+          <div className="display" style={{ color: ink, fontSize: 'min(120px, 30.8vw)', fontFamily: "'Martian Mono', monospace", fontStretch: '112.5%' }}>12</div>
         </div>
 
         <div className="ko-med" style={{
           textAlign: 'center', color: ink,
           lineHeight: 1.35, letterSpacing: '-0.01em',
-          marginTop: 14, marginBottom: 10, fontFamily: "Pretendard", fontSize: "20px", fontWeight: "400"
+          marginTop: 14, marginBottom: 10, fontFamily: "Pretendard", fontSize: 'min(20px, 5.2vw)', fontWeight: "400"
         }}>
           2026년 9월 12일<br />
-          <span className="ko-light" style={{ fontFamily: "Pretendard", color: "rgb(17, 17, 17)", fontSize: "20px", fontWeight: "400" }}>토요일 오후 1시</span>
+          <span className="ko-light" style={{ fontFamily: "Pretendard", color: "rgb(17, 17, 17)", fontSize: 'min(20px, 5.2vw)', fontWeight: "400" }}>토요일 오후 1시</span>
         </div>
         <div className="ko-light" style={{ textAlign: 'center', fontSize: 12, color: '#777', marginBottom: 36, fontFamily: "'Pretendard', sans-serif", letterSpacing: '0.18em', fontWeight: 500 }}>
           
         </div>
 
         <div style={{ textAlign: 'center', marginBottom: 36 }}>
-          <div className="ko-med" style={{ marginBottom: 4, fontSize: "20px", fontWeight: "400" }}>삼성전자 서초사옥</div>
-          <div className="ko-light" style={{ color: "rgb(17, 17, 17)", fontSize: "20px", fontWeight: "400" }}>5층 웨딩홀</div>
+          <div className="ko-med" style={{ marginBottom: 4, fontSize: 'min(20px, 5.2vw)', fontWeight: "400" }}>삼성전자 서초사옥</div>
+          <div className="ko-light" style={{ color: "rgb(17, 17, 17)", fontSize: 'min(20px, 5.2vw)', fontWeight: "400" }}>5층 웨딩홀</div>
         </div>
 
         {/* family lines */}
@@ -278,23 +278,23 @@ function MainScreen({ goTo, openSheet, tweaks }) {
             display: 'grid', gap: 14, fontFamily: "'Pretendard'"
           }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-              <div className="ko-reg" style={{ fontSize: 20, color: '#666', flex: 1 }}>
+              <div className="ko-reg" style={{ fontSize: 'min(20px, 5.2vw)', color: '#666', flex: 1 }}>
                 <span style={{ color: ink }}>최교선</span>
                 <span style={{ margin: '0 6px', opacity: 0.5 }}>·</span>
                 <span style={{ color: ink }}>구지영</span>
-                <span style={{ marginLeft: 6, fontSize: "16px" }}>의 아들</span>
+                <span style={{ marginLeft: 6, fontSize: 'min(16px, 4.1vw)' }}>의 아들</span>
               </div>
-              <div className="display" style={{ fontSize: 20, fontWeight: "400", fontFamily: "'Pretendard', sans-serif" }}>해성</div>
+              <div className="display" style={{ fontSize: 'min(20px, 5.2vw)', fontWeight: "400", fontFamily: "'Pretendard', sans-serif" }}>해성</div>
             </div>
             <div className="hr" />
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-              <div className="ko-reg" style={{ fontSize: 20, color: '#666', flex: 1 }}>
+              <div className="ko-reg" style={{ fontSize: 'min(20px, 5.2vw)', color: '#666', flex: 1 }}>
                 <span style={{ color: ink }}>윤재경</span>
                 <span style={{ margin: '0 6px', opacity: 0.5 }}>·</span>
                 <span style={{ color: ink }}>공명아</span>
-                <span style={{ marginLeft: 6, fontSize: "16px" }}>의 딸</span>
+                <span style={{ marginLeft: 6, fontSize: 'min(16px, 4.1vw)' }}>의 딸</span>
               </div>
-              <div className="display" style={{ fontSize: 20, fontWeight: "400", fontFamily: "'Pretendard', sans-serif" }}>채원</div>
+              <div className="display" style={{ fontSize: 'min(20px, 5.2vw)', fontWeight: "400", fontFamily: "'Pretendard', sans-serif" }}>채원</div>
             </div>
           </div>
         </div>

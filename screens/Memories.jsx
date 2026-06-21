@@ -1174,18 +1174,18 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
               </svg>
             </button>
             <div style={{ flex:1, textAlign:'center' }}>
-              <div style={{ fontFamily:"'Pretendard',sans-serif", fontWeight:700, fontSize:15, color:ink, lineHeight:1.2 }}>게시물</div>
-              <div style={{ fontFamily:"'Pretendard',sans-serif", fontSize:12, color:'#888', marginTop:1 }}>chaewon_and_haeseong</div>
+              <div style={{ fontFamily:"'Pretendard',sans-serif", fontWeight:700, fontSize:'min(15px, 3.8vw)', color:ink, lineHeight:1.2, whiteSpace:'nowrap' }}>게시물</div>
+              <div style={{ fontFamily:"'Pretendard',sans-serif", fontSize:'min(12px, 3.1vw)', color:'#888', marginTop:1, whiteSpace:'nowrap' }}>chaewon_and_haeseong</div>
             </div>
             <div style={{ width:44 }}/>
           </div>
         ) : (
           <div style={{ padding:'14px 16px 12px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
             <button onClick={() => goTo('main')} className="tap"
-              style={{ background:'transparent', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:6, padding:'8px 16px 8px 4px', margin:'-8px -16px -8px -4px', color:ink, fontFamily:"'Pretendard',sans-serif", fontWeight:600, fontSize:11, letterSpacing:'0.16em' }}>
-              <span style={{ fontSize:18, lineHeight:1 }}>←</span> MAIN
+              style={{ background:'transparent', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:6, padding:'8px 16px 8px 4px', margin:'-8px -16px -8px -4px', color:ink, fontFamily:"'Pretendard',sans-serif", fontWeight:600, fontSize:'min(11px, 2.8vw)', letterSpacing:'0.16em', whiteSpace:'nowrap' }}>
+              <span style={{ fontSize:'min(18px, 4.6vw)', lineHeight:1 }}>←</span> MAIN
             </button>
-            <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontWeight:600, fontSize:17, color:ink, letterSpacing:'-0.02em' }}>chaewon_and_haeseong</div>
+            <div style={{ fontFamily:"'Bricolage Grotesque',sans-serif", fontWeight:600, fontSize:'min(17px, 4.4vw)', color:ink, letterSpacing:'-0.02em', whiteSpace:'nowrap' }}>chaewon_and_haeseong</div>
             <div style={{ width:48 }}/>
           </div>
         )}

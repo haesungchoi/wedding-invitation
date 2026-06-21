@@ -147,7 +147,7 @@ function MainScreen({
       position: 'absolute',
       right: -1,
       top: 70,
-      fontSize: 64,
+      fontSize: 'min(64px, 16.4vw)',
       color: ink,
       lineHeight: 0.85,
       opacity: 0,
@@ -314,7 +314,7 @@ function MainScreen({
       marginTop: 38,
       position: 'relative',
       marginLeft: -4,
-      marginRight: 30,
+      marginRight: 68,
       display: 'block',
       width: 'auto',
       padding: 0,
@@ -422,7 +422,7 @@ function MainScreen({
     className: "display",
     style: {
       color: ink,
-      fontSize: "120px",
+      fontSize: 'min(120px, 30.8vw)',
       fontFamily: "'Martian Mono', monospace",
       fontStretch: '112.5%'
     }
@@ -430,7 +430,7 @@ function MainScreen({
     className: "display",
     style: {
       color: ink,
-      fontSize: "120px",
+      fontSize: 'min(120px, 30.8vw)',
       fontFamily: "'Martian Mono', monospace",
       fontStretch: '112.5%'
     }
@@ -444,7 +444,7 @@ function MainScreen({
       marginTop: 14,
       marginBottom: 10,
       fontFamily: "Pretendard",
-      fontSize: "20px",
+      fontSize: 'min(20px, 5.2vw)',
       fontWeight: "400"
     }
   }, "2026년 9월 12일", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
@@ -452,7 +452,7 @@ function MainScreen({
     style: {
       fontFamily: "Pretendard",
       color: "rgb(17, 17, 17)",
-      fontSize: "20px",
+      fontSize: 'min(20px, 5.2vw)',
       fontWeight: "400"
     }
   }, "토요일 오후 1시")), /*#__PURE__*/React.createElement("div", {
@@ -475,14 +475,14 @@ function MainScreen({
     className: "ko-med",
     style: {
       marginBottom: 4,
-      fontSize: "20px",
+      fontSize: 'min(20px, 5.2vw)',
       fontWeight: "400"
     }
   }, "삼성전자 서초사옥"), /*#__PURE__*/React.createElement("div", {
     className: "ko-light",
     style: {
       color: "rgb(17, 17, 17)",
-      fontSize: "20px",
+      fontSize: 'min(20px, 5.2vw)',
       fontWeight: "400"
     }
   }, "5층 웨딩홀")), /*#__PURE__*/React.createElement("div", {
@@ -509,7 +509,7 @@ function MainScreen({
   }, /*#__PURE__*/React.createElement("div", {
     className: "ko-reg",
     style: {
-      fontSize: 20,
+      fontSize: 'min(20px, 5.2vw)',
       color: '#666',
       flex: 1
     }
@@ -529,12 +529,12 @@ function MainScreen({
   }, "구지영"), /*#__PURE__*/React.createElement("span", {
     style: {
       marginLeft: 6,
-      fontSize: "16px"
+      fontSize: 'min(16px, 4.1vw)'
     }
   }, "의 아들")), /*#__PURE__*/React.createElement("div", {
     className: "display",
     style: {
-      fontSize: 20,
+      fontSize: 'min(20px, 5.2vw)',
       fontWeight: "400",
       fontFamily: "'Pretendard', sans-serif"
     }
@@ -549,7 +549,7 @@ function MainScreen({
   }, /*#__PURE__*/React.createElement("div", {
     className: "ko-reg",
     style: {
-      fontSize: 20,
+      fontSize: 'min(20px, 5.2vw)',
       color: '#666',
       flex: 1
     }
@@ -569,12 +569,12 @@ function MainScreen({
   }, "공명아"), /*#__PURE__*/React.createElement("span", {
     style: {
       marginLeft: 6,
-      fontSize: "16px"
+      fontSize: 'min(16px, 4.1vw)'
     }
   }, "의 딸")), /*#__PURE__*/React.createElement("div", {
     className: "display",
     style: {
-      fontSize: 20,
+      fontSize: 'min(20px, 5.2vw)',
       fontWeight: "400",
       fontFamily: "'Pretendard', sans-serif"
     }
