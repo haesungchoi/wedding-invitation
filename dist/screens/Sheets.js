@@ -130,9 +130,13 @@ function Sheet({
       background: '#FFFFFF',
       borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
-      padding: '14px 22px 28px',
       maxHeight: '82%',
-      overflowY: dragY > 0 || closing ? 'hidden' : 'auto',
+      /* 헤더(손잡이+제목)는 스크롤 영역 밖의 고정 블록, 본문만 스크롤한다.
+         position:sticky는 transform이 걸린 스크롤 컨테이너 안에서 안드로이드 Chrome에선
+         깨져(고정되지 않고 같이 스크롤됨) 위쪽으로 뒤 내용이 비쳐 보였다 → flex 레이아웃으로 교체. */
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
       animation: 'sheet-in 280ms cubic-bezier(.32,.72,0,1) both',
       transform: `translateY(${dragY}px)`,
       transition: !closing && dragY > 0 ? 'none' : 'transform 300ms cubic-bezier(.32,.72,0,1)'
@@ -144,18 +148,12 @@ function Sheet({
     onTouchCancel: commitDrag,
     onMouseDown: attachMouse,
     style: {
-      padding: '12px 0 22px',
+      flexShrink: 0,
       cursor: 'grab',
       touchAction: 'none',
       userSelect: 'none',
       background: '#FFFFFF',
-      position: 'sticky',
-      top: 0,
-      zIndex: 1,
-      marginLeft: -22,
-      marginRight: -22,
-      paddingLeft: 22,
-      paddingRight: 22
+      padding: '12px 22px 0'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -165,12 +163,12 @@ function Sheet({
       background: 'rgba(0,0,0,0.32)',
       margin: '0 auto'
     }
-  })), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: 18
+      margin: '22px 0 18px'
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "label-en",
@@ -190,7 +188,15 @@ function Sheet({
       padding: 4
     },
     "aria-label": "닫기"
-  }, "×")), children));
+  }, "×"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minHeight: 0,
+      overflowY: dragY > 0 || closing ? 'hidden' : 'auto',
+      WebkitOverflowScrolling: 'touch',
+      padding: '0 22px 28px'
+    }
+  }, children)));
 }
 function MapSheet({
   open,

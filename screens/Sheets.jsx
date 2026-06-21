@@ -88,14 +88,19 @@ function Sheet({ open, onClose, children, title, accent, pc }) {
           background: '#FFFFFF',
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
-          padding: '14px 22px 28px',
           maxHeight: '82%',
-          overflowY: (dragY > 0 || closing) ? 'hidden' : 'auto',
+          /* 헤더(손잡이+제목)는 스크롤 영역 밖의 고정 블록, 본문만 스크롤한다.
+             position:sticky는 transform이 걸린 스크롤 컨테이너 안에서 안드로이드 Chrome에선
+             깨져(고정되지 않고 같이 스크롤됨) 위쪽으로 뒤 내용이 비쳐 보였다 → flex 레이아웃으로 교체. */
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
           animation: 'sheet-in 280ms cubic-bezier(.32,.72,0,1) both',
           transform: `translateY(${dragY}px)`,
           transition: (!closing && dragY > 0) ? 'none' : 'transform 300ms cubic-bezier(.32,.72,0,1)',
         }}>
 
+        {/* 고정 헤더 — 드래그로 닫기 + 제목/닫기 버튼 */}
         <div
           onTouchStart={e => startDrag(e.touches[0].clientY)}
           onTouchMove={e => updateDrag(e.touches[0].clientY)}
@@ -103,41 +108,44 @@ function Sheet({ open, onClose, children, title, accent, pc }) {
           onTouchCancel={commitDrag}
           onMouseDown={attachMouse}
           style={{
-            padding: '12px 0 22px',
+            flexShrink: 0,
             cursor: 'grab',
             touchAction: 'none',
             userSelect: 'none',
             background: '#FFFFFF',
-            position: 'sticky',
-            top: 0,
-            zIndex: 1,
-            marginLeft: -22,
-            marginRight: -22,
-            paddingLeft: 22,
-            paddingRight: 22,
+            padding: '12px 22px 0',
           }}>
           <div style={{
             width: 38, height: 4, borderRadius: 99,
             background: 'rgba(0,0,0,0.32)', margin: '0 auto',
           }} />
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            margin: '22px 0 18px'
+          }}>
+            <div className="label-en" style={{ color: accent || '#111' }}>{title}</div>
+            <button
+              onClick={onClose}
+              className="tap"
+              style={{
+                border: 'none', background: 'transparent', cursor: 'pointer',
+                fontSize: 22, color: '#111', lineHeight: 1, padding: 4
+              }}
+              aria-label="닫기">
+              ×</button>
+          </div>
         </div>
 
+        {/* 스크롤 본문 */}
         <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          marginBottom: 18
+          flex: 1,
+          minHeight: 0,
+          overflowY: (dragY > 0 || closing) ? 'hidden' : 'auto',
+          WebkitOverflowScrolling: 'touch',
+          padding: '0 22px 28px',
         }}>
-          <div className="label-en" style={{ color: accent || '#111' }}>{title}</div>
-          <button
-            onClick={onClose}
-            className="tap"
-            style={{
-              border: 'none', background: 'transparent', cursor: 'pointer',
-              fontSize: 22, color: '#111', lineHeight: 1, padding: 4
-            }}
-            aria-label="닫기">
-            ×</button>
+          {children}
         </div>
-        {children}
       </div>
     </div>);
 

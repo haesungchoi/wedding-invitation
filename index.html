@@ -63,6 +63,10 @@
     font-family: var(--display-font), 'Pretendard', system-ui, -apple-system, sans-serif;
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
+    /* 안드로이드 Chrome의 자동 폰트 확대(text autosizing) 차단 →
+       아이폰/갤럭시에서 글자 크기·줄바꿈·간격이 동일하게 보이도록 한다. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   * { box-sizing: border-box; }
   button { font-family: inherit; color: inherit; }
@@ -463,6 +467,11 @@
     text-transform: uppercase;
     padding: 0 32px;
     user-select: none;
+    /* 대문자는 라인박스 위쪽에 치우쳐 그려져(밑선 아래 여백이 비어) 위로 올라가 보인다.
+       살짝 아래로 내려 세로 중앙에 맞춘다. */
+    line-height: 1;
+    position: relative;
+    top: 1px;
   }
   @keyframes tickerScroll {
     from { transform: translateX(0); }
