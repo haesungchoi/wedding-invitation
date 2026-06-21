@@ -903,7 +903,9 @@ function StoryViewer({ groups, startGroupIdx = 0, onClose }) {
         // 스크롤 중인 .inv-screen이 아니라 모달 프레임(transform 조상)에 고정 →
         // 그리드가 스크롤된 상태에서도 하단에 빈틈이 생겨 뒤가 비쳐 보이지 않는다.
         position:'fixed', inset:0, background:'#000', zIndex:300,
-        display:'flex', flexDirection:'column', userSelect:'none',
+        display:'flex', flexDirection:'column',
+        userSelect:'none', WebkitUserSelect:'none',
+        WebkitTouchCallout:'none',  // iOS 길게 누르기 컨텍스트 메뉴 차단
         cursor: 'pointer', touchAction: 'none',
       }}>
 

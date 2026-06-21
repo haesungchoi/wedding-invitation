@@ -1623,6 +1623,9 @@ function StoryViewer({
       display: 'flex',
       flexDirection: 'column',
       userSelect: 'none',
+      WebkitUserSelect: 'none',
+      WebkitTouchCallout: 'none',
+      // iOS 길게 누르기 컨텍스트 메뉴 차단
       cursor: 'pointer',
       touchAction: 'none'
     }
