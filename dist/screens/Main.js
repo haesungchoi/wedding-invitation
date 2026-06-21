@@ -175,27 +175,29 @@ function MainScreen({
   }, /*#__PURE__*/React.createElement("div", {
     className: "display",
     style: {
-      fontSize: 77,
+      fontSize: 'min(77px, 20vw)',
       color: ink,
       lineHeight: 0.88,
       fontWeight: 600,
-      fontFamily: "'Pretendard', sans-serif"
+      fontFamily: "'Pretendard', sans-serif",
+      whiteSpace: 'nowrap'
     }
   }, "윤채원"), /*#__PURE__*/React.createElement("div", {
     className: "serif agrandir",
     style: {
-      fontSize: 22,
+      fontSize: 'min(22px, 5.6vw)',
       color: ink,
       opacity: 0.8,
       marginTop: 2,
       marginLeft: 4,
       fontFamily: "'Martian Mono', monospace",
-      letterSpacing: '0em'
+      letterSpacing: '0em',
+      whiteSpace: 'nowrap'
     }
   }, "Chaewon Yun")), /*#__PURE__*/React.createElement("div", {
     className: "display fade-up delay-1",
     style: {
-      fontSize: 36,
+      fontSize: 'min(36px, 9vw)',
       margin: '14px 0 14px 4px',
       color: ink,
       display: 'flex',
@@ -211,7 +213,7 @@ function MainScreen({
     }
   }), /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: 20,
+      fontSize: 'min(20px, 5vw)',
       fontFamily: "'Martian Mono', monospace",
       fontWeight: 300,
       letterSpacing: '0em'
@@ -228,22 +230,24 @@ function MainScreen({
   }, /*#__PURE__*/React.createElement("div", {
     className: "display",
     style: {
-      fontSize: 77,
+      fontSize: 'min(77px, 20vw)',
       color: ink,
       lineHeight: 0.88,
       fontWeight: 600,
-      fontFamily: "'Pretendard', sans-serif"
+      fontFamily: "'Pretendard', sans-serif",
+      whiteSpace: 'nowrap'
     }
   }, "최해성"), /*#__PURE__*/React.createElement("div", {
     className: "serif agrandir",
     style: {
-      fontSize: 22,
+      fontSize: 'min(22px, 5.6vw)',
       color: ink,
       opacity: 0.8,
       marginTop: 2,
       marginLeft: 4,
       fontFamily: "'Martian Mono', monospace",
-      letterSpacing: '0em'
+      letterSpacing: '0em',
+      whiteSpace: 'nowrap'
     }
   }, "Haeseong Choi"))), /*#__PURE__*/React.createElement("div", {
     style: {

@@ -120,31 +120,33 @@ function MainScreen({ goTo, openSheet, tweaks }) {
           <div>
             <div className="fade-up" style={{ marginBottom: 4 }}>
               <div className="display" style={{
-                fontSize: 77, color: ink, lineHeight: 0.88, fontWeight: 600, fontFamily: "'Pretendard', sans-serif"
+                fontSize: 'min(77px, 20vw)', color: ink, lineHeight: 0.88, fontWeight: 600, fontFamily: "'Pretendard', sans-serif",
+                whiteSpace: 'nowrap',
               }}>
                 윤채원
               </div>
-              <div className="serif agrandir" style={{ fontSize: 22, color: ink, opacity: 0.8, marginTop: 2, marginLeft: 4, fontFamily: "'Martian Mono', monospace", letterSpacing: '0em' }}>
+              <div className="serif agrandir" style={{ fontSize: 'min(22px, 5.6vw)', color: ink, opacity: 0.8, marginTop: 2, marginLeft: 4, fontFamily: "'Martian Mono', monospace", letterSpacing: '0em', whiteSpace: 'nowrap' }}>
                 Chaewon Yun
               </div>
             </div>
 
             <div className="display fade-up delay-1" style={{
-              fontSize: 36, margin: '14px 0 14px 4px', color: ink,
+              fontSize: 'min(36px, 9vw)', margin: '14px 0 14px 4px', color: ink,
               display: 'flex', alignItems: 'center', gap: 10
             }}>
               <span style={{ display: 'inline-block', width: 28, height: 1, background: ink }} />
-              <span style={{ fontSize: 20, fontFamily: "'Martian Mono', monospace", fontWeight: 300, letterSpacing: '0em' }}>and</span>
+              <span style={{ fontSize: 'min(20px, 5vw)', fontFamily: "'Martian Mono', monospace", fontWeight: 300, letterSpacing: '0em' }}>and</span>
               <span style={{ display: 'inline-block', width: 28, height: 1, background: ink }} />
             </div>
 
             <div className="fade-up delay-2">
               <div className="display" style={{
-                fontSize: 77, color: ink, lineHeight: 0.88, fontWeight: 600, fontFamily: "'Pretendard', sans-serif"
+                fontSize: 'min(77px, 20vw)', color: ink, lineHeight: 0.88, fontWeight: 600, fontFamily: "'Pretendard', sans-serif",
+                whiteSpace: 'nowrap',
               }}>
                 최해성
               </div>
-              <div className="serif agrandir" style={{ fontSize: 22, color: ink, opacity: 0.8, marginTop: 2, marginLeft: 4, fontFamily: "'Martian Mono', monospace", letterSpacing: '0em' }}>
+              <div className="serif agrandir" style={{ fontSize: 'min(22px, 5.6vw)', color: ink, opacity: 0.8, marginTop: 2, marginLeft: 4, fontFamily: "'Martian Mono', monospace", letterSpacing: '0em', whiteSpace: 'nowrap' }}>
                 Haeseong Choi
               </div>
             </div>
