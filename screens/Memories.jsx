@@ -34,6 +34,14 @@ function TabIconTagged({ active, ink }) {
     </svg>
   );
 }
+function TabIconBookmark({ active, ink }) {
+  const c = active ? ink : '#AAAAAA';
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4.5L6 21V4z" />
+    </svg>
+  );
+}
 function TabIconMention({ active, ink }) {
   const c = active ? ink : '#AAAAAA';
   return (
@@ -1322,7 +1330,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
 
   const TABS = [
     { key: 'grid', Icon: TabIconGrid },
-    { key: 'repost', Icon: TabIconTagged },
+    { key: 'repost', Icon: TabIconBookmark },
     { key: 'mention', Icon: TabIconMention },
   ];
 
