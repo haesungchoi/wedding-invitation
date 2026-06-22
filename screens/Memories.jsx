@@ -37,7 +37,7 @@ function TabIconTagged({ active, ink }) {
 function TabIconBookmark({ active, ink }) {
   const c = active ? ink : '#AAAAAA';
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? ink : 'none'} stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <path d="M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4.5L6 21V4z" />
     </svg>
   );
@@ -251,10 +251,10 @@ function PhotoCarousel({ postId, photoCount, images = [], onSwipeBack }) {
 /* carousel icon for grid cells */
 function CarouselBadge() {
   return (
-    <div style={{ position: 'absolute', top: 7, right: 7 }}>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.92)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="13" height="13" rx="2" />
-        <path d="M17 6h3a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-3" />
+    <div style={{ position: 'absolute', top: 8, right: 8, filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.35))' }}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeLinejoin="round">
+        <rect x="7.5" y="3.5" width="13" height="13" rx="3.5" fill="none" stroke="#fff" strokeWidth="2" />
+        <rect x="3.5" y="7.5" width="13" height="13" rx="3.5" fill="#fff" stroke="#fff" strokeWidth="2" />
       </svg>
     </div>
   );
@@ -1531,15 +1531,6 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
                     </div>
                   )}
                   {it.images && it.images.length > 1 && <CarouselBadge />}
-                  {/* repost badge */}
-                  <div style={{ position: 'absolute', top: 6, left: 6, width: 18, height: 18, borderRadius: '50%', background: 'rgba(255,255,255,0.88)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round">
-                      <polyline points="1,4 1,10 7,10" />
-                      <polyline points="23,20 23,14 17,14" />
-                      <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10" />
-                      <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14" />
-                    </svg>
-                  </div>
                   {/* label */}
                   <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 8px 8px', background: 'linear-gradient(transparent, rgba(0,0,0,0.52))', textAlign: 'center', pointerEvents: 'none' }}>
                     <div style={{ fontFamily: "'Pretendard',sans-serif", fontWeight: 700, fontSize: 13, color: '#fff' }}>{it.label}</div>
