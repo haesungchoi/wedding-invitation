@@ -1857,36 +1857,34 @@ function MemoriesScreen({
   }];
   const interests = [{
     id: 'int-1',
+    label: '일상',
+    sub: 'Daily',
+    images: ['img/memories/repost-cafe/cafe-1.jpg', 'img/memories/repost-cafe/cafe-2.jpg']
+  }, {
+    id: 'int-2',
+    label: '맛집',
+    sub: 'Eats',
+    images: ['img/memories/interest-photo/interest-eats/1.JPG', 'img/memories/interest-photo/interest-eats/2.JPG', 'img/memories/interest-photo/interest-eats/3.JPG', 'img/memories/interest-photo/interest-eats/4.JPG', 'img/memories/interest-photo/interest-eats/5.JPG']
+  }, {
+    id: 'int-3',
+    label: '액티비티',
+    sub: 'Activity',
+    images: []
+  }, {
+    id: 'int-4',
+    label: '문화',
+    sub: 'Culture',
+    images: []
+  }, {
+    id: 'int-5',
     label: '여행',
     sub: 'Travel',
     images: []
   }, {
-    id: 'int-2',
-    label: '음악',
-    sub: 'Music',
-    images: []
-  }, {
-    id: 'int-3',
-    label: '카페',
-    sub: 'Café',
-    images: ['img/memories/repost-cafe/cafe-1.jpg', 'img/memories/repost-cafe/cafe-2.jpg']
-  },
-  // '사진' 카테고리 — HSC 사진은 img/memories/interest-photo/ 에 넣고 아래 배열에 경로를 추가하세요.
-  {
-    id: 'int-4',
-    label: '사진',
-    sub: 'Photo',
-    images: ['img/memories/interest-photo/HSC07295.JPG']
-  }, {
-    id: 'int-5',
-    label: '자연',
-    sub: 'Nature',
-    images: []
-  }, {
     id: 'int-6',
-    label: '음식',
-    sub: 'Food',
-    images: ['img/memories/repost-food/food-1.jpg', 'img/memories/repost-food/food-2.jpg']
+    label: '사진',
+    sub: 'Photos',
+    images: ['img/memories/interest-photo/HSC07295.JPG']
   }];
 
   // 관심사도 Feed처럼 스크롤되도록 — 각 관심사를 게시물 형태로 변환
