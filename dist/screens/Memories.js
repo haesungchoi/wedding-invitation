@@ -99,7 +99,7 @@ function TabIconBookmark({
     width: "24",
     height: "24",
     viewBox: "0 0 24 24",
-    fill: "none",
+    fill: active ? ink : 'none',
     stroke: c,
     strokeWidth: "1.6",
     strokeLinecap: "round",
@@ -412,26 +412,34 @@ function CarouselBadge() {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
-      top: 7,
-      right: 7
+      top: 8,
+      right: 8,
+      filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.35))'
     }
   }, /*#__PURE__*/React.createElement("svg", {
-    width: "18",
-    height: "18",
+    width: "20",
+    height: "20",
     viewBox: "0 0 24 24",
     fill: "none",
-    stroke: "rgba(255,255,255,0.92)",
-    strokeWidth: "2.2",
-    strokeLinecap: "round",
     strokeLinejoin: "round"
   }, /*#__PURE__*/React.createElement("rect", {
-    x: "2",
-    y: "2",
+    x: "7.5",
+    y: "3.5",
     width: "13",
     height: "13",
-    rx: "2"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M17 6h3a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-3"
+    rx: "3.5",
+    fill: "none",
+    stroke: "#fff",
+    strokeWidth: "2"
+  }), /*#__PURE__*/React.createElement("rect", {
+    x: "3.5",
+    y: "7.5",
+    width: "13",
+    height: "13",
+    rx: "3.5",
+    fill: "#fff",
+    stroke: "#fff",
+    strokeWidth: "2"
   })));
 }
 
@@ -2970,35 +2978,6 @@ function MemoriesScreen({
         lineHeight: 1
       }
     }, "＋")), it.images && it.images.length > 1 && /*#__PURE__*/React.createElement(CarouselBadge, null), /*#__PURE__*/React.createElement("div", {
-      style: {
-        position: 'absolute',
-        top: 6,
-        left: 6,
-        width: 18,
-        height: 18,
-        borderRadius: '50%',
-        background: 'rgba(255,255,255,0.88)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }
-    }, /*#__PURE__*/React.createElement("svg", {
-      width: "10",
-      height: "10",
-      viewBox: "0 0 24 24",
-      fill: "none",
-      stroke: "#111",
-      strokeWidth: "2.5",
-      strokeLinecap: "round"
-    }, /*#__PURE__*/React.createElement("polyline", {
-      points: "1,4 1,10 7,10"
-    }), /*#__PURE__*/React.createElement("polyline", {
-      points: "23,20 23,14 17,14"
-    }), /*#__PURE__*/React.createElement("path", {
-      d: "M20.49 9A9 9 0 0 0 5.64 5.64L1 10"
-    }), /*#__PURE__*/React.createElement("path", {
-      d: "M3.51 15A9 9 0 0 0 18.36 18.36L23 14"
-    }))), /*#__PURE__*/React.createElement("div", {
       style: {
         position: 'absolute',
         bottom: 0,
