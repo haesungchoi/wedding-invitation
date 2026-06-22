@@ -1036,9 +1036,13 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
       caption:'채원',
     },
     {
-      id:'mem-4', date:'2026.02.12', likes:'4,477', photoCount:1,
+      id:'mem-4', date:'2026.02.12', likes:'4,477', photoCount:5,
       images:[
         'img/memories/snap-shanghai/shanghai-1.jpg',
+        'img/memories/snap-shanghai/shanghai-2.jpg',
+        'img/memories/snap-shanghai/shanghai-3.jpg',
+        'img/memories/snap-shanghai/shanghai-4.jpg',
+        'img/memories/snap-shanghai/shanghai-5.jpg',
       ],
       caption:'📍 상하이',
     },
