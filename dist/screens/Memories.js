@@ -61,7 +61,7 @@ function TabIconFeed({
     stroke: "none"
   }));
 }
-function TabIconRepost({
+function TabIconTagged({
   active,
   ink
 }) {
@@ -75,14 +75,19 @@ function TabIconRepost({
     strokeWidth: "1.6",
     strokeLinecap: "round",
     strokeLinejoin: "round"
-  }, /*#__PURE__*/React.createElement("polyline", {
-    points: "1,4 1,10 7,10"
-  }), /*#__PURE__*/React.createElement("polyline", {
-    points: "23,20 23,14 17,14"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "2",
+    y: "2",
+    width: "20",
+    height: "20",
+    rx: "4",
+    ry: "4"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "9",
+    r: "3"
   }), /*#__PURE__*/React.createElement("path", {
-    d: "M20.49 9A9 9 0 0 0 5.64 5.64L1 10"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M3.51 15A9 9 0 0 0 18.36 18.36L23 14"
+    d: "M6.5 19a5.5 5.5 0 0 1 11 0"
   }));
 }
 function TabIconMention({
@@ -1977,7 +1982,7 @@ function MemoriesScreen({
     Icon: TabIconGrid
   }, {
     key: 'repost',
-    Icon: TabIconRepost
+    Icon: TabIconTagged
   }, {
     key: 'mention',
     Icon: TabIconMention
@@ -2640,6 +2645,6 @@ Object.assign(window, {
   StoryViewer,
   TabIconGrid,
   TabIconFeed,
-  TabIconRepost,
+  TabIconTagged,
   TabIconMention
 });

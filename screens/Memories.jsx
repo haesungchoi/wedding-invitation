@@ -24,14 +24,13 @@ function TabIconFeed({ active, ink }) {
     </svg>
   );
 }
-function TabIconRepost({ active, ink }) {
+function TabIconTagged({ active, ink }) {
   const c = active ? ink : '#AAAAAA';
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="1,4 1,10 7,10"/>
-      <polyline points="23,20 23,14 17,14"/>
-      <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"/>
-      <path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14"/>
+      <rect x="2" y="2" width="20" height="20" rx="4" ry="4"/>
+      <circle cx="12" cy="9" r="3"/>
+      <path d="M6.5 19a5.5 5.5 0 0 1 11 0"/>
     </svg>
   );
 }
@@ -1151,7 +1150,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
 
   const TABS = [
     { key:'grid',    Icon: TabIconGrid    },
-    { key:'repost',  Icon: TabIconRepost  },
+    { key:'repost',  Icon: TabIconTagged  },
     { key:'mention', Icon: TabIconMention },
   ];
 
@@ -1367,4 +1366,4 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
 
 Object.assign(window, { MemoriesScreen, FollowingSheet, MemoryPost, PhotoCarousel, CarouselBadge, GuestbookTab,
   HeartIcon, CommentIcon, SendIcon, StoryViewer,
-  TabIconGrid, TabIconFeed, TabIconRepost, TabIconMention });
+  TabIconGrid, TabIconFeed, TabIconTagged, TabIconMention });
