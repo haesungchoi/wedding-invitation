@@ -90,6 +90,24 @@ function TabIconTagged({
     d: "M6.5 19a5.5 5.5 0 0 1 11 0"
   }));
 }
+function TabIconBookmark({
+  active,
+  ink
+}) {
+  const c = active ? ink : '#AAAAAA';
+  return /*#__PURE__*/React.createElement("svg", {
+    width: "24",
+    height: "24",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: c,
+    strokeWidth: "1.6",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4.5L6 21V4z"
+  }));
+}
 function TabIconMention({
   active,
   ink
@@ -2332,7 +2350,7 @@ function MemoriesScreen({
     Icon: TabIconGrid
   }, {
     key: 'repost',
-    Icon: TabIconTagged
+    Icon: TabIconBookmark
   }, {
     key: 'mention',
     Icon: TabIconMention
