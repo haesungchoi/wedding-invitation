@@ -501,12 +501,6 @@ function PCMemoriesSection({ lime, ink, tweaks, variant, openSheet }) {
                 <image-slot id={it.id} shape="rect" fit="cover" placeholder="탭하여 추가"
                   src={it.src}
                   style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
-                <div style={{ position: 'absolute', top: 6, right: 6, width: 18, height: 18, borderRadius: '50%', background: 'rgba(255,255,255,0.88)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round">
-                    <polyline points="1,4 1,10 7,10" /><polyline points="23,20 23,14 17,14" />
-                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10" /><path d="M3.51 15A9 9 0 0 0 18.36 18.36L23 14" />
-                  </svg>
-                </div>
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 8px 8px', background: 'linear-gradient(transparent,rgba(0,0,0,0.52))', textAlign: 'center' }}>
                   <div style={{ fontFamily: "'Pretendard',sans-serif", fontWeight: 700, fontSize: 13, color: '#fff' }}>{it.label}</div>
                   <div style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{it.sub}</div>

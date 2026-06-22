@@ -1024,35 +1024,6 @@ function PCMemoriesSection({
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
-      top: 6,
-      right: 6,
-      width: 18,
-      height: 18,
-      borderRadius: '50%',
-      background: 'rgba(255,255,255,0.88)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("svg", {
-    width: "10",
-    height: "10",
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "#111",
-    strokeWidth: "2.5",
-    strokeLinecap: "round"
-  }, /*#__PURE__*/React.createElement("polyline", {
-    points: "1,4 1,10 7,10"
-  }), /*#__PURE__*/React.createElement("polyline", {
-    points: "23,20 23,14 17,14"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M20.49 9A9 9 0 0 0 5.64 5.64L1 10"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M3.51 15A9 9 0 0 0 18.36 18.36L23 14"
-  }))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
       bottom: 0,
       left: 0,
       right: 0,
