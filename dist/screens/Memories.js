@@ -1772,346 +1772,6 @@ function StoryViewer({
   }, "아래로 스와이프하여 닫기"));
 }
 
-/* ─── Promises Sheet ────────────────────────────────────────── */
-function PromisesSheet({
-  open,
-  onClose,
-  ink
-}) {
-  const [dragY, setDragY] = React.useState(0);
-  const [closing, setClosing] = React.useState(false);
-  const drag = React.useRef({
-    active: false,
-    startY: 0,
-    startTime: 0,
-    delta: 0
-  });
-  const startDrag = y => {
-    drag.current = {
-      active: true,
-      startY: y,
-      startTime: Date.now(),
-      delta: 0
-    };
-  };
-  const updateDrag = y => {
-    if (!drag.current.active) return;
-    const d = y - drag.current.startY;
-    if (d > 0) {
-      drag.current.delta = d;
-      setDragY(d);
-    }
-  };
-  const commitDrag = () => {
-    if (!drag.current.active) return;
-    drag.current.active = false;
-    const elapsed = Math.max(1, Date.now() - drag.current.startTime);
-    const d = drag.current.delta;
-    drag.current.delta = 0;
-    if (d > 80 || d / elapsed > 0.45) {
-      setClosing(true);
-      setDragY(700);
-      setTimeout(() => {
-        setDragY(0);
-        setClosing(false);
-        onClose();
-      }, 300);
-    } else {
-      setDragY(0);
-    }
-  };
-  const attachMouse = e => {
-    startDrag(e.clientY);
-    const mm = ev => updateDrag(ev.clientY);
-    const mu = () => {
-      commitDrag();
-      window.removeEventListener('mousemove', mm);
-      window.removeEventListener('mouseup', mu);
-    };
-    window.addEventListener('mousemove', mm);
-    window.addEventListener('mouseup', mu);
-  };
-  const PROMISES = [{
-    emoji: '🌙',
-    text: '항상 네 곁에 있을게'
-  }, {
-    emoji: '🍜',
-    text: '네가 먹고 싶은 거 다 먹으러 갈게'
-  }, {
-    emoji: '✈️',
-    text: '같이 세계 곳곳을 여행할게'
-  }, {
-    emoji: '📸',
-    text: '우리 추억을 계속 기록할게'
-  }, {
-    emoji: '😴',
-    text: '힘들 때 먼저 안아줄게'
-  }, {
-    emoji: '☀️',
-    text: '네가 웃을 때 나도 행복할게'
-  }, {
-    emoji: '🤝',
-    text: '어떤 결정도 함께 할게'
-  }, {
-    emoji: '🌸',
-    text: '같이 늙어가도 예쁘게 봐줄게'
-  }, {
-    emoji: '🎵',
-    text: '좋아하는 노래 같이 들을게'
-  }, {
-    emoji: '💪',
-    text: '네 꿈을 항상 응원할게'
-  }, {
-    emoji: '🌊',
-    text: '슬플 때도 즐거울 때도 함께할게'
-  }, {
-    emoji: '♾️',
-    text: '이 약속들, 영원히 지킬게'
-  }];
-  if (!open) return null;
-  return /*#__PURE__*/React.createElement("div", {
-    className: "scrim",
-    onClick: onClose,
-    style: {
-      display: 'flex',
-      alignItems: 'flex-end',
-      zIndex: 110
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    onClick: e => e.stopPropagation(),
-    style: {
-      width: '100%',
-      background: '#fff',
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-      animation: 'sheet-in 280ms cubic-bezier(.32,.72,0,1) both',
-      transform: `translateY(${dragY}px)`,
-      transition: !closing && dragY > 0 ? 'none' : 'transform 300ms cubic-bezier(.32,.72,0,1)',
-      maxHeight: '72vh',
-      display: 'flex',
-      flexDirection: 'column'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    onTouchStart: e => startDrag(e.touches[0].clientY),
-    onTouchMove: e => updateDrag(e.touches[0].clientY),
-    onTouchEnd: commitDrag,
-    onTouchCancel: commitDrag,
-    onMouseDown: attachMouse,
-    style: {
-      padding: '12px 0 0',
-      display: 'flex',
-      justifyContent: 'center',
-      cursor: 'grab',
-      touchAction: 'none',
-      userSelect: 'none',
-      flexShrink: 0
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 36,
-      height: 4,
-      borderRadius: 99,
-      background: 'rgba(0,0,0,0.18)'
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: 'center',
-      padding: '18px 0 6px',
-      fontFamily: "'Bricolage Grotesque',sans-serif",
-      fontWeight: 600,
-      fontSize: 17,
-      color: ink,
-      flexShrink: 0
-    }
-  }, "∞개의 약속"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: 'center',
-      fontFamily: "'Pretendard',sans-serif",
-      fontSize: 12,
-      color: '#bbb',
-      marginBottom: 10,
-      flexShrink: 0
-    }
-  }, "아래로 쓸어내리면 닫혀요"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      overflowY: 'auto',
-      flex: 1,
-      paddingBottom: 36
-    }
-  }, PROMISES.map((p, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 14,
-      padding: '13px 24px',
-      borderBottom: i < PROMISES.length - 1 ? '1px solid rgba(17,17,17,0.06)' : 'none'
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 22,
-      lineHeight: 1,
-      flexShrink: 0
-    }
-  }, p.emoji), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontFamily: "'Pretendard',sans-serif",
-      fontSize: 15,
-      color: '#222',
-      lineHeight: 1.4
-    }
-  }, p.text))))));
-}
-
-/* ─── Love Letter ───────────────────────────────────────────── */
-function LoveLetter({
-  open,
-  onClose,
-  ink
-}) {
-  const [dragY, setDragY] = React.useState(0);
-  const [closing, setClosing] = React.useState(false);
-  const drag = React.useRef({
-    active: false,
-    startY: 0,
-    startTime: 0,
-    delta: 0
-  });
-  const startDrag = y => {
-    drag.current = {
-      active: true,
-      startY: y,
-      startTime: Date.now(),
-      delta: 0
-    };
-  };
-  const updateDrag = y => {
-    if (!drag.current.active) return;
-    const d = y - drag.current.startY;
-    if (d > 0) {
-      drag.current.delta = d;
-      setDragY(d);
-    }
-  };
-  const commitDrag = () => {
-    if (!drag.current.active) return;
-    drag.current.active = false;
-    const elapsed = Math.max(1, Date.now() - drag.current.startTime);
-    const d = drag.current.delta;
-    drag.current.delta = 0;
-    if (d > 80 || d / elapsed > 0.45) {
-      setClosing(true);
-      setDragY(700);
-      setTimeout(() => {
-        setDragY(0);
-        setClosing(false);
-        onClose();
-      }, 300);
-    } else {
-      setDragY(0);
-    }
-  };
-  const attachMouse = e => {
-    startDrag(e.clientY);
-    const mm = ev => updateDrag(ev.clientY);
-    const mu = () => {
-      commitDrag();
-      window.removeEventListener('mousemove', mm);
-      window.removeEventListener('mouseup', mu);
-    };
-    window.addEventListener('mousemove', mm);
-    window.addEventListener('mouseup', mu);
-  };
-  if (!open) return null;
-  return /*#__PURE__*/React.createElement("div", {
-    className: "scrim",
-    onClick: onClose,
-    style: {
-      display: 'flex',
-      alignItems: 'flex-end',
-      zIndex: 110
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    onClick: e => e.stopPropagation(),
-    style: {
-      width: '100%',
-      background: '#FDF8F0',
-      borderTopLeftRadius: 24,
-      borderTopRightRadius: 24,
-      animation: 'sheet-in 280ms cubic-bezier(.32,.72,0,1) both',
-      transform: `translateY(${dragY}px)`,
-      transition: !closing && dragY > 0 ? 'none' : 'transform 300ms cubic-bezier(.32,.72,0,1)'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    onTouchStart: e => startDrag(e.touches[0].clientY),
-    onTouchMove: e => updateDrag(e.touches[0].clientY),
-    onTouchEnd: commitDrag,
-    onTouchCancel: commitDrag,
-    onMouseDown: attachMouse,
-    style: {
-      padding: '12px 0 0',
-      display: 'flex',
-      justifyContent: 'center',
-      cursor: 'grab',
-      touchAction: 'none',
-      userSelect: 'none'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 36,
-      height: 4,
-      borderRadius: 99,
-      background: 'rgba(0,0,0,0.12)'
-    }
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: '28px 32px 44px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Pretendard',sans-serif",
-      fontSize: 11,
-      color: '#bbb',
-      letterSpacing: '0.14em',
-      textTransform: 'uppercase',
-      marginBottom: 24
-    }
-  }, "To. 채원에게"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Grand Hotel',cursive",
-      fontSize: 34,
-      color: ink,
-      lineHeight: 1.4,
-      marginBottom: 28
-    }
-  }, "세상에 단 하나뿐인", /*#__PURE__*/React.createElement("br", null), "당신에게."), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Pretendard',sans-serif",
-      fontSize: 15,
-      color: '#555',
-      lineHeight: 2.1,
-      marginBottom: 36
-    }
-  }, "당신을 만난 것이", /*#__PURE__*/React.createElement("br", null), "내 인생 최고의 선택이에요.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("br", null), "앞으로도, 영원히,", /*#__PURE__*/React.createElement("br", null), "그 이상으로."), /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: 'right'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Grand Hotel',cursive",
-      fontSize: 24,
-      color: ink
-    }
-  }, "해성 드림"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Pretendard',sans-serif",
-      fontSize: 11,
-      color: '#bbb',
-      marginTop: 6
-    }
-  }, "2026.09.12")))));
-}
-
 /* ─── Main Screen ───────────────────────────────────────────── */
 function MemoriesScreen({
   goTo,
@@ -2143,18 +1803,6 @@ function MemoriesScreen({
     }]);
     // 애니메이션(1.4s)이 끝나면 스스로 제거 → 오버레이가 남아 클릭을 막지 않음
     setTimeout(() => setHearts(hs => hs.filter(h => h.id !== id)), 1400);
-  };
-  const [showPromises, setShowPromises] = React.useState(false);
-  const [postToast, setPostToast] = React.useState('');
-  const [showLetter, setShowLetter] = React.useState(false);
-  const POST_TOASTS = ['우리가 함께 먹은 삼겹살 인분이기도 해요 🥩', '두 사람이 맞춘 카페 방문 횟수예요 ☕', '이 초대장을 만든 버전 수예요 😅', '함께한 여행지 개수예요 ✈️', '우리가 서로한테 화낸 횟수... 는 아니에요 😇'];
-  const postToastIdxRef = React.useRef(0);
-  const postToastTimerRef = React.useRef(null);
-  const handlePostStat = () => {
-    if (postToastTimerRef.current) clearTimeout(postToastTimerRef.current);
-    setPostToast(POST_TOASTS[postToastIdxRef.current % POST_TOASTS.length]);
-    postToastIdxRef.current += 1;
-    postToastTimerRef.current = setTimeout(() => setPostToast(''), 2800);
   };
   const screenRef = React.useRef(null);
   const topbarRef = React.useRef(null);
@@ -2375,32 +2023,7 @@ function MemoriesScreen({
     groups: story.groups,
     startGroupIdx: story.startGroupIdx,
     onClose: () => setStory(null)
-  }), showPromises && /*#__PURE__*/React.createElement(PromisesSheet, {
-    open: showPromises,
-    onClose: () => setShowPromises(false),
-    ink: ink
-  }), showLetter && /*#__PURE__*/React.createElement(LoveLetter, {
-    open: showLetter,
-    onClose: () => setShowLetter(false),
-    ink: ink
-  }), postToast && /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'fixed',
-      bottom: 88,
-      left: '50%',
-      transform: 'translateX(-50%)',
-      background: 'rgba(17,17,17,0.88)',
-      color: '#fff',
-      padding: '10px 20px',
-      borderRadius: 99,
-      fontFamily: "'Pretendard',sans-serif",
-      fontSize: 13,
-      fontWeight: 500,
-      whiteSpace: 'nowrap',
-      zIndex: 200,
-      pointerEvents: 'none'
-    }
-  }, postToast), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     ref: topbarRef,
     style: {
       position: 'sticky',
@@ -2571,25 +2194,17 @@ function MemoriesScreen({
     }
   }, [{
     n: posts.length,
-    l: '게시물',
-    onClick: handlePostStat
+    l: '게시물'
   }, {
     n: '∞',
-    l: '함께할 날',
-    onClick: () => setShowPromises(true)
+    l: '함께할 날'
   }, {
     n: '1',
-    l: '영원히',
-    onClick: () => setShowLetter(true)
-  }].map((s, i) => /*#__PURE__*/React.createElement("button", {
+    l: '영원히'
+  }].map((s, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
-    onClick: s.onClick,
-    className: "tap",
     style: {
       textAlign: 'center',
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
       padding: '4px 8px'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -3016,8 +2631,6 @@ function MemoriesScreen({
 Object.assign(window, {
   MemoriesScreen,
   FollowingSheet,
-  PromisesSheet,
-  LoveLetter,
   MemoryPost,
   PhotoCarousel,
   CarouselBadge,
