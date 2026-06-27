@@ -198,21 +198,39 @@ function MainScreen({ goTo, openSheet, tweaks }) {
           </div>
 
           {/* buttons column — aligns with 윤채원 */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
+            {/* Filled (M3 Filled Button) — highest emphasis for primary action */}
             <button onClick={() => openSheet('map')} className="tap"
             style={{
-              border: `1px solid ${ink}`, background: 'transparent',
-              padding: '5px 8px', borderRadius: 99, cursor: 'pointer',
-              fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.14em',
-              fontWeight: 300
-            }}>LOCATION</button>
+              border: `1.5px solid ${ink}`, background: ink, color: lime,
+              padding: '9px 14px', borderRadius: 99, cursor: 'pointer',
+              fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.12em',
+              fontWeight: 500,
+              display: 'flex', alignItems: 'center', gap: 6,
+              minHeight: 36, lineHeight: 1
+            }}>
+              <svg width="10" height="13" viewBox="0 0 10 13" fill="none" style={{ flexShrink: 0 }}>
+                <path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 8 5 8s5-4.25 5-8c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/>
+              </svg>
+              LOCATION
+            </button>
+            {/* Outlined (M3 Outlined Button) — secondary action */}
             <button onClick={() => openSheet('account-both')} className="tap"
             style={{
-              border: `1px solid ${ink}`, background: 'transparent',
-              padding: '5px 8px', borderRadius: 99, cursor: 'pointer',
-              fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.14em',
-              fontWeight: 300
-            }}>ACCOUNTS</button>
+              border: `1.5px solid ${ink}`, background: 'transparent', color: ink,
+              padding: '9px 14px', borderRadius: 99, cursor: 'pointer',
+              fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.12em',
+              fontWeight: 500,
+              display: 'flex', alignItems: 'center', gap: 6,
+              minHeight: 36, lineHeight: 1
+            }}>
+              <svg width="12" height="11" viewBox="0 0 12 11" fill="none" style={{ flexShrink: 0 }}>
+                <rect x="0.75" y="0.75" width="10.5" height="9.5" rx="1.25" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M0.75 3.5h10.5" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M3 6.5h2M3 8h3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+              </svg>
+              ACCOUNTS
+            </button>
           </div>
         </div>
         {/* memories CTA */}
@@ -253,14 +271,23 @@ function MainScreen({ goTo, openSheet, tweaks }) {
               width: '100%', height: '100%', objectFit: 'cover',
               objectPosition: 'center 35%'
             }} />
+            {/* M3 Assist Chip — icon + label + directional arrow clearly signals "tap to explore" */}
             <div style={{
               position: 'absolute', top: 10, left: 10,
-              background: lime, color: ink,
-              fontFamily: "'Pretendard', sans-serif", fontSize: 9, fontWeight: 700,
-              padding: '4px 8px', letterSpacing: '0.18em',
-              borderRadius: 2,
-              display: 'flex', alignItems: 'center', gap: 6
-            }}>우리의 추억 보기 <span style={{ fontSize: 11, opacity: 0.7 }}>↗</span></div>
+              background: ink, color: lime,
+              fontFamily: "'Pretendard', sans-serif", fontSize: 10, fontWeight: 600,
+              padding: '7px 11px', letterSpacing: '0.12em',
+              borderRadius: 99,
+              display: 'flex', alignItems: 'center', gap: 6,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.22)'
+            }}>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style={{ flexShrink: 0 }}>
+                <circle cx="5.5" cy="5.5" r="4.75" stroke="currentColor" strokeWidth="1.2"/>
+                <circle cx="5.5" cy="5.5" r="1.6" fill="currentColor"/>
+              </svg>
+              우리의 추억 보기
+              <span style={{ fontSize: 13, fontWeight: 300, lineHeight: 1 }}>↗</span>
+            </div>
           </div>
         </button>
 
@@ -382,27 +409,27 @@ function MainScreen({ goTo, openSheet, tweaks }) {
         }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
             <div className="label-en">MEAL</div>
-            <div className="ko-light" style={{ fontSize: 11, color: '#666' }}>식사</div>
+            <div className="ko-light" style={{ fontSize: 12, color: '#666' }}>식사</div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             <div style={{ paddingBottom: 16 }}>
-              <div className="ko-med" style={{ fontSize: 14, marginBottom: 6 }}>식사 시간</div>
-              <div className="ko-light" style={{ fontSize: 13, color: '#555', lineHeight: 1.65 }}>
+              <div className="ko-med" style={{ fontSize: 15, marginBottom: 6 }}>식사 시간</div>
+              <div className="ko-light" style={{ fontSize: 15, color: '#555', lineHeight: 1.65 }}>
                 오후 1시 ~ 3시까지 식사가 제공됩니다
               </div>
             </div>
             <div className="hr" style={{ margin: '0 0 16px' }} />
             <div style={{ paddingBottom: 16 }}>
-              <div className="ko-med" style={{ fontSize: 14, marginBottom: 6 }}>식사 장소</div>
-              <div className="ko-light" style={{ fontSize: 13, color: '#555', lineHeight: 1.65 }}>
+              <div className="ko-med" style={{ fontSize: 15, marginBottom: 6 }}>식사 장소</div>
+              <div className="ko-light" style={{ fontSize: 15, color: '#555', lineHeight: 1.65 }}>
                 서초사옥 지하1층에서 이뤄집니다<br />
                 양식 · 중식 · 일식 중 선택하실 수 있습니다
               </div>
             </div>
             <div className="hr" style={{ margin: '0 0 16px' }} />
             <div>
-              <div className="ko-med" style={{ fontSize: 14, marginBottom: 6 }}>식당 선택</div>
-              <div className="ko-light" style={{ fontSize: 13, color: '#555', lineHeight: 1.65 }}>
+              <div className="ko-med" style={{ fontSize: 15, marginBottom: 6 }}>식당 선택</div>
+              <div className="ko-light" style={{ fontSize: 15, color: '#555', lineHeight: 1.65 }}>
                 식당 선택은 축의대에서 이뤄지오니<br />
                 함께 오시는 분이 계시다면 미리 상의하고 오시면 좋습니다
               </div>
@@ -422,19 +449,37 @@ function MainScreen({ goTo, openSheet, tweaks }) {
             background: 'transparent', padding: 0, cursor: 'pointer', textAlign: 'left'
           }}>
             <div style={{
-              border: `1px solid ${ink}`, background: '#fff',
-              padding: '22px 20px', borderRadius: 0,
+              border: `1.5px solid ${ink}`, background: '#fff',
+              padding: '20px 20px', borderRadius: 0,
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               fontFamily: "'Pretendard'"
             }}>
-              <div style={{ flex: 1, textAlign: 'left' }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, marginBottom: 6 }}>
-                  <div className="label-en">VENUE</div>
-                  <div className="ko-light" style={{ fontSize: 11, color: '#666' }}>오시는 길 보기</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1 }}>
+                {/* leading icon — map pin */}
+                <div style={{
+                  width: 40, height: 40, borderRadius: '50%',
+                  border: `1.5px solid ${ink}`, flexShrink: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}>
+                  <svg width="14" height="17" viewBox="0 0 14 17" fill="none">
+                    <path d="M7 0C4.24 0 2 2.24 2 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 7A2 2 0 1 1 7 3a2 2 0 0 1 0 4z" fill={ink}/>
+                  </svg>
                 </div>
-                <div className="ko-med" style={{ fontSize: 16 }}>삼성전자 서초사옥 5층</div>
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4 }}>
+                    <div className="label-en">VENUE</div>
+                    <div className="ko-light" style={{ fontSize: 12, color: '#888' }}>오시는 길 보기</div>
+                  </div>
+                  <div className="ko-med" style={{ fontSize: 16 }}>삼성전자 서초사옥 5층</div>
+                </div>
               </div>
-              <span style={{ fontSize: 22, marginLeft: 12 }}>→</span>
+              {/* M3 FAB-mini style trailing action indicator */}
+              <div style={{
+                width: 40, height: 40, borderRadius: '50%',
+                background: ink, color: '#fff',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 18, flexShrink: 0, marginLeft: 12
+              }}>→</div>
             </div>
           </button>
           <div id="section-accounts">
@@ -444,19 +489,38 @@ function MainScreen({ goTo, openSheet, tweaks }) {
               background: 'transparent', padding: 0, cursor: 'pointer', textAlign: 'left'
             }}>
               <div style={{
-                border: `1px solid ${ink}`, background: '#fff',
-                padding: '22px 20px', borderRadius: 0,
+                border: `1.5px solid ${ink}`, background: '#fff',
+                padding: '20px 20px', borderRadius: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 fontFamily: "'Pretendard'"
               }}>
-                <div style={{ flex: 1, textAlign: 'left' }}>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 6 }}>
-                    <div className="label-en">ACCOUNT</div>
-                    <div className="ko-light" style={{ fontSize: 11, color: '#666' }}>계좌번호 보기</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1 }}>
+                  {/* leading icon — account/card */}
+                  <div style={{
+                    width: 40, height: 40, borderRadius: '50%',
+                    border: `1.5px solid ${ink}`, flexShrink: 0,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}>
+                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none">
+                      <rect x="1" y="1" width="14" height="12" rx="1.5" stroke={ink} strokeWidth="1.5"/>
+                      <path d="M1 4.5h14" stroke={ink} strokeWidth="1.5"/>
+                      <path d="M4 8.5h3M4 10.5h5" stroke={ink} strokeWidth="1.2" strokeLinecap="round"/>
+                    </svg>
                   </div>
-                  <div className="ko-med" style={{ fontSize: 16 }}>마음 전하실 곳</div>
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 4 }}>
+                      <div className="label-en">ACCOUNT</div>
+                      <div className="ko-light" style={{ fontSize: 12, color: '#888' }}>계좌번호 보기</div>
+                    </div>
+                    <div className="ko-med" style={{ fontSize: 16 }}>마음 전하실 곳</div>
+                  </div>
                 </div>
-                <span style={{ fontSize: 22, marginLeft: 12 }}>→</span>
+                <div style={{
+                  width: 40, height: 40, borderRadius: '50%',
+                  background: ink, color: '#fff',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 18, flexShrink: 0, marginLeft: 12
+                }}>→</div>
               </div>
             </button>
           </div>

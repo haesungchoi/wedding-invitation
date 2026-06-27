@@ -34,14 +34,6 @@ function TabIconTagged({ active, ink }) {
     </svg>
   );
 }
-function TabIconBookmark({ active, ink }) {
-  const c = active ? ink : '#AAAAAA';
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? ink : 'none'} stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4.5L6 21V4z" />
-    </svg>
-  );
-}
 function TabIconMention({ active, ink }) {
   const c = active ? ink : '#AAAAAA';
   return (
@@ -777,6 +769,7 @@ function StoryViewer({ groups, startGroupIdx = 0, onClose }) {
   const DURATION = 4000;
 
   const images = groups[groupIdx]?.images || [];
+  const captions = groups[groupIdx]?.captions || [];
 
   const goPrev = () => {
     if (idx === 0 && groupIdx === 0) return;
@@ -962,13 +955,23 @@ function StoryViewer({ groups, startGroupIdx = 0, onClose }) {
         }} />
       </div>
 
-      {/* 하단 스와이프 힌트 */}
-      <div style={{
-        textAlign: 'center', padding: '10px 0 16px',
-        color: 'rgba(255,255,255,0.3)',
-        fontFamily: "'Pretendard',sans-serif", fontSize: 11, letterSpacing: '0.1em',
-        pointerEvents: 'none',
-      }}>아래로 스와이프하여 닫기</div>
+      {/* 캡션 + 하단 스와이프 힌트 */}
+      <div style={{ pointerEvents: 'none' }}>
+        {captions[idx] && (
+          <div style={{
+            textAlign: 'center', padding: '14px 24px 4px',
+            color: 'rgba(255,255,255,0.92)',
+            fontFamily: "'Noto Sans KR', sans-serif", fontSize: 13, fontWeight: 400,
+            lineHeight: 1.6, letterSpacing: '-0.01em',
+            textShadow: '0 1px 6px rgba(0,0,0,0.5)',
+          }}>{captions[idx]}</div>
+        )}
+        <div style={{
+          textAlign: 'center', padding: '8px 0 16px',
+          color: 'rgba(255,255,255,0.3)',
+          fontFamily: "'Pretendard',sans-serif", fontSize: 11, letterSpacing: '0.1em',
+        }}>아래로 스와이프하여 닫기</div>
+      </div>
     </div>
   );
 }
@@ -980,7 +983,6 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
   const ink = tweaks.ink;
   const [tab, setTab] = React.useState('grid');
   const [feedActive, setFeedActive] = React.useState(false);
-  const [feedType, setFeedType] = React.useState('posts'); // 'posts' | 'interests'
   const [feedScrollTo, setFeedScrollTo] = React.useState(null);
   const [story, setStory] = React.useState(null);
   const [hearts, setHearts] = React.useState([]);
@@ -1000,6 +1002,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
   const [topbarH, setTopbarH] = React.useState(52);
 
   const proposeImages = ['img/memories/propose-newyork/newyork-1.jpg', 'img/memories/propose-newyork/newyork-2.jpg'];
+  const proposeCaptions = ['2025년 6월, New York에서 프로포즈', 'Brookyln bridge가 보이는 Pebble beach에서'];
 
   const highlights = [
     {
@@ -1078,27 +1081,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
     },
   ];
 
-  const interests = [
-    { id: 'int-1', label: '일상', sub: 'Daily', images: ['img/memories/interest-photo/interest-daily/IMG_1551.JPG', 'img/memories/interest-photo/interest-daily/IMG_1727.JPG', 'img/memories/interest-photo/interest-daily/IMG_2828.jpeg', 'img/memories/interest-photo/interest-daily/IMG_3053.JPG', 'img/memories/interest-photo/interest-daily/IMG_5753.JPG', 'img/memories/interest-photo/interest-daily/IMG_6411.JPG', 'img/memories/interest-photo/interest-daily/IMG_8708.JPG', 'img/memories/interest-photo/interest-daily/QT004134.DNG.JPG', 'img/memories/interest-photo/interest-daily/QT004708.JPG'] },
-    { id: 'int-2', label: '맛집', sub: 'Eats', images: ['img/memories/interest-photo/interest-eats/1.JPG', 'img/memories/interest-photo/interest-eats/2.JPG', 'img/memories/interest-photo/interest-eats/3.JPG', 'img/memories/interest-photo/interest-eats/4.JPG', 'img/memories/interest-photo/interest-eats/5.JPG', 'img/memories/interest-photo/interest-eats/IMG_1655.JPG', 'img/memories/interest-photo/interest-eats/IMG_1767.JPG', 'img/memories/interest-photo/interest-eats/IMG_3748.jpeg', 'img/memories/interest-photo/interest-eats/IMG_4166.JPG', 'img/memories/interest-photo/interest-eats/IMG_8923.JPG'] },
-    { id: 'int-3', label: '액티비티', sub: 'Activity', images: ['img/memories/interest-photo/interest-activity/IMG_1107.JPG', 'img/memories/interest-photo/interest-activity/IMG_6500.JPG'] },
-    { id: 'int-4', label: '문화', sub: 'Culture', images: ['img/memories/interest-photo/interest-culture/IMG_0874.JPG', 'img/memories/interest-photo/interest-culture/IMG_1404.JPG', 'img/memories/interest-photo/interest-culture/IMG_1857.JPG', 'img/memories/interest-photo/interest-culture/IMG_1936.JPG', 'img/memories/interest-photo/interest-culture/IMG_2469.jpeg', 'img/memories/interest-photo/interest-culture/IMG_3731.JPG', 'img/memories/interest-photo/interest-culture/IMG_3900.jpeg', 'img/memories/interest-photo/interest-culture/IMG_7273.JPG', 'img/memories/interest-photo/interest-culture/IMG_7321.JPG', 'img/memories/interest-photo/interest-culture/IMG_7693.JPG'] },
-    { id: 'int-5', label: '여행', sub: 'Travel', images: ['img/memories/interest-photo/interest-travel/1.jpeg', 'img/memories/interest-photo/interest-travel/AE61BB3F-3AC6-4C23-9147-D81FC11F20FF.JPG', 'img/memories/interest-photo/interest-travel/FEFBF014-C742-4181-9FD6-F74450949DD7.JPG', 'img/memories/interest-photo/interest-travel/IMG_0122.JPG', 'img/memories/interest-photo/interest-travel/IMG_3170.jpeg', 'img/memories/interest-photo/interest-travel/IMG_4262.JPG', 'img/memories/interest-photo/interest-travel/IMG_8334.JPG', 'img/memories/interest-photo/interest-travel/IMG_8430.JPG', 'img/memories/interest-photo/interest-travel/IMG_9529.JPG'] },
-    { id: 'int-6', label: '사진', sub: 'Photos', images: ['img/memories/interest-photo/interest-photos/TREY4093.jpg', 'img/memories/interest-photo/interest-photos/TREY4254-2.jpg', 'img/memories/interest-photo/interest-photos/TREY4577.jpg'] },
-  ];
-
-  // 관심사도 Feed처럼 스크롤되도록 — 각 관심사를 게시물 형태로 변환
-  const interestPosts = interests.map((it, i) => ({
-    id: it.id,
-    date: it.sub,
-    likes: ['1,204', '2,318', '3,402', '4,510', '1,890', '5,221'][i] || '1,000',
-    photoCount: it.images.length || 1,
-    images: it.images,
-    caption: `${it.label} · 두 사람이 함께 좋아하는 것`,
-  }));
-
-  const openInFeed = (type, id) => {
-    setFeedType(type);
+  const openPostInFeed = id => {
     setFeedScrollTo(id);
     setFeedActive(true);
     if (screenRef.current) screenRef.current.scrollTop = 0;
@@ -1108,10 +1091,6 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
       if (screen && el) screen.scrollTop = el.offsetTop - topbarH;
     }, 60);
   };
-  const openPostInFeed = id => openInFeed('posts', id);
-  const openInterestInFeed = id => openInFeed('interests', id);
-
-  const feedItems = feedType === 'interests' ? interestPosts : posts;
 
   const backFromFeed = () => {
     setFeedActive(false);
@@ -1162,7 +1141,6 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
 
   const TABS = [
     { key: 'grid', Icon: TabIconGrid },
-    { key: 'repost', Icon: TabIconBookmark },
     { key: 'mention', Icon: TabIconMention },
   ];
 
@@ -1207,7 +1185,7 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
         <div style={{ background: '#fff', padding: '20px 16px 0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             {/* avatar ring — Instagram gradient story ring */}
-            <button className="tap" onClick={() => setStory({ groups: [{ images: proposeImages }], startGroupIdx: 0 })} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', borderRadius: '50%', flexShrink: 0 }}>
+            <button className="tap" onClick={() => setStory({ groups: [{ images: proposeImages, captions: proposeCaptions }], startGroupIdx: 0 })} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', borderRadius: '50%', flexShrink: 0 }}>
               <div style={{ padding: 2.5, borderRadius: '50%', background: 'linear-gradient(45deg,#fcaf45,#f77737,#f56040,#fd1d1d,#e1306c,#c13584,#833ab4,#5851db)' }}>
                 <div style={{ padding: 2.5, borderRadius: '50%', background: '#fff' }}>
                   <img src="img/couple-main.jpg" alt="채원 ♥ 해성" loading="lazy" decoding="async" draggable={false}
@@ -1245,13 +1223,11 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
             <button className="tap" onClick={() => setTab('mention')} style={{ flex: 1, padding: '7px 0', background: 'rgba(17,17,17,0.07)', border: '1px solid rgba(17,17,17,0.14)', borderRadius: 9, fontFamily: "'Pretendard',sans-serif", fontWeight: 600, fontSize: 13, color: ink, cursor: 'pointer' }}>
               축하메시지 보내기
             </button>
-            <button className="tap" onClick={burstHeart} style={{ width: 40, background: 'rgba(17,17,17,0.07)', border: '1px solid rgba(17,17,17,0.14)', borderRadius: 9, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={ink} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <line x1="19" y1="8" x2="19" y2="14" />
-                <line x1="22" y1="11" x2="16" y2="11" />
+            <button className="tap" onClick={burstHeart} style={{ width: 40, background: 'rgba(17,17,17,0.07)', border: '1px solid rgba(17,17,17,0.14)', borderRadius: 9, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={ink} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
+              <span style={{ fontSize: 10, fontWeight: 700, color: ink, lineHeight: 1, marginBottom: 1 }}>+</span>
             </button>
           </div>
           {hearts.length > 0 && (
@@ -1322,45 +1298,10 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
       {/* ── FEED ───────────────────────────────────────── */}
       {feedActive && (
         <div style={{ background: '#fff' }}>
-          {feedItems.map(p => <MemoryPost key={p.id} lime={lime} ink={ink} {...p} onSwipeBack={backFromFeed} />)}
+          {posts.map(p => <MemoryPost key={p.id} lime={lime} ink={ink} {...p} onSwipeBack={backFromFeed} />)}
           <div style={{ background: lime, padding: '40px 24px 80px', textAlign: 'center' }}>
             <div style={{ fontFamily: "'Grand Hotel',cursive", fontSize: 44, color: ink, lineHeight: 1, marginBottom: 16 }}>Lovestagram</div>
           </div>
-        </div>
-      )}
-
-      {/* ── REPOST / 관심사 (Grid → 탭하면 Feed) ───────── */}
-      {!feedActive && tab === 'repost' && (
-        <div>
-          <div style={{ background: '#fff', padding: '18px 16px 12px', borderBottom: '1px solid rgba(17,17,17,0.08)' }}>
-            <div style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 22, fontWeight: 400, color: ink, letterSpacing: '-0.01em' }}>우리의 관심사</div>
-            <div style={{ fontFamily: "'Pretendard',sans-serif", fontSize: 13, color: '#666', marginTop: 4 }}>두 사람이 함께 좋아하는 것들</div>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 2, background: '#ddd' }}>
-            {interests.map((it) => {
-              const thumb = it.images && it.images[0];
-              return (
-                <button key={it.id} onClick={() => openInterestInFeed(it.id)} className="tap"
-                  style={{ padding: 0, border: 'none', cursor: 'pointer', aspectRatio: '4/5', background: '#F4F2EB', position: 'relative', overflow: 'hidden' }}>
-                  {thumb ? (
-                    <img src={thumb} alt={it.label} loading="lazy" decoding="async" draggable={false}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', pointerEvents: 'none' }} />
-                  ) : (
-                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#F4F2EB' }}>
-                      <span style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontWeight: 600, fontSize: 30, color: '#C9C5B8', lineHeight: 1 }}>＋</span>
-                    </div>
-                  )}
-                  {it.images && it.images.length > 1 && <CarouselBadge />}
-                  {/* label */}
-                  <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 8px 8px', background: 'linear-gradient(transparent, rgba(0,0,0,0.52))', textAlign: 'center', pointerEvents: 'none' }}>
-                    <div style={{ fontFamily: "'Pretendard',sans-serif", fontWeight: 700, fontSize: 13, color: '#fff' }}>{it.label}</div>
-                    <div style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{it.sub}</div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-          <div style={{ height: 60 }} />
         </div>
       )}
 

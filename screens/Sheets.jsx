@@ -228,7 +228,7 @@ function MapSheet({ open, onClose, pc }) {
         {/* address copy */}
         <button
           className="tap"
-          onClick={() => {navigator.clipboard?.writeText('서울 서초구 서초대로74길 11');}}
+          onClick={() => { navigator.clipboard?.writeText('서울 서초구 서초대로74길 11'); }}
           style={{
             width: '100%', border: '1px solid #111', background: '#fff',
             padding: '14px 16px', borderRadius: 12, display: 'flex',
@@ -269,7 +269,7 @@ function MapSheet({ open, onClose, pc }) {
           <div className="hr" />
           <div style={{ display: 'flex', gap: 12 }}>
             <div className="num-mono" style={{ fontSize: 13, fontWeight: 700, width: 56, paddingTop: 2 }}>주차</div>
-            <div className="ko-reg" style={{ fontSize: 13, color: '#333', lineHeight: 1.5 }}>방문객 주차장 이용<br />(3시간 무료)</div>
+            <div className="ko-reg" style={{ fontSize: 13, color: '#333', lineHeight: 1.5 }}>방문객 주차장 이용 (3시간 무료)</div>
           </div>
         </div>
       </div>
@@ -294,26 +294,26 @@ function RSVPSheet({ open, onClose, pc }) {
             소중한 마음 잘 전달받았습니다.<br />당일에 뵙기를 기다릴게요.
           </div>
           <button onClick={onClose} className="tap"
-          style={{
-            marginTop: 24, background: '#111', color: '#D4E607',
-            border: 'none', padding: '14px 28px', borderRadius: 99,
-            fontFamily: "'Pretendard', sans-serif", fontWeight: 700, letterSpacing: '0.1em',
-            fontSize: 12, cursor: 'pointer'
-          }}>CLOSE</button>
+            style={{
+              marginTop: 24, background: '#111', color: '#D4E607',
+              border: 'none', padding: '14px 28px', borderRadius: 99,
+              fontFamily: "'Pretendard', sans-serif", fontWeight: 700, letterSpacing: '0.1em',
+              fontSize: 12, cursor: 'pointer'
+            }}>CLOSE</button>
         </div>
       </Sheet>);
 
   }
 
   const Pill = ({ on, children, ...rest }) =>
-  <button {...rest} className="tap"
-  style={{
-    flex: 1, padding: '12px 0', borderRadius: 10, cursor: 'pointer',
-    border: on ? '1.5px solid #111' : '1px solid rgba(0,0,0,0.18)',
-    background: on ? '#D4E607' : '#fff',
-    fontWeight: on ? 700 : 500, fontSize: 13,
-    fontFamily: "'Pretendard'"
-  }}>{children}</button>;
+    <button {...rest} className="tap"
+      style={{
+        flex: 1, padding: '12px 0', borderRadius: 10, cursor: 'pointer',
+        border: on ? '1.5px solid #111' : '1px solid rgba(0,0,0,0.18)',
+        background: on ? '#D4E607' : '#fff',
+        fontWeight: on ? 700 : 500, fontSize: 13,
+        fontFamily: "'Pretendard'"
+      }}>{children}</button>;
 
 
   return (
@@ -337,10 +337,10 @@ function RSVPSheet({ open, onClose, pc }) {
         background: '#F4F2EB', borderRadius: 12, padding: '12px 16px', marginBottom: 18
       }}>
         <button onClick={() => setCompanions(Math.max(0, companions - 1))}
-        style={{ width: 32, height: 32, borderRadius: 99, border: '1px solid #111', background: '#fff', cursor: 'pointer', fontSize: 18 }}>−</button>
+          style={{ width: 32, height: 32, borderRadius: 99, border: '1px solid #111', background: '#fff', cursor: 'pointer', fontSize: 18 }}>−</button>
         <div className="display" style={{ fontSize: 28 }}>{1 + companions}<span style={{ fontSize: 14, color: '#777', marginLeft: 6 }}>명</span></div>
         <button onClick={() => setCompanions(Math.min(8, companions + 1))}
-        style={{ width: 32, height: 32, borderRadius: 99, border: '1px solid #111', background: '#D4E607', cursor: 'pointer', fontSize: 18 }}>＋</button>
+          style={{ width: 32, height: 32, borderRadius: 99, border: '1px solid #111', background: '#D4E607', cursor: 'pointer', fontSize: 18 }}>＋</button>
       </div>
 
       <div className="label-en" style={{ marginBottom: 8 }}>구분</div>
@@ -365,7 +365,7 @@ function RSVPSheet({ open, onClose, pc }) {
           fontSize: 15, fontFamily: "'Pretendard'", outline: 'none',
           marginBottom: 22, background: '#fff'
         }} />
-      
+
 
       <button
         disabled={attending === null}
@@ -385,14 +385,14 @@ function RSVPSheet({ open, onClose, pc }) {
 function AccountSheet({ open, onClose, side, pc }) {
   // side: 'groom' | 'bride' | 'both'
   const groom = [
-  { role: '신랑', name: '최해성', bank: '우리은행',   no: '1002-9666-38828' },
-  { role: '아버지', name: '최교선', bank: '우리은행', no: '1002-032-377631' },
-  { role: '어머니', name: '구지영', bank: '신한은행', no: '110-444-937048'  }];
+    { role: '신랑', name: '최해성', bank: '우리은행', no: '1002-9666-38828' },
+    { role: '아버지', name: '최교선', bank: '우리은행', no: '1002-032-377631' },
+    { role: '어머니', name: '구지영', bank: '신한은행', no: '110-444-937048' }];
 
   const bride = [
-  { role: '신부', name: '윤채원', bank: '신한은행',     no: '110-237-552513'  },
-  { role: '아버지', name: '윤재경', bank: '카카오뱅크', no: '3333-03-1764677' },
-  { role: '어머니', name: '공명아', bank: '신한은행',   no: '110-066-395030'  }];
+    { role: '신부', name: '윤채원', bank: '신한은행', no: '110-237-552513' },
+    { role: '아버지', name: '윤재경', bank: '카카오뱅크', no: '3333-03-1764677' },
+    { role: '어머니', name: '공명아', bank: '신한은행', no: '110-066-395030' }];
 
 
   const [copied, setCopied] = React.useState(null);
@@ -403,10 +403,10 @@ function AccountSheet({ open, onClose, side, pc }) {
   };
 
   const Row = ({ a, idx, gkey }) =>
-  <div style={{
-    padding: '14px 0', borderBottom: '1px solid rgba(0,0,0,0.08)',
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12
-  }}>
+    <div style={{
+      padding: '14px 0', borderBottom: '1px solid rgba(0,0,0,0.08)',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12
+    }}>
       <div style={{ minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 4 }}>
           <span className="label-en" style={{ fontSize: 10, minWidth: 38, flexShrink: 0 }}>{a.role}</span>
@@ -417,19 +417,19 @@ function AccountSheet({ open, onClose, side, pc }) {
         </div>
       </div>
       <button
-      onClick={() => copy(`${a.bank} ${a.no}`, `${gkey}-${idx}`)}
-      className="tap"
-      style={{
-        background: copied === `${gkey}-${idx}`
-          ? (gkey === 'b' ? '#D4E607' : '#111')
-          : (gkey === 'b' ? '#111' : '#D4E607'),
-        color: copied === `${gkey}-${idx}`
-          ? (gkey === 'b' ? '#111' : '#D4E607')
-          : (gkey === 'b' ? '#D4E607' : '#111'),
-        border: 'none', padding: '8px 14px', borderRadius: 99,
-        fontFamily: "'Pretendard', sans-serif", fontWeight: 700, letterSpacing: '0.1em',
-        fontSize: 10, cursor: 'pointer', whiteSpace: 'nowrap'
-      }}>{copied === `${gkey}-${idx}` ? 'COPIED' : 'COPY'}</button>
+        onClick={() => copy(`${a.bank} ${a.no}`, `${gkey}-${idx}`)}
+        className="tap"
+        style={{
+          background: copied === `${gkey}-${idx}`
+            ? (gkey === 'b' ? '#D4E607' : '#111')
+            : (gkey === 'b' ? '#111' : '#D4E607'),
+          color: copied === `${gkey}-${idx}`
+            ? (gkey === 'b' ? '#111' : '#D4E607')
+            : (gkey === 'b' ? '#D4E607' : '#111'),
+          border: 'none', padding: '8px 14px', borderRadius: 99,
+          fontFamily: "'Pretendard', sans-serif", fontWeight: 700, letterSpacing: '0.1em',
+          fontSize: 10, cursor: 'pointer', whiteSpace: 'nowrap'
+        }}>{copied === `${gkey}-${idx}` ? 'COPIED' : 'COPY'}</button>
     </div>;
 
 
@@ -444,25 +444,25 @@ function AccountSheet({ open, onClose, side, pc }) {
       </div>
 
       {showGroom &&
-      <div style={{ marginBottom: 24 }}>
+        <div style={{ marginBottom: 24 }}>
           <div style={{
-          background: '#D4E607', display: 'inline-block',
-          padding: '6px 12px', borderRadius: 99,
-          fontFamily: "'Pretendard', sans-serif", fontWeight: 700, fontSize: 11,
-          letterSpacing: '0.15em', marginBottom: 4
-        }}>GROOM · 신랑측</div>
+            background: '#D4E607', display: 'inline-block',
+            padding: '6px 12px', borderRadius: 99,
+            fontFamily: "'Pretendard', sans-serif", fontWeight: 700, fontSize: 11,
+            letterSpacing: '0.15em', marginBottom: 4
+          }}>GROOM · 신랑측</div>
           {groom.map((a, i) => <Row key={i} a={a} idx={i} gkey="g" />)}
         </div>
       }
 
       {showBride &&
-      <div>
+        <div>
           <div style={{
-          background: '#111', color: '#D4E607', display: 'inline-block',
-          padding: '6px 12px', borderRadius: 99,
-          fontFamily: "'Pretendard', sans-serif", fontWeight: 700, fontSize: 11,
-          letterSpacing: '0.15em', marginBottom: 4
-        }}>BRIDE · 신부측</div>
+            background: '#111', color: '#D4E607', display: 'inline-block',
+            padding: '6px 12px', borderRadius: 99,
+            fontFamily: "'Pretendard', sans-serif", fontWeight: 700, fontSize: 11,
+            letterSpacing: '0.15em', marginBottom: 4
+          }}>BRIDE · 신부측</div>
           {bride.map((a, i) => <Row key={i} a={a} idx={i} gkey="b" />)}
         </div>
       }
@@ -475,14 +475,14 @@ function ShareSheet({ open, onClose, pc }) {
   const link = 'https://haeseong-chaewon.wedding';
 
   const Btn = ({ bg, fg, children, onClick }) =>
-  <button onClick={onClick} className="tap"
-  style={{
-    background: bg, color: fg, border: 'none',
-    padding: '14px 16px', borderRadius: 12, cursor: 'pointer',
-    fontFamily: "'Pretendard'", fontWeight: 600, fontSize: 14,
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    width: '100%'
-  }}>{children}</button>;
+    <button onClick={onClick} className="tap"
+      style={{
+        background: bg, color: fg, border: 'none',
+        padding: '14px 16px', borderRadius: 12, cursor: 'pointer',
+        fontFamily: "'Pretendard'", fontWeight: 600, fontSize: 14,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        width: '100%'
+      }}>{children}</button>;
 
 
   return (
@@ -498,7 +498,7 @@ function ShareSheet({ open, onClose, pc }) {
           <span>네이버 밴드로 공유</span><span style={{ fontFamily: "'Pretendard', sans-serif", fontSize: 11, letterSpacing: '0.1em' }}>BAND →</span>
         </Btn>
         <Btn bg="#111" fg="#D4E607"
-        onClick={() => {navigator.clipboard?.writeText(link);setCopied(true);setTimeout(() => setCopied(false), 1400);}}>
+          onClick={() => { navigator.clipboard?.writeText(link); setCopied(true); setTimeout(() => setCopied(false), 1400); }}>
           <span>{copied ? '복사되었습니다' : '링크 복사'}</span>
           <span style={{ fontFamily: "'Pretendard', sans-serif", fontSize: 11, letterSpacing: '0.1em' }}>{copied ? 'OK' : 'COPY'}</span>
         </Btn>
@@ -511,9 +511,9 @@ function ShareSheet({ open, onClose, pc }) {
 function CalendarSheet({ open, onClose, pc }) {
   const [saved, setSaved] = React.useState(null);
 
-  const text  = encodeURIComponent('채원 ♡ 해성 결혼식');
-  const loc   = encodeURIComponent('삼성전자 서초사옥 5층 웨딩홀, 서울 서초구 서초대로74길 11');
-  const desc  = encodeURIComponent('두 사람의 이야기가 하나가 되는 날 · 함께 축복해 주세요');
+  const text = encodeURIComponent('채원 ♡ 해성 결혼식');
+  const loc = encodeURIComponent('삼성전자 서초사옥 5층 웨딩홀, 서울 서초구 서초대로74길 11');
+  const desc = encodeURIComponent('두 사람의 이야기가 하나가 되는 날 · 함께 축복해 주세요');
   const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=20260912T040000Z%2F20260912T060000Z&details=${desc}&location=${loc}`;
 
   const downloadICS = (label) => {
