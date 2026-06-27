@@ -140,7 +140,19 @@ function MainScreen({
       flexDirection: 'column',
       overflow: 'hidden'
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("style", null, `
+        @keyframes photo-ping {
+          0%   { box-shadow: 0 0 0 0px  rgba(17,17,17,0.28); }
+          70%  { box-shadow: 0 0 0 10px rgba(17,17,17,0);    }
+          100% { box-shadow: 0 0 0 10px rgba(17,17,17,0);    }
+        }
+        @keyframes badge-dot-blink {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0; }
+        }
+        .photo-ping     { animation: photo-ping 2.2s ease-out infinite; }
+        .badge-live-dot { animation: badge-dot-blink 1.6s ease-in-out infinite; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; vertical-align: middle; margin-right: 2px; }
+      `), /*#__PURE__*/React.createElement("div", {
     className: "ticker-wrap",
     style: {
       background: lime
@@ -425,6 +437,7 @@ function MainScreen({
       textAlign: 'left'
     }
   }, /*#__PURE__*/React.createElement("div", {
+    className: "photo-ping",
     style: {
       position: 'relative',
       overflow: 'hidden',
@@ -456,43 +469,14 @@ function MainScreen({
       padding: '4px 8px',
       letterSpacing: '0.18em',
       borderRadius: 2,
+      zIndex: 2,
       display: 'flex',
       alignItems: 'center',
-      gap: 6
+      gap: 5
     }
-  }, "우리의 추억 보기 ", /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: 11,
-      opacity: 0.7
-    }
-  }, "↗")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      padding: '36px 12px 12px',
-      background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.38))',
-      display: 'flex',
-      justifyContent: 'flex-end',
-      alignItems: 'flex-end',
-      pointerEvents: 'none'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: 32,
-      height: 32,
-      borderRadius: '50%',
-      background: 'rgba(255,255,255,0.18)',
-      border: '1px solid rgba(255,255,255,0.4)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: '#fff',
-      fontSize: 15,
-      lineHeight: 1
-    }
-  }, "↗")))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "badge-live-dot"
+  }), "우리의 추억 보기"))), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 32,
       paddingTop: 18,
