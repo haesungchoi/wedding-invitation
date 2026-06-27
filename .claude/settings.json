@@ -3,7 +3,22 @@
     "allow": [
       "Bash(xargs ls -lh)",
       "Bash(awk '{print $5, $9}')",
-      "Bash(sips --version)"
+      "Bash(sips --version)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/haesungchoi/wedding-invitation/main/screens/Memories.jsx\")",
+      "Bash(git -C \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2\" status)",
+      "Bash(git -C \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2\" log --oneline -3)",
+      "Bash(git -C \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2\" add screens/Memories.jsx dist/screens/Memories.js)",
+      "Bash(git -C '/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2' commit -m ' *)",
+      "Bash(git -C \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2\" push)",
+      "Bash(gh api *)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('default branch:', d.get\\('default_branch'\\)\\); print\\('homepage:', d.get\\('homepage'\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(x.get\\('environment'\\), x.get\\('created_at'\\)\\) for x in d[:3]]\")",
+      "Bash(git -C \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2\" ls-remote origin HEAD)",
+      "Bash(git -C \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2\" show HEAD~1:dist/screens/Memories.js)",
+      "Bash(git -C \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2\" add dist/)",
+      "Bash(node --check \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2/dist/screens/Memories.js\")",
+      "Bash(node --check \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2/dist/app.js\")",
+      "Bash(node --check \"/Users/haeseong/Library/Mobile Documents/com~apple~CloudDocs/quietspace/wedding-invitation-v2/dist/screens/Main.js\")"
     ]
   }
 }
