@@ -1020,7 +1020,7 @@ function GuestbookTab({
   }, "이름"), /*#__PURE__*/React.createElement("input", {
     value: name,
     onChange: e => setName(e.target.value),
-    placeholder: "김서연",
+    placeholder: "이름",
     required: true,
     style: {
       width: '100%',

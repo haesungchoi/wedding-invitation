@@ -34,7 +34,7 @@ function PCHeader({
       top: 0,
       left: 0,
       right: 0,
-      zIndex: 200,
+      zIndex: 90,
       height: H,
       padding: `0 ${px}px`,
       display: 'flex',
@@ -49,46 +49,33 @@ function PCHeader({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Martian Mono', monospace",
-      fontSize: 10,
+      fontSize: 12,
       fontWeight: 700,
-      letterSpacing: '0.18em',
+      letterSpacing: '0.16em',
       color: ink
     }
   }, "CHAEWON · HAESEONG"), /*#__PURE__*/React.createElement("nav", {
     style: {
       display: 'flex',
       alignItems: 'center',
-      gap: variant === 'pc' ? 28 : 16
+      gap: variant === 'pc' ? 32 : 20
     }
   }, navItems.map(item => /*#__PURE__*/React.createElement("button", {
     key: item.label,
     onClick: item.onClick,
+    className: "tap",
     style: {
       background: 'none',
       border: 'none',
       cursor: 'pointer',
       fontFamily: "'Martian Mono', monospace",
-      fontSize: 9,
-      letterSpacing: '0.16em',
+      fontSize: 12,
+      letterSpacing: '0.14em',
       fontWeight: 600,
       color: ink,
-      padding: 0
+      padding: '4px 0'
     }
-  }, item.label)), /*#__PURE__*/React.createElement("button", {
-    onClick: () => openSheet('share'),
-    style: {
-      background: ink,
-      color: lime,
-      border: 'none',
-      padding: '8px 18px',
-      borderRadius: 99,
-      cursor: 'pointer',
-      fontFamily: "'Martian Mono', monospace",
-      fontSize: 9,
-      letterSpacing: '0.14em',
-      fontWeight: 700
-    }
-  }, "SHARE ↗")));
+  }, item.label))));
 }
 
 /* ─── Hero Section ──────────────────────────────────────────── */
@@ -128,7 +115,7 @@ function PCHeroSection({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Martian Mono', monospace",
-      fontSize: variant === 'pc' ? 26 : 18,
+      fontSize: variant === 'pc' ? 20 : 15,
       letterSpacing: '0.2em',
       fontWeight: 600,
       color: ink,
@@ -150,7 +137,7 @@ function PCHeroSection({
   }, "윤채원"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Martian Mono', monospace",
-      fontSize: variant === 'pc' ? 26 : 18,
+      fontSize: variant === 'pc' ? 20 : 16,
       color: ink,
       opacity: 0.65,
       marginTop: 5,
@@ -174,7 +161,7 @@ function PCHeroSection({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: "'Martian Mono', monospace",
-      fontSize: variant === 'pc' ? 22 : 17,
+      fontSize: variant === 'pc' ? 18 : 15,
       color: ink,
       opacity: 0.65
     }
@@ -196,7 +183,7 @@ function PCHeroSection({
   }, "최해성"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Martian Mono', monospace",
-      fontSize: variant === 'pc' ? 26 : 18,
+      fontSize: variant === 'pc' ? 20 : 16,
       color: ink,
       opacity: 0.65,
       marginTop: 5,
@@ -209,14 +196,16 @@ function PCHeroSection({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      marginBottom: 16
+      marginBottom: 18
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Martian Mono', monospace",
-      fontSize: variant === 'pc' ? 17 : 13,
+      fontStretch: '75%',
+      fontSize: variant === 'pc' ? 18 : 15,
       color: ink,
-      fontWeight: 300
+      fontWeight: 300,
+      letterSpacing: '-0.02em'
     }
   }, "2026.09.12")), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -224,28 +213,79 @@ function PCHeroSection({
       gap: 8,
       flexWrap: 'wrap'
     }
-  }, [{
-    label: 'LOCATION →',
-    action: () => openSheet('map')
-  }, {
-    label: 'ACCOUNTS →',
-    action: () => openSheet('account-both')
-  }].map(b => /*#__PURE__*/React.createElement("button", {
-    key: b.label,
-    onClick: b.action,
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => openSheet('map'),
+    className: "tap",
     style: {
-      background: b.dark ? ink : 'transparent',
-      color: b.dark ? lime : ink,
-      border: b.dark ? 'none' : `1px solid ${ink}`,
-      padding: '9px 18px',
+      background: ink,
+      color: lime,
+      border: `1.5px solid ${ink}`,
+      padding: '11px 18px',
       borderRadius: 99,
       cursor: 'pointer',
       fontFamily: "'Martian Mono', monospace",
-      fontSize: 9,
-      letterSpacing: '0.14em',
-      fontWeight: 700
+      fontSize: 12,
+      letterSpacing: '0.12em',
+      fontWeight: 500,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 6
     }
-  }, b.label))))), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "10",
+    height: "13",
+    viewBox: "0 0 10 13",
+    fill: "none",
+    style: {
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M5 0C2.24 0 0 2.24 0 5c0 3.75 5 8 5 8s5-4.25 5-8c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z",
+    fill: "currentColor"
+  })), "LOCATION"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => openSheet('account-both'),
+    className: "tap",
+    style: {
+      background: 'transparent',
+      color: ink,
+      border: `1.5px solid ${ink}`,
+      padding: '11px 18px',
+      borderRadius: 99,
+      cursor: 'pointer',
+      fontFamily: "'Martian Mono', monospace",
+      fontSize: 12,
+      letterSpacing: '0.12em',
+      fontWeight: 500,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 6
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "12",
+    height: "11",
+    viewBox: "0 0 12 11",
+    fill: "none",
+    style: {
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "0.75",
+    y: "0.75",
+    width: "10.5",
+    height: "9.5",
+    rx: "1.25",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M0.75 3.5h10.5",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M3 6.5h2M3 8h3.5",
+    stroke: "currentColor",
+    strokeWidth: "1.2",
+    strokeLinecap: "round"
+  })), "ACCOUNTS")))), /*#__PURE__*/React.createElement("button", {
     onClick: onOpenMemories,
     className: "tap",
     style: {
@@ -280,13 +320,51 @@ function PCHeroSection({
       background: lime,
       color: ink,
       fontFamily: "'Pretendard', sans-serif",
-      fontSize: 9,
+      fontSize: 12,
       fontWeight: 700,
-      letterSpacing: '0.18em',
-      padding: '5px 10px',
-      borderRadius: 2
+      letterSpacing: '0.14em',
+      padding: '6px 12px',
+      borderRadius: 2,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 6
     }
-  }, "우리의 추억 보기 ↗"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: 'relative',
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 10,
+      height: 10
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "badge-live-dot",
+    style: {
+      width: 6,
+      height: 6,
+      borderRadius: '50%',
+      background: ink,
+      display: 'inline-block',
+      position: 'relative',
+      zIndex: 1
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "badge-ping",
+    style: {
+      position: 'absolute',
+      inset: 0,
+      borderRadius: '50%',
+      border: `1.5px solid ${ink}`,
+      animation: 'badgePing 1.6s ease-out infinite'
+    }
+  })), "우리의 추억 보기"), /*#__PURE__*/React.createElement("style", null, `
+          @keyframes badgePing {
+            0%   { transform: scale(1);   opacity: 0.7; }
+            70%  { transform: scale(2.2); opacity: 0; }
+            100% { transform: scale(2.2); opacity: 0; }
+          }
+        `), /*#__PURE__*/React.createElement("div", {
     className: "vertical-headline",
     style: {
       position: 'absolute',
@@ -399,7 +477,7 @@ function PCTheDaySection({
     body: /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: "'Pretendard'",
-        fontSize: variant === 'pc' ? 21 : 17,
+        fontSize: variant === 'pc' ? 20 : 17,
         fontWeight: 400,
         lineHeight: 1.55,
         color: ink
@@ -415,7 +493,7 @@ function PCTheDaySection({
     body: /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: "'Pretendard'",
-        fontSize: variant === 'pc' ? 21 : 17,
+        fontSize: variant === 'pc' ? 20 : 17,
         fontWeight: 400,
         lineHeight: 1.55,
         color: ink
@@ -434,7 +512,7 @@ function PCTheDaySection({
     body: /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: "'Pretendard'",
-        fontSize: variant === 'pc' ? 21 : 17,
+        fontSize: variant === 'pc' ? 20 : 17,
         fontWeight: 400,
         lineHeight: 1.55,
         color: ink
@@ -446,9 +524,9 @@ function PCTheDaySection({
     }, "최교선 · 구지영"), /*#__PURE__*/React.createElement("span", {
       style: {
         color: '#555',
-        fontSize: variant === 'pc' ? 17 : 14
+        fontSize: variant === 'pc' ? 16 : 14
       }
-    }, "의 아들 해성")), /*#__PURE__*/React.createElement("div", {
+    }, " 의 아들 해성")), /*#__PURE__*/React.createElement("div", {
       style: {
         height: 1,
         background: 'rgba(17,17,17,0.1)',
@@ -461,9 +539,9 @@ function PCTheDaySection({
     }, "윤재경 · 공명아"), /*#__PURE__*/React.createElement("span", {
       style: {
         color: '#555',
-        fontSize: variant === 'pc' ? 17 : 14
+        fontSize: variant === 'pc' ? 16 : 14
       }
-    }, "의 딸 채원")))
+    }, " 의 딸 채원")))
   }].map(col => /*#__PURE__*/React.createElement("div", {
     key: col.label,
     style: col.style
@@ -480,7 +558,7 @@ function PCTheDaySection({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Pretendard'",
-      fontSize: variant === 'pc' ? 18 : 15,
+      fontSize: variant === 'pc' ? 16 : 14,
       color: '#555',
       lineHeight: 1.9
     }
@@ -493,15 +571,44 @@ function PCMemoriesSection({
   ink,
   tweaks,
   variant,
-  openSheet
+  openSheet,
+  onBack
 }) {
   const [tab, setTab] = React.useState('grid');
   const [story, setStory] = React.useState(null);
-  const [heartKey, setHeartKey] = React.useState(0);
-  const burstHeart = () => setHeartKey(k => k + 1);
+  const [hearts, setHearts] = React.useState([]);
+  const [gbRefreshKey, setGbRefreshKey] = React.useState(0);
   const px = variant === 'pc' ? 80 : 48;
-  const gridCols = variant === 'pc' ? 6 : 3;
+
+  // Portal target: render StoryViewer at document.body to escape all stacking contexts
+  const storyRoot = React.useRef(null);
+  if (!storyRoot.current) {
+    storyRoot.current = document.createElement('div');
+    document.body.appendChild(storyRoot.current);
+  }
+  React.useEffect(() => {
+    const el = storyRoot.current;
+    return () => {
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+    };
+  }, []);
+  const burstHeart = () => {
+    const id = Date.now() + Math.random();
+    const x = Math.random() * 50 - 25;
+    const y = Math.random() * 30 - 15;
+    const rot = Math.random() * 40 - 20;
+    const size = 70 + Math.random() * 60;
+    setHearts(hs => [...hs, {
+      id,
+      x,
+      y,
+      rot,
+      size
+    }]);
+    setTimeout(() => setHearts(hs => hs.filter(h => h.id !== id)), 1400);
+  };
   const proposeImages = ['img/memories/propose-newyork/newyork-1.jpg', 'img/memories/propose-newyork/newyork-2.jpg'];
+  const proposeCaptions = ['2025년 6월, New York에서 프로포즈', 'Brookyln bridge가 보이는 Pebble beach에서'];
   const highlights = [{
     label: '2021',
     images: Array.from({
@@ -547,15 +654,15 @@ function PCMemoriesSection({
     id: 'mem-3',
     date: '2026.03.15',
     likes: '5,204',
-    photoCount: 6,
-    images: ['img/memories/studio-bride/bride-0.jpg', 'img/memories/studio-bride/bride-1.jpg', 'img/memories/studio-bride/bride-2.jpg', 'img/memories/studio-bride/bride-3.jpg', 'img/memories/studio-bride/bride-4.jpg', 'img/memories/studio-bride/bride-5.jpg'],
+    photoCount: 3,
+    images: ['img/memories/studio-bride/bride-0.jpg', 'img/memories/studio-bride/bride-1.jpg', 'img/memories/studio-bride/bride-3.jpg'],
     caption: '채원'
   }, {
     id: 'mem-4',
     date: '2026.02.12',
     likes: '4,477',
-    photoCount: 1,
-    images: ['img/memories/snap-shanghai/shanghai-1.jpg'],
+    photoCount: 5,
+    images: ['img/memories/snap-shanghai/shanghai-1.jpg', 'img/memories/snap-shanghai/shanghai-2.jpg', 'img/memories/snap-shanghai/shanghai-3.jpg', 'img/memories/snap-shanghai/shanghai-4.jpg', 'img/memories/snap-shanghai/shanghai-5.jpg'],
     caption: '📍 상하이'
   }, {
     id: 'mem-5',
@@ -572,69 +679,105 @@ function PCMemoriesSection({
     images: ['img/memories/wedding-ng/ng-1.jpg', 'img/memories/wedding-ng/ng-2.jpg', 'img/memories/wedding-ng/ng-3.jpg', 'img/memories/wedding-ng/ng-4.jpg'],
     caption: '📍 학교'
   }];
-  const interests = [{
-    id: 'wi-1',
-    label: '여행',
-    sub: 'Travel'
-  }, {
-    id: 'wi-2',
-    label: '음악',
-    sub: 'Music'
-  }, {
-    id: 'wi-3',
-    label: '카페',
-    sub: 'Café',
-    src: 'img/memories/repost-cafe/cafe-1.jpg'
-  }, {
-    id: 'wi-4',
-    label: '사진',
-    sub: 'Photo',
-    src: 'img/memories/interest-photo/HSC07295.JPG'
-  }, {
-    id: 'wi-5',
-    label: '자연',
-    sub: 'Nature'
-  }, {
-    id: 'wi-6',
-    label: '음식',
-    sub: 'Food',
-    src: 'img/memories/repost-food/food-1.jpg'
-  }];
   const TABS = [{
     key: 'grid',
     Icon: TabIconGrid
   }, {
-    key: 'repost',
-    Icon: TabIconRepost
-  }, {
     key: 'mention',
     Icon: TabIconMention
   }];
-  return /*#__PURE__*/React.createElement("section", {
-    id: "wide-memories",
-    style: {
-      background: '#fff',
-      borderTop: '1px solid rgba(17,17,17,0.07)'
-    }
-  }, story && /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'fixed',
-      inset: 0,
-      zIndex: 500
-    }
-  }, /*#__PURE__*/React.createElement(StoryViewer, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, story && ReactDOM.createPortal(/*#__PURE__*/React.createElement(StoryViewer, {
     groups: story.groups,
     startGroupIdx: story.startGroupIdx,
     onClose: () => setStory(null)
-  })), /*#__PURE__*/React.createElement("div", {
+  }), storyRoot.current), hearts.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
-      padding: `${variant === 'pc' ? 52 : 36}px ${px}px 20px`,
-      borderBottom: '1px solid rgba(17,17,17,0.08)'
+      position: 'fixed',
+      inset: 0,
+      overflow: 'hidden',
+      zIndex: 999,
+      pointerEvents: 'none'
+    }
+  }, hearts.map(h => /*#__PURE__*/React.createElement("span", {
+    key: h.id,
+    style: {
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: `translate(-50%,-50%) translate(${h.x}vw, ${h.y}vh) rotate(${h.rot}deg)`
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "heart-burst",
+    style: {
+      display: 'inline-block',
+      fontSize: h.size,
+      lineHeight: 1
+    }
+  }, "❤️")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 101,
+      background: '#fff',
+      overflowY: 'auto'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'sticky',
+      top: 0,
+      zIndex: 20,
+      background: '#fff',
+      borderBottom: '1px solid rgba(17,17,17,0.10)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '14px 24px 12px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: onBack,
+    className: "tap",
+    style: {
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      color: ink,
+      fontFamily: "'Martian Mono',monospace",
+      fontSize: 12,
+      fontWeight: 700,
+      letterSpacing: '0.12em',
+      padding: '8px 16px 8px 0'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 18,
+      lineHeight: 1
+    }
+  }, "←"), " BACK"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: "'Bricolage Grotesque',sans-serif",
+      fontWeight: 600,
+      fontSize: 17,
+      color: ink,
+      letterSpacing: '-0.02em'
+    }
+  }, "chaewon_and_haeseong"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 80
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: `${variant === 'pc' ? 32 : 24}px ${px}px 0`
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "label-en",
     style: {
-      marginBottom: 28
+      marginBottom: 24
     }
   }, "· 우리의 추억"), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -648,7 +791,8 @@ function PCMemoriesSection({
     className: "tap",
     onClick: () => setStory({
       groups: [{
-        images: proposeImages
+        images: proposeImages,
+        captions: proposeCaptions
       }],
       startGroupIdx: 0
     }),
@@ -716,7 +860,7 @@ function PCMemoriesSection({
   }, s.n), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Pretendard',sans-serif",
-      fontSize: 11,
+      fontSize: 13,
       color: '#666',
       marginTop: 4
     }
@@ -771,7 +915,10 @@ function PCMemoriesSection({
     }
   }, "▾")), /*#__PURE__*/React.createElement("button", {
     className: "tap",
-    onClick: () => setTab('mention'),
+    onClick: () => {
+      setTab('mention');
+      setGbRefreshKey(k => k + 1);
+    },
     style: {
       flex: 2,
       padding: '8px 0',
@@ -795,11 +942,12 @@ function PCMemoriesSection({
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      gap: 1
     }
   }, /*#__PURE__*/React.createElement("svg", {
-    width: "16",
-    height: "16",
+    width: "14",
+    height: "14",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: ink,
@@ -807,43 +955,21 @@ function PCMemoriesSection({
     strokeLinecap: "round",
     strokeLinejoin: "round"
   }, /*#__PURE__*/React.createElement("path", {
-    d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "9",
-    cy: "7",
-    r: "4"
-  }), /*#__PURE__*/React.createElement("line", {
-    x1: "19",
-    y1: "8",
-    x2: "19",
-    y2: "14"
-  }), /*#__PURE__*/React.createElement("line", {
-    x1: "22",
-    y1: "11",
-    x2: "16",
-    y2: "11"
-  })))), heartKey > 0 && /*#__PURE__*/React.createElement("div", {
-    key: heartKey,
+    d: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+  })), /*#__PURE__*/React.createElement("span", {
     style: {
-      position: 'fixed',
-      inset: 0,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 999
+      fontSize: 10,
+      fontWeight: 700,
+      color: ink,
+      lineHeight: 1,
+      marginBottom: 1
     }
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "heart-burst",
-    style: {
-      fontSize: 120,
-      lineHeight: 1
-    }
-  }, "❤️")), /*#__PURE__*/React.createElement("div", {
+  }, "+"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: variant === 'pc' ? 20 : 14,
       overflowX: 'auto',
-      paddingBottom: 4
+      paddingBottom: 16
     }
   }, highlights.map((h, i) => {
     const hasImages = h.images.length > 0;
@@ -904,31 +1030,40 @@ function PCMemoriesSection({
     }, "+"))), /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: "'Pretendard',sans-serif",
-        fontSize: 10,
+        fontSize: 12,
         color: '#444',
         whiteSpace: 'nowrap'
       }
     }, h.label));
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
+      position: 'sticky',
+      top: 53,
+      zIndex: 10,
+      background: '#fff',
       display: 'flex',
-      justifyContent: 'center',
-      borderBottom: '1px solid rgba(17,17,17,0.08)'
+      borderTop: '1px solid rgba(17,17,17,0.09)',
+      borderBottom: '1px solid rgba(17,17,17,0.09)'
     }
   }, TABS.map(({
     key,
     Icon
   }) => /*#__PURE__*/React.createElement("button", {
     key: key,
-    onClick: () => setTab(key),
+    onClick: () => {
+      setTab(key);
+      if (key === 'mention') setGbRefreshKey(k => k + 1);
+    },
     className: "tap",
     style: {
-      padding: `14px ${variant === 'pc' ? 40 : 28}px`,
+      flex: 1,
+      padding: '13px 0',
       background: 'none',
       border: 'none',
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center',
       borderBottom: tab === key ? `2px solid ${ink}` : '2px solid transparent',
       transition: 'border-color .15s'
     }
@@ -971,95 +1106,22 @@ function PCMemoriesSection({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      fontFamily: "'Grand Hotel', cursive",
+      fontFamily: "'Grand Hotel',cursive",
       fontSize: 52,
       color: ink,
       lineHeight: 1
     }
-  }, "Lovestagram"))), tab === 'repost' && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: `24px ${px}px 16px`,
-      borderBottom: '1px solid rgba(17,17,17,0.07)'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Bricolage Grotesque',sans-serif",
-      fontSize: 22,
-      fontWeight: 400,
-      color: ink
-    }
-  }, "우리의 관심사"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Pretendard',sans-serif",
-      fontSize: 13,
-      color: '#666',
-      marginTop: 4
-    }
-  }, "두 사람이 함께 좋아하는 것들")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(6, 1fr)',
-      gap: 2,
-      background: '#ddd'
-    }
-  }, interests.map(it => /*#__PURE__*/React.createElement("div", {
-    key: it.id,
-    style: {
-      aspectRatio: '4/5',
-      background: '#F4F2EB',
-      position: 'relative',
-      overflow: 'hidden'
-    }
-  }, /*#__PURE__*/React.createElement("image-slot", {
-    id: it.id,
-    shape: "rect",
-    fit: "cover",
-    placeholder: "탭하여 추가",
-    src: it.src,
-    style: {
-      width: '100%',
-      height: '100%',
-      display: 'block'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      padding: '20px 8px 8px',
-      background: 'linear-gradient(transparent,rgba(0,0,0,0.52))',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Pretendard',sans-serif",
-      fontWeight: 700,
-      fontSize: 13,
-      color: '#fff'
-    }
-  }, it.label), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Bricolage Grotesque',sans-serif",
-      fontSize: 9,
-      color: 'rgba(255,255,255,0.7)',
-      letterSpacing: '0.1em',
-      textTransform: 'uppercase'
-    }
-  }, it.sub))))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      height: 60
-    }
-  })), tab === 'mention' && /*#__PURE__*/React.createElement("div", {
+  }, "Lovestagram"))), tab === 'mention' && /*#__PURE__*/React.createElement("div", {
     style: {
       maxWidth: 720,
       margin: '0 auto',
       padding: '48px 24px 80px'
     }
   }, /*#__PURE__*/React.createElement(GuestbookTab, {
+    key: gbRefreshKey,
     lime: lime,
     ink: ink
-  })));
+  }))));
 }
 
 /* ─── OUR STORY / Numbers Section ──────────────────────────── */
@@ -1135,9 +1197,9 @@ function PCNumbersSection({
       background: lime,
       color: ink,
       fontFamily: "'Martian Mono', monospace",
-      fontSize: 9,
+      fontSize: 11,
       letterSpacing: '0.14em',
-      padding: '4px 10px',
+      padding: '5px 12px',
       borderRadius: 2
     }
   }, "The Two")), /*#__PURE__*/React.createElement("div", null, stats.map((s, i) => /*#__PURE__*/React.createElement("div", {
@@ -1178,6 +1240,94 @@ function PCNumbersSection({
   }, line)))))))));
 }
 
+/* ─── GUIDE / MEAL Section ──────────────────────────────────── */
+function PCGuideSection({
+  ink,
+  variant
+}) {
+  const px = variant === 'pc' ? 80 : 48;
+  const items = [{
+    title: '식사 시간',
+    body: ['오후 1시 ~ 3시까지 식사가 제공됩니다']
+  }, {
+    title: '식사 장소',
+    body: ['서초사옥 지하1층에서 이뤄집니다', '양식 · 중식 · 일식 중 선택하실 수 있습니다']
+  }, {
+    title: '식당 선택',
+    body: ['식당 선택은 축의대에서 이뤄지오니', '함께 오시는 분이 계시다면 미리 상의하고 오시면 좋습니다'],
+    wide: true
+  }];
+  return /*#__PURE__*/React.createElement("section", {
+    style: {
+      background: '#F8F6F0',
+      padding: `0 ${px}px ${variant === 'pc' ? 64 : 44}px`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxWidth: 1200,
+      margin: '0 auto'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `1px solid ${ink}`,
+      background: '#fff',
+      padding: `${variant === 'pc' ? 38 : 26}px 28px`,
+      fontFamily: "'Pretendard'"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'baseline',
+      gap: 12,
+      marginBottom: 28
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "label-en"
+  }, "MEAL"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: "'Pretendard'",
+      fontSize: 12,
+      color: '#666'
+    }
+  }, "식사")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: variant === 'pc' ? '1fr 1fr 1fr' : '1fr 1fr',
+      gap: `${variant === 'pc' ? 0 : 0}px`
+    }
+  }, items.map((item, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      ...(item.wide && variant !== 'pc' ? {
+        gridColumn: '1 / -1'
+      } : {}),
+      paddingTop: i === 0 ? 0 : 16,
+      paddingBottom: i === items.length - 1 ? 0 : 16,
+      borderBottom: variant === 'pc' ? 'none' : i === items.length - 1 ? 'none' : '1px solid rgba(17,17,17,0.1)',
+      borderRight: variant === 'pc' && i < items.length - 1 ? '1px solid rgba(17,17,17,0.1)' : 'none',
+      paddingRight: variant === 'pc' && i < items.length - 1 ? 24 : 0,
+      paddingLeft: variant === 'pc' && i > 0 ? 24 : 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: "'Pretendard'",
+      fontWeight: 500,
+      fontSize: variant === 'pc' ? 15 : 14,
+      marginBottom: 8,
+      color: ink
+    }
+  }, item.title), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: "'Pretendard'",
+      fontSize: variant === 'pc' ? 15 : 14,
+      color: '#555',
+      lineHeight: 1.65
+    }
+  }, item.body.map((line, j) => /*#__PURE__*/React.createElement("div", {
+    key: j
+  }, line)))))))));
+}
+
 /* ─── VENUE + ACCOUNT Section ───────────────────────────────── */
 function PCVenueSection({
   lime,
@@ -1186,7 +1336,50 @@ function PCVenueSection({
   variant
 }) {
   const px = variant === 'pc' ? 80 : 48;
-  const py = variant === 'pc' ? 96 : 64;
+  const py = variant === 'pc' ? 64 : 44;
+  const cards = [{
+    label: 'VENUE',
+    labelSub: '오시는 길 보기',
+    title: '삼성전자 서초사옥 5층',
+    icon: /*#__PURE__*/React.createElement("svg", {
+      width: "14",
+      height: "17",
+      viewBox: "0 0 14 17",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M7 0C4.24 0 2 2.24 2 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 7A2 2 0 1 1 7 3a2 2 0 0 1 0 4z",
+      fill: ink
+    })),
+    action: () => openSheet('map')
+  }, {
+    label: 'ACCOUNT',
+    labelSub: '계좌번호 보기',
+    title: '마음 전하실 곳',
+    icon: /*#__PURE__*/React.createElement("svg", {
+      width: "16",
+      height: "14",
+      viewBox: "0 0 16 14",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "1",
+      y: "1",
+      width: "14",
+      height: "12",
+      rx: "1.5",
+      stroke: ink,
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M1 4.5h14",
+      stroke: ink,
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M4 8.5h3M4 10.5h5",
+      stroke: ink,
+      strokeWidth: "1.2",
+      strokeLinecap: "round"
+    })),
+    action: () => openSheet('account-both')
+  }];
   return /*#__PURE__*/React.createElement("section", {
     style: {
       background: '#F8F6F0',
@@ -1200,83 +1393,101 @@ function PCVenueSection({
   }, /*#__PURE__*/React.createElement("div", {
     className: "label-en",
     style: {
-      marginBottom: variant === 'pc' ? 44 : 28
+      marginBottom: variant === 'pc' ? 24 : 18
     }
   }, "· INFORMATION"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: 14,
-      marginBottom: 14
+      gridTemplateColumns: variant === 'pc' ? '1fr 1fr' : '1fr',
+      gap: 14
     }
-  }, [{
-    label: 'VENUE',
-    title: '삼성전자 서초사옥',
-    sub: '5층 웨딩홀',
-    cta: '오시는 길 보기 →',
-    action: () => openSheet('map')
-  }, {
-    label: 'ACCOUNT',
-    title: '마음 전하실 곳',
-    sub: '계좌 번호 안내',
-    cta: '계좌 번호 보기 →',
-    action: () => openSheet('account-both')
-  }].map(card => /*#__PURE__*/React.createElement("button", {
+  }, cards.map(card => /*#__PURE__*/React.createElement("button", {
     key: card.label,
     onClick: card.action,
     className: "tap",
     style: {
-      display: 'block',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
       width: '100%',
-      border: `1px solid ${ink}`,
+      border: `1.5px solid ${ink}`,
       background: '#fff',
-      padding: `${variant === 'pc' ? 38 : 26}px 28px`,
-      textAlign: 'left',
-      cursor: 'pointer'
+      padding: '20px 20px',
+      cursor: 'pointer',
+      textAlign: 'left'
     }
   }, /*#__PURE__*/React.createElement("div", {
-    className: "label-en",
     style: {
-      marginBottom: 12
+      display: 'flex',
+      alignItems: 'center',
+      gap: 14,
+      flex: 1
     }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: variant === 'pc' ? 48 : 40,
+      height: variant === 'pc' ? 48 : 40,
+      borderRadius: '50%',
+      border: `1.5px solid ${ink}`,
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, card.icon), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'baseline',
+      gap: 10,
+      marginBottom: 4
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "label-en"
   }, card.label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Pretendard'",
-      fontSize: variant === 'pc' ? 24 : 19,
-      fontWeight: 500,
-      marginBottom: 6,
-      color: ink
+      fontSize: 12,
+      color: '#888'
     }
-  }, card.title), /*#__PURE__*/React.createElement("div", {
+  }, card.labelSub)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Pretendard'",
-      fontSize: 14,
-      color: '#666',
-      marginBottom: 22
+      fontWeight: 500,
+      fontSize: variant === 'pc' ? 18 : 16,
+      color: ink
     }
-  }, card.sub), /*#__PURE__*/React.createElement("div", {
+  }, card.title))), /*#__PURE__*/React.createElement("div", {
     style: {
-      fontFamily: "'Martian Mono'",
-      fontSize: 10,
-      color: ink,
-      letterSpacing: '0.14em',
-      fontWeight: 600
+      width: variant === 'pc' ? 44 : 40,
+      height: variant === 'pc' ? 44 : 40,
+      borderRadius: '50%',
+      background: ink,
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: 18,
+      flexShrink: 0,
+      marginLeft: 12
     }
-  }, card.cta))))));
+  }, "→"))))));
 }
 
 /* ─── CLOSING Section ───────────────────────────────────────── */
 function PCClosingSection({
   lime,
   ink,
-  openSheet,
   variant
 }) {
   const px = variant === 'pc' ? 80 : 48;
   return /*#__PURE__*/React.createElement("section", {
     style: {
       background: lime,
-      padding: `${variant === 'pc' ? 112 : 72}px ${px}px`
+      padding: `${variant === 'pc' ? 96 : 64}px ${px}px ${variant === 'pc' ? 80 : 56}px`
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1285,62 +1496,43 @@ function PCClosingSection({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: variant === 'pc' ? 54 : 38,
+      fontSize: variant === 'pc' ? 28 : 20,
       fontFamily: "'Pretendard', sans-serif",
       fontWeight: 500,
-      lineHeight: 1.1,
-      letterSpacing: '-0.4px',
+      lineHeight: 1.6,
+      letterSpacing: '-0.2px',
       color: ink,
-      marginBottom: 48
+      marginBottom: 40
     }
   }, "보내주시는 따뜻한 축하에 감사하며,", /*#__PURE__*/React.createElement("br", null), "함께 잘 살아가겠습니다"), /*#__PURE__*/React.createElement("div", {
     style: {
       height: 1,
       background: ink,
-      marginBottom: 22
+      marginBottom: 18
     }
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'baseline',
-      marginBottom: 52
+      alignItems: 'baseline'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Martian Mono', monospace",
-      fontSize: 10,
-      letterSpacing: '0.18em',
-      color: ink,
-      fontWeight: 600
-    }
-  }, "CHAEWON · HAESEONG"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Martian Mono', monospace",
       fontSize: 13,
+      letterSpacing: '0.12em',
       color: ink,
       fontWeight: 300
     }
-  }, "2026.09.12")), /*#__PURE__*/React.createElement("div", {
+  }, "CHAEWON"), /*#__PURE__*/React.createElement("div", {
     style: {
-      display: 'flex',
-      gap: 10
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => openSheet('share'),
-    style: {
-      background: ink,
-      color: lime,
-      border: 'none',
-      padding: '12px 28px',
-      borderRadius: 99,
-      cursor: 'pointer',
       fontFamily: "'Martian Mono', monospace",
-      fontSize: 9,
-      letterSpacing: '0.14em',
-      fontWeight: 700
+      fontSize: 13,
+      letterSpacing: '0.12em',
+      color: ink,
+      fontWeight: 300
     }
-  }, "SHARE ↗"))));
+  }, "HAESEONG"))));
 }
 
 /* ─── Root ──────────────────────────────────────────────────── */
@@ -1359,41 +1551,14 @@ function WideApp({
       minHeight: '100vh',
       background: '#F8F6F0'
     }
-  }, showMemories && /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'fixed',
-      inset: 0,
-      zIndex: 300,
-      background: '#fff',
-      overflowY: 'auto'
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: closeMemories,
-    style: {
-      position: 'fixed',
-      top: variant === 'pc' ? 20 : 14,
-      left: variant === 'pc' ? 28 : 16,
-      zIndex: 301,
-      background: 'rgba(248,246,240,0.92)',
-      border: `1px solid ${ink}`,
-      borderRadius: 99,
-      padding: '8px 18px',
-      cursor: 'pointer',
-      fontFamily: "'Martian Mono', monospace",
-      fontSize: 9,
-      fontWeight: 700,
-      letterSpacing: '0.14em',
-      color: ink,
-      backdropFilter: 'blur(8px)',
-      WebkitBackdropFilter: 'blur(8px)'
-    }
-  }, "← BACK"), /*#__PURE__*/React.createElement(PCMemoriesSection, {
+  }, showMemories && /*#__PURE__*/React.createElement(PCMemoriesSection, {
     lime: lime,
     ink: ink,
     tweaks: tweaks,
     variant: variant,
-    openSheet: openSheet
-  })), /*#__PURE__*/React.createElement(PCHeader, {
+    openSheet: openSheet,
+    onBack: closeMemories
+  }), /*#__PURE__*/React.createElement(PCHeader, {
     lime: lime,
     ink: ink,
     openSheet: openSheet,
@@ -1412,6 +1577,9 @@ function WideApp({
   }), /*#__PURE__*/React.createElement(PCTheDaySection, {
     ink: ink,
     variant: variant
+  }), /*#__PURE__*/React.createElement(PCGuideSection, {
+    ink: ink,
+    variant: variant
   }), /*#__PURE__*/React.createElement(PCVenueSection, {
     lime: lime,
     ink: ink,
@@ -1420,7 +1588,6 @@ function WideApp({
   }), /*#__PURE__*/React.createElement(PCClosingSection, {
     lime: lime,
     ink: ink,
-    openSheet: openSheet,
     variant: variant
   }));
 }
