@@ -448,42 +448,48 @@ function MainScreen({
       position: 'absolute',
       top: 10,
       left: 10,
-      background: ink,
-      color: lime,
+      background: lime,
+      color: ink,
       fontFamily: "'Pretendard', sans-serif",
-      fontSize: 10,
-      fontWeight: 600,
-      padding: '7px 11px',
-      letterSpacing: '0.12em',
-      borderRadius: 99,
+      fontSize: 9,
+      fontWeight: 700,
+      padding: '4px 8px',
+      letterSpacing: '0.18em',
+      borderRadius: 2,
       display: 'flex',
       alignItems: 'center',
-      gap: 6,
-      boxShadow: '0 2px 8px rgba(0,0,0,0.22)'
+      gap: 6
     }
-  }, /*#__PURE__*/React.createElement("svg", {
-    width: "11",
-    height: "11",
-    viewBox: "0 0 11 11",
-    fill: "none",
+  }, "우리의 추억 보기 ", /*#__PURE__*/React.createElement("span", {
     style: {
-      flexShrink: 0
+      fontSize: 11,
+      opacity: 0.7
     }
-  }, /*#__PURE__*/React.createElement("circle", {
-    cx: "5.5",
-    cy: "5.5",
-    r: "4.75",
-    stroke: "currentColor",
-    strokeWidth: "1.2"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "5.5",
-    cy: "5.5",
-    r: "1.6",
-    fill: "currentColor"
-  })), "우리의 추억 보기", /*#__PURE__*/React.createElement("span", {
+  }, "↗")), /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: 13,
-      fontWeight: 300,
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      padding: '36px 12px 12px',
+      background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.38))',
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 32,
+      height: 32,
+      borderRadius: '50%',
+      background: 'rgba(255,255,255,0.18)',
+      border: '1px solid rgba(255,255,255,0.4)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#fff',
+      fontSize: 15,
       lineHeight: 1
     }
   }, "↗")))), /*#__PURE__*/React.createElement("div", {

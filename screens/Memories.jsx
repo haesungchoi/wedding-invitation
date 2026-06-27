@@ -1036,14 +1036,11 @@ function MemoriesScreen({ goTo, tweaks, openSheet, backHandlerRef }) {
       caption: '해성',
     },
     {
-      id: 'mem-3', date: '2026.03.15', likes: '5,204', photoCount: 6,
+      id: 'mem-3', date: '2026.03.15', likes: '5,204', photoCount: 3,
       images: [
         'img/memories/studio-bride/bride-0.jpg',
         'img/memories/studio-bride/bride-1.jpg',
-        'img/memories/studio-bride/bride-2.jpg',
         'img/memories/studio-bride/bride-3.jpg',
-        'img/memories/studio-bride/bride-4.jpg',
-        'img/memories/studio-bride/bride-5.jpg',
       ],
       caption: '채원',
     },

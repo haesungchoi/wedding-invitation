@@ -271,22 +271,30 @@ function MainScreen({ goTo, openSheet, tweaks }) {
               width: '100%', height: '100%', objectFit: 'cover',
               objectPosition: 'center 35%'
             }} />
-            {/* M3 Assist Chip — icon + label + directional arrow clearly signals "tap to explore" */}
+            {/* 원래 스타일 badge */}
             <div style={{
               position: 'absolute', top: 10, left: 10,
-              background: ink, color: lime,
-              fontFamily: "'Pretendard', sans-serif", fontSize: 10, fontWeight: 600,
-              padding: '7px 11px', letterSpacing: '0.12em',
-              borderRadius: 99,
-              display: 'flex', alignItems: 'center', gap: 6,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.22)'
+              background: lime, color: ink,
+              fontFamily: "'Pretendard', sans-serif", fontSize: 9, fontWeight: 700,
+              padding: '4px 8px', letterSpacing: '0.18em',
+              borderRadius: 2,
+              display: 'flex', alignItems: 'center', gap: 6
+            }}>우리의 추억 보기 <span style={{ fontSize: 11, opacity: 0.7 }}>↗</span></div>
+            {/* 하단 그라디언트 + 원형 탭 인디케이터 — 사진이 눌리는 영역임을 암시 */}
+            <div style={{
+              position: 'absolute', bottom: 0, left: 0, right: 0,
+              padding: '36px 12px 12px',
+              background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.38))',
+              display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end',
+              pointerEvents: 'none'
             }}>
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style={{ flexShrink: 0 }}>
-                <circle cx="5.5" cy="5.5" r="4.75" stroke="currentColor" strokeWidth="1.2"/>
-                <circle cx="5.5" cy="5.5" r="1.6" fill="currentColor"/>
-              </svg>
-              우리의 추억 보기
-              <span style={{ fontSize: 13, fontWeight: 300, lineHeight: 1 }}>↗</span>
+              <div style={{
+                width: 32, height: 32, borderRadius: '50%',
+                background: 'rgba(255,255,255,0.18)',
+                border: '1px solid rgba(255,255,255,0.4)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: '#fff', fontSize: 15, lineHeight: 1
+              }}>↗</div>
             </div>
           </div>
         </button>
