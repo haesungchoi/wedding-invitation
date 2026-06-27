@@ -599,7 +599,7 @@ function GuestbookTab({ lime, ink }) {
         <div style={{ marginBottom: 14 }}>
           <div style={{ fontFamily: "'Pretendard',sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '0.12em', color: '#888', marginBottom: 6, textTransform: 'uppercase' }}>이름</div>
           <input value={name} onChange={e => setName(e.target.value)}
-            placeholder="김서연"
+            placeholder="이름"
             required
             style={{
               width: '100%', padding: '12px 14px', border: '1px solid rgba(17,17,17,0.18)',
