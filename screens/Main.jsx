@@ -118,6 +118,20 @@ function MainScreen({ goTo, openSheet, tweaks }) {
       display: 'flex', flexDirection: 'column',
       overflow: 'hidden'
     }}>
+      {/* 포토 카드 인터랙션 애니메이션 */}
+      <style>{`
+        @keyframes photo-ping {
+          0%   { box-shadow: 0 0 0 0px  rgba(17,17,17,0.28); }
+          70%  { box-shadow: 0 0 0 10px rgba(17,17,17,0);    }
+          100% { box-shadow: 0 0 0 10px rgba(17,17,17,0);    }
+        }
+        @keyframes badge-dot-blink {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0; }
+        }
+        .photo-ping     { animation: photo-ping 2.2s ease-out infinite; }
+        .badge-live-dot { animation: badge-dot-blink 1.6s ease-in-out infinite; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; vertical-align: middle; margin-right: 2px; }
+      `}</style>
       {/* ── HEADER TICKER ──────────────────────────────────── */}
       <div className="ticker-wrap" style={{ background: lime }}>
         <div className="ticker-track" ref={tickerTrackRef}>
@@ -138,364 +152,313 @@ function MainScreen({ goTo, openSheet, tweaks }) {
       {/* ── SCROLLABLE CONTENT ─────────────────────────────── */}
       <div className="inv-screen" style={{ position: 'relative', flex: 1 }}>
 
-      {/* ── HERO ───────────────────────────────────────────── */}
-      <section style={{ ...{
-          position: 'relative',
-          background: lime,
-          minHeight: 'calc(100% - 0px)',
-          padding: '48px 24px 56px',
-          overflow: 'hidden'
-        }, background: "rgb(212, 230, 7)" }}>
-        {/* top meta row */}
-        <div style={{ marginBottom: 30 }}>
-          <div className="label-en" style={{ color: ink, opacity: 0.7 }}>CHAEWON  ·  HAESEONG</div>
-        </div>
-
-        {/* big rotated WEDDING INVITATION on right edge */}
-        <div ref={weddingTextRef} className="vertical-headline agrandir" style={{
-          position: 'absolute', right: -1, top: 70,
-          fontSize: 'min(64px, 16.4vw)', color: ink, lineHeight: 0.85, opacity: 0, transition: 'opacity 0.45s ease', height: "640px", fontFamily: "'Martian Mono', monospace", fontWeight: "400", fontStretch: '100%', letterSpacing: '0em'
+        {/* ── HERO ───────────────────────────────────────────── */}
+        <section style={{
+          ...{
+            position: 'relative',
+            background: lime,
+            minHeight: 'calc(100% - 0px)',
+            padding: '48px 24px 56px',
+            overflow: 'hidden'
+          }, background: "rgb(212, 230, 7)"
         }}>
-          WEDDING<br />INVITATION
-        </div>
-
-        {/* names + buttons row — aligned at same top */}
-        <div style={{ marginTop: 18, position: 'relative', zIndex: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          {/* names column */}
-          <div>
-            <div className="fade-up" style={{ marginBottom: 4 }}>
-              <div className="display" style={{
-                fontSize: 'min(77px, 20vw)', color: ink, lineHeight: 0.88, fontWeight: 600, fontFamily: "'Pretendard', sans-serif",
-                whiteSpace: 'nowrap',
-              }}>
-                윤채원
-              </div>
-              <div className="serif agrandir" style={{ fontSize: 'min(22px, 5.6vw)', color: ink, opacity: 0.8, marginTop: 2, marginLeft: 4, fontFamily: "'Martian Mono', monospace", letterSpacing: '0em', whiteSpace: 'nowrap' }}>
-                Chaewon Yun
-              </div>
-            </div>
-
-            <div className="display fade-up delay-1" style={{
-              fontSize: 'min(36px, 9vw)', margin: '14px 0 14px 4px', color: ink,
-              display: 'flex', alignItems: 'center', gap: 10
-            }}>
-              <span style={{ display: 'inline-block', width: 28, height: 1, background: ink }} />
-              <span style={{ fontSize: 'min(20px, 5vw)', fontFamily: "'Martian Mono', monospace", fontWeight: 300, letterSpacing: '0em' }}>and</span>
-              <span style={{ display: 'inline-block', width: 28, height: 1, background: ink }} />
-            </div>
-
-            <div className="fade-up delay-2">
-              <div className="display" style={{
-                fontSize: 'min(77px, 20vw)', color: ink, lineHeight: 0.88, fontWeight: 600, fontFamily: "'Pretendard', sans-serif",
-                whiteSpace: 'nowrap',
-              }}>
-                최해성
-              </div>
-              <div className="serif agrandir" style={{ fontSize: 'min(22px, 5.6vw)', color: ink, opacity: 0.8, marginTop: 2, marginLeft: 4, fontFamily: "'Martian Mono', monospace", letterSpacing: '0em', whiteSpace: 'nowrap' }}>
-                Haeseong Choi
-              </div>
-            </div>
+          {/* top meta row */}
+          <div style={{ marginBottom: 30 }}>
+            <div className="label-en" style={{ color: ink, opacity: 0.7 }}>CHAEWON  ·  HAESEONG</div>
           </div>
 
-          {/* buttons column — aligns with 윤채원 */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
-            {/* Filled (M3 Filled Button) — highest emphasis for primary action */}
-            <button onClick={() => openSheet('map')} className="tap"
-            style={{
-              border: `1.5px solid ${ink}`, background: ink, color: lime,
-              padding: '9px 14px', borderRadius: 99, cursor: 'pointer',
-              fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.12em',
-              fontWeight: 500,
-              display: 'flex', alignItems: 'center', gap: 6,
-              minHeight: 36, lineHeight: 1
-            }}>
-              <svg width="10" height="13" viewBox="0 0 10 13" fill="none" style={{ flexShrink: 0 }}>
-                <path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 8 5 8s5-4.25 5-8c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/>
-              </svg>
-              LOCATION
-            </button>
-            {/* Outlined (M3 Outlined Button) — secondary action */}
-            <button onClick={() => openSheet('account-both')} className="tap"
-            style={{
-              border: `1.5px solid ${ink}`, background: 'transparent', color: ink,
-              padding: '9px 14px', borderRadius: 99, cursor: 'pointer',
-              fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.12em',
-              fontWeight: 500,
-              display: 'flex', alignItems: 'center', gap: 6,
-              minHeight: 36, lineHeight: 1
-            }}>
-              <svg width="12" height="11" viewBox="0 0 12 11" fill="none" style={{ flexShrink: 0 }}>
-                <rect x="0.75" y="0.75" width="10.5" height="9.5" rx="1.25" stroke="currentColor" strokeWidth="1.5"/>
-                <path d="M0.75 3.5h10.5" stroke="currentColor" strokeWidth="1.5"/>
-                <path d="M3 6.5h2M3 8h3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-              </svg>
-              ACCOUNTS
-            </button>
-          </div>
-        </div>
-        {/* memories CTA */}
-        <button
-          onClick={() => goTo('memories')}
-          className="tap fade-up delay-3"
-          style={{
-            marginTop: 28, marginLeft: 4,
-            background: 'transparent', border: 'none', cursor: 'pointer',
-            padding: 0, display: 'flex', alignItems: 'center', gap: 8
+          {/* big rotated WEDDING INVITATION on right edge */}
+          <div ref={weddingTextRef} className="vertical-headline agrandir" style={{
+            position: 'absolute', right: -1, top: 70,
+            fontSize: 'min(64px, 16.4vw)', color: ink, lineHeight: 0.85, opacity: 0, transition: 'opacity 0.45s ease', height: "640px", fontFamily: "'Martian Mono', monospace", fontWeight: "400", fontStretch: '100%', letterSpacing: '0em'
           }}>
-          <div style={{
-            fontFamily: "'Pretendard', sans-serif", fontSize: 10, letterSpacing: '0.16em',
-            fontWeight: 600, color: ink
-          }}></div>
-        </button>
-
-        {/* photo card overlap — taps to OUR STORY / numbers */}
-        <button
-          ref={photoRef}
-          onClick={() => goTo('memories')}
-          className="fade-up delay-3 tap"
-          style={{
-            marginTop: 38, position: 'relative',
-            marginLeft: -4, marginRight: 68,
-            display: 'block', width: 'auto',
-            padding: 0, border: 'none', background: 'transparent',
-            cursor: 'pointer', textAlign: 'left'
-          }}>
-          <div style={{
-            position: 'relative', overflow: 'hidden',
-            aspectRatio: '4/5', maxHeight: 280
-          }}>
-            <img src="img/couple-main.jpg" alt="couple"
-            fetchPriority="high" decoding="async"
-            className={tweaks.bw ? 'bw kenburns' : 'kenburns'}
-            style={{
-              width: '100%', height: '100%', objectFit: 'cover',
-              objectPosition: 'center 35%'
-            }} />
-            {/* 원래 스타일 badge */}
-            <div style={{
-              position: 'absolute', top: 10, left: 10,
-              background: lime, color: ink,
-              fontFamily: "'Pretendard', sans-serif", fontSize: 9, fontWeight: 700,
-              padding: '4px 8px', letterSpacing: '0.18em',
-              borderRadius: 2,
-              display: 'flex', alignItems: 'center', gap: 6
-            }}>우리의 추억 보기 <span style={{ fontSize: 11, opacity: 0.7 }}>↗</span></div>
-            {/* 하단 그라디언트 + 원형 탭 인디케이터 — 사진이 눌리는 영역임을 암시 */}
-            <div style={{
-              position: 'absolute', bottom: 0, left: 0, right: 0,
-              padding: '36px 12px 12px',
-              background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.38))',
-              display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end',
-              pointerEvents: 'none'
-            }}>
-              <div style={{
-                width: 32, height: 32, borderRadius: '50%',
-                background: 'rgba(255,255,255,0.18)',
-                border: '1px solid rgba(255,255,255,0.4)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#fff', fontSize: 15, lineHeight: 1
-              }}>↗</div>
-            </div>
+            WEDDING<br />INVITATION
           </div>
-        </button>
 
-        {/* bottom date line */}
-        <div style={{
-          marginTop: 32, paddingTop: 18,
-          borderTop: `1px solid ${ink}`,
-          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'
-        }}>
-          <div className="num-mono agrandir" style={{ fontWeight: 300, color: ink, letterSpacing: '-0.02em', fontSize: "16px", fontFamily: "'Martian Mono', monospace", fontStretch: '75%' }}>
-            2026.09.12
-          </div>
-          <button onClick={() => openSheet('map')} className="tap"
-          style={{
-            fontFamily: "'Pretendard', sans-serif", letterSpacing: '-0.02em',
-            fontWeight: 600, color: ink, fontSize: "16px",
-            background: 'transparent', border: 'none', cursor: 'pointer', padding: 0
-          }}>삼성전자 서초사옥</button>
-        </div>
-      </section>
-
-      {/* ── THE DAY ───────────────────────────────────────── */}
-      <section style={{
-        background: '#F8F6F0',
-        padding: '64px 24px 71px',
-        position: 'relative'
-      }}>
-        <div className="label-en" style={{ marginBottom: 28, textAlign: "left" }}>· THE DAY</div>
-
-        {/* giant 09 / 12 */}
-        <div style={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-          marginBottom: 8, fontWeight: "400", lineHeight: 0.85,
-        }}>
-          <div className="display" style={{ color: ink, fontSize: 'min(120px, 30.8vw)', fontFamily: "'Martian Mono', monospace", fontStretch: '112.5%' }}>09</div>
-          <div className="display" style={{ color: ink, fontSize: 'min(120px, 30.8vw)', fontFamily: "'Martian Mono', monospace", fontStretch: '112.5%' }}>12</div>
-        </div>
-
-        <div className="ko-med" style={{
-          textAlign: 'center', color: ink,
-          lineHeight: 1.35, letterSpacing: '-0.01em',
-          marginTop: 14, marginBottom: 10, fontFamily: "Pretendard", fontSize: 'min(20px, 5.2vw)', fontWeight: "400"
-        }}>
-          2026년 9월 12일<br />
-          <span className="ko-light" style={{ fontFamily: "Pretendard", color: "rgb(17, 17, 17)", fontSize: 'min(20px, 5.2vw)', fontWeight: "400" }}>토요일 오후 1시</span>
-        </div>
-        <div className="ko-light" style={{ textAlign: 'center', fontSize: 12, color: '#777', marginBottom: 36, fontFamily: "'Pretendard', sans-serif", letterSpacing: '0.18em', fontWeight: 500 }}>
-          
-        </div>
-
-        <div style={{ textAlign: 'center', marginBottom: 36 }}>
-          <div className="ko-med" style={{ marginBottom: 4, fontSize: 'min(20px, 5.2vw)', fontWeight: "400" }}>삼성전자 서초사옥</div>
-          <div className="ko-light" style={{ color: "rgb(17, 17, 17)", fontSize: 'min(20px, 5.2vw)', fontWeight: "400" }}>5층 웨딩홀</div>
-        </div>
-
-        {/* family lines */}
-        <div style={{ marginBottom: 32 }}>
-          <div className="label-en" style={{ marginBottom: 14 }}>· FAMILY</div>
-          <div style={{
-            display: 'grid', gap: 14, fontFamily: "'Pretendard'"
-          }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-              <div className="ko-reg" style={{ fontSize: 'min(20px, 5.2vw)', color: '#666', flex: 1 }}>
-                <span style={{ color: ink }}>최교선</span>
-                <span style={{ margin: '0 6px', opacity: 0.5 }}>·</span>
-                <span style={{ color: ink }}>구지영</span>
-                <span style={{ marginLeft: 6, fontSize: 'min(16px, 4.1vw)' }}>의 아들</span>
-              </div>
-              <div className="display" style={{ fontSize: 'min(20px, 5.2vw)', fontWeight: "400", fontFamily: "'Pretendard', sans-serif" }}>해성</div>
-            </div>
-            <div className="hr" />
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-              <div className="ko-reg" style={{ fontSize: 'min(20px, 5.2vw)', color: '#666', flex: 1 }}>
-                <span style={{ color: ink }}>윤재경</span>
-                <span style={{ margin: '0 6px', opacity: 0.5 }}>·</span>
-                <span style={{ color: ink }}>공명아</span>
-                <span style={{ marginLeft: 6, fontSize: 'min(16px, 4.1vw)' }}>의 딸</span>
-              </div>
-              <div className="display" style={{ fontSize: 'min(20px, 5.2vw)', fontWeight: "400", fontFamily: "'Pretendard', sans-serif" }}>채원</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="ko-light" style={{
-          textAlign: 'center', fontSize: 14, color: '#555',
-          lineHeight: 1.75, padding: '0 4px', fontFamily: "Pretendard"
-        }}>
-          두 사람의 이야기가 하나가 되는 날,<br />
-          함께 축복해 주세요
-        </div>
-
-        <div className="serif" style={{ textAlign: 'center', marginTop: 0, fontSize: 22, color: ink }}>
-
-        </div>
-      </section>
-
-      {/* ── NUMBERS strip (compact) ──────────────────────── */}
-      <section style={{ display: 'none' }}>
-        <div className="label-en" style={{ marginBottom: 18, color: ink }}>· NUMBERS</div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
-          {[
-          { n: '1914', t: '함께한 날들' },
-          { n: '1', t: '하나가 되는 날' },
-          { n: '∞', t: '오늘부터, 영원히' }].
-          map((x, i) =>
-          <div key={i}>
-              <div className="display" style={{ fontSize: 44, color: ink, lineHeight: 0.9 }}>{x.n}</div>
-              <div className="ko-light" style={{ fontSize: 11, color: ink, opacity: 0.7, marginTop: 6, lineHeight: 1.4 }}>{x.t}</div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ── GUIDE section ──────────────────────────────────── */}
-      <section style={{ background: '#F8F6F0', padding: '24px 24px 0' }}>
-        <div style={{
-          border: `1px solid ${ink}`, background: '#fff',
-          padding: '22px 20px', fontFamily: "'Pretendard'"
-        }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
-            <div className="label-en">MEAL</div>
-            <div className="ko-light" style={{ fontSize: 12, color: '#666' }}>식사</div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-            <div style={{ paddingBottom: 16 }}>
-              <div className="ko-med" style={{ fontSize: 15, marginBottom: 6 }}>식사 시간</div>
-              <div className="ko-light" style={{ fontSize: 15, color: '#555', lineHeight: 1.65 }}>
-                오후 1시 ~ 3시까지 식사가 제공됩니다
-              </div>
-            </div>
-            <div className="hr" style={{ margin: '0 0 16px' }} />
-            <div style={{ paddingBottom: 16 }}>
-              <div className="ko-med" style={{ fontSize: 15, marginBottom: 6 }}>식사 장소</div>
-              <div className="ko-light" style={{ fontSize: 15, color: '#555', lineHeight: 1.65 }}>
-                서초사옥 지하1층에서 이뤄집니다<br />
-                양식 · 중식 · 일식 중 선택하실 수 있습니다
-              </div>
-            </div>
-            <div className="hr" style={{ margin: '0 0 16px' }} />
+          {/* names + buttons row — aligned at same top */}
+          <div style={{ marginTop: 18, position: 'relative', zIndex: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            {/* names column */}
             <div>
-              <div className="ko-med" style={{ fontSize: 15, marginBottom: 6 }}>식당 선택</div>
-              <div className="ko-light" style={{ fontSize: 15, color: '#555', lineHeight: 1.65 }}>
-                식당 선택은 축의대에서 이뤄지오니<br />
-                함께 오시는 분이 계시다면 미리 상의하고 오시면 좋습니다
+              <div className="fade-up" style={{ marginBottom: 4 }}>
+                <div className="display" style={{
+                  fontSize: 'min(77px, 20vw)', color: ink, lineHeight: 0.88, fontWeight: 600, fontFamily: "'Pretendard', sans-serif",
+                  whiteSpace: 'nowrap',
+                }}>
+                  윤채원
+                </div>
+                <div className="serif agrandir" style={{ fontSize: 'min(22px, 5.6vw)', color: ink, opacity: 0.8, marginTop: 2, marginLeft: 4, fontFamily: "'Martian Mono', monospace", letterSpacing: '0em', whiteSpace: 'nowrap' }}>
+                  Chaewon Yun
+                </div>
+              </div>
+
+              <div className="display fade-up delay-1" style={{
+                fontSize: 'min(36px, 9vw)', margin: '14px 0 14px 4px', color: ink,
+                display: 'flex', alignItems: 'center', gap: 10
+              }}>
+                <span style={{ display: 'inline-block', width: 28, height: 1, background: ink }} />
+                <span style={{ fontSize: 'min(20px, 5vw)', fontFamily: "'Martian Mono', monospace", fontWeight: 300, letterSpacing: '0em' }}>and</span>
+                <span style={{ display: 'inline-block', width: 28, height: 1, background: ink }} />
+              </div>
+
+              <div className="fade-up delay-2">
+                <div className="display" style={{
+                  fontSize: 'min(77px, 20vw)', color: ink, lineHeight: 0.88, fontWeight: 600, fontFamily: "'Pretendard', sans-serif",
+                  whiteSpace: 'nowrap',
+                }}>
+                  최해성
+                </div>
+                <div className="serif agrandir" style={{ fontSize: 'min(22px, 5.6vw)', color: ink, opacity: 0.8, marginTop: 2, marginLeft: 4, fontFamily: "'Martian Mono', monospace", letterSpacing: '0em', whiteSpace: 'nowrap' }}>
+                  Haeseong Choi
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ── CTA section ──────────────────────────────────── */}
-      <section id="section-location" style={{
-        background: '#F8F6F0', padding: '24px 24px 24px'
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-          <button onClick={() => openSheet('map')} className="tap"
-          style={{
-            display: 'block', width: '100%', border: 'none',
-            background: 'transparent', padding: 0, cursor: 'pointer', textAlign: 'left'
-          }}>
-            <div style={{
-              border: `1.5px solid ${ink}`, background: '#fff',
-              padding: '20px 20px', borderRadius: 0,
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              fontFamily: "'Pretendard'"
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1 }}>
-                {/* leading icon — map pin */}
-                <div style={{
-                  width: 40, height: 40, borderRadius: '50%',
-                  border: `1.5px solid ${ink}`, flexShrink: 0,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center'
+            {/* buttons column — aligns with 윤채원 */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
+              {/* Filled (M3 Filled Button) — highest emphasis for primary action */}
+              <button onClick={() => openSheet('map')} className="tap"
+                style={{
+                  border: `1.5px solid ${ink}`, background: ink, color: lime,
+                  padding: '9px 14px', borderRadius: 99, cursor: 'pointer',
+                  fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.12em',
+                  fontWeight: 500,
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  minHeight: 36, lineHeight: 1
                 }}>
-                  <svg width="14" height="17" viewBox="0 0 14 17" fill="none">
-                    <path d="M7 0C4.24 0 2 2.24 2 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 7A2 2 0 1 1 7 3a2 2 0 0 1 0 4z" fill={ink}/>
-                  </svg>
-                </div>
-                <div style={{ textAlign: 'left' }}>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4 }}>
-                    <div className="label-en">VENUE</div>
-                    <div className="ko-light" style={{ fontSize: 12, color: '#888' }}>오시는 길 보기</div>
-                  </div>
-                  <div className="ko-med" style={{ fontSize: 16 }}>삼성전자 서초사옥 5층</div>
-                </div>
-              </div>
-              {/* M3 FAB-mini style trailing action indicator */}
+                <svg width="10" height="13" viewBox="0 0 10 13" fill="none" style={{ flexShrink: 0 }}>
+                  <path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 8 5 8s5-4.25 5-8c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor" />
+                </svg>
+                LOCATION
+              </button>
+              {/* Outlined (M3 Outlined Button) — secondary action */}
+              <button onClick={() => openSheet('account-both')} className="tap"
+                style={{
+                  border: `1.5px solid ${ink}`, background: 'transparent', color: ink,
+                  padding: '9px 14px', borderRadius: 99, cursor: 'pointer',
+                  fontFamily: "'Martian Mono', monospace", fontSize: 9, letterSpacing: '0.12em',
+                  fontWeight: 500,
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  minHeight: 36, lineHeight: 1
+                }}>
+                <svg width="12" height="11" viewBox="0 0 12 11" fill="none" style={{ flexShrink: 0 }}>
+                  <rect x="0.75" y="0.75" width="10.5" height="9.5" rx="1.25" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M0.75 3.5h10.5" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M3 6.5h2M3 8h3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                </svg>
+                ACCOUNTS
+              </button>
+            </div>
+          </div>
+          {/* memories CTA */}
+          <button
+            onClick={() => goTo('memories')}
+            className="tap fade-up delay-3"
+            style={{
+              marginTop: 28, marginLeft: 4,
+              background: 'transparent', border: 'none', cursor: 'pointer',
+              padding: 0, display: 'flex', alignItems: 'center', gap: 8
+            }}>
+            <div style={{
+              fontFamily: "'Pretendard', sans-serif", fontSize: 10, letterSpacing: '0.16em',
+              fontWeight: 600, color: ink
+            }}></div>
+          </button>
+
+          {/* photo card overlap — taps to OUR STORY / numbers */}
+          <button
+            ref={photoRef}
+            onClick={() => goTo('memories')}
+            className="fade-up delay-3 tap"
+            style={{
+              marginTop: 38, position: 'relative',
+              marginLeft: -4, marginRight: 68,
+              display: 'block', width: 'auto',
+              padding: 0, border: 'none', background: 'transparent',
+              cursor: 'pointer', textAlign: 'left'
+            }}>
+            <div className="photo-ping" style={{
+              position: 'relative', overflow: 'hidden',
+              aspectRatio: '4/5', maxHeight: 280,
+            }}>
+              <img src="img/couple-main.jpg" alt="couple"
+                fetchPriority="high" decoding="async"
+                className={tweaks.bw ? 'bw kenburns' : 'kenburns'}
+                style={{
+                  width: '100%', height: '100%', objectFit: 'cover',
+                  objectPosition: 'center 35%'
+                }} />
+              {/* badge — 블링킹 dot으로 "살아있는 영역" 암시 */}
               <div style={{
-                width: 40, height: 40, borderRadius: '50%',
-                background: ink, color: '#fff',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 18, flexShrink: 0, marginLeft: 12
-              }}>→</div>
+                position: 'absolute', top: 10, left: 10,
+                background: lime, color: ink,
+                fontFamily: "'Pretendard', sans-serif", fontSize: 9, fontWeight: 700,
+                padding: '4px 8px', letterSpacing: '0.18em',
+                borderRadius: 2, zIndex: 2,
+                display: 'flex', alignItems: 'center', gap: 5
+              }}>
+                <span className="badge-live-dot" />
+                우리의 추억 보기
+              </div>
             </div>
           </button>
-          <div id="section-accounts">
-            <button onClick={() => openSheet('account-both')} className="tap"
-            style={{
-              display: 'block', width: '100%', border: 'none',
-              background: 'transparent', padding: 0, cursor: 'pointer', textAlign: 'left'
+
+          {/* bottom date line */}
+          <div style={{
+            marginTop: 32, paddingTop: 18,
+            borderTop: `1px solid ${ink}`,
+            display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'
+          }}>
+            <div className="num-mono agrandir" style={{ fontWeight: 300, color: ink, letterSpacing: '-0.02em', fontSize: "16px", fontFamily: "'Martian Mono', monospace", fontStretch: '75%' }}>
+              2026.09.12
+            </div>
+            <button onClick={() => openSheet('map')} className="tap"
+              style={{
+                fontFamily: "'Pretendard', sans-serif", letterSpacing: '-0.02em',
+                fontWeight: 600, color: ink, fontSize: "16px",
+                background: 'transparent', border: 'none', cursor: 'pointer', padding: 0
+              }}>삼성전자 서초사옥</button>
+          </div>
+        </section>
+
+        {/* ── THE DAY ───────────────────────────────────────── */}
+        <section style={{
+          background: '#F8F6F0',
+          padding: '64px 24px 71px',
+          position: 'relative'
+        }}>
+          <div className="label-en" style={{ marginBottom: 28, textAlign: "left" }}>· THE DAY</div>
+
+          {/* giant 09 / 12 */}
+          <div style={{
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            marginBottom: 8, fontWeight: "400", lineHeight: 0.85,
+          }}>
+            <div className="display" style={{ color: ink, fontSize: 'min(120px, 30.8vw)', fontFamily: "'Martian Mono', monospace", fontStretch: '112.5%' }}>09</div>
+            <div className="display" style={{ color: ink, fontSize: 'min(120px, 30.8vw)', fontFamily: "'Martian Mono', monospace", fontStretch: '112.5%' }}>12</div>
+          </div>
+
+          <div className="ko-med" style={{
+            textAlign: 'center', color: ink,
+            lineHeight: 1.35, letterSpacing: '-0.01em',
+            marginTop: 14, marginBottom: 10, fontFamily: "Pretendard", fontSize: 'min(20px, 5.2vw)', fontWeight: "400"
+          }}>
+            2026년 9월 12일<br />
+            <span className="ko-light" style={{ fontFamily: "Pretendard", color: "rgb(17, 17, 17)", fontSize: 'min(20px, 5.2vw)', fontWeight: "400" }}>토요일 오후 1시</span>
+          </div>
+          <div className="ko-light" style={{ textAlign: 'center', fontSize: 12, color: '#777', marginBottom: 36, fontFamily: "'Pretendard', sans-serif", letterSpacing: '0.18em', fontWeight: 500 }}>
+
+          </div>
+
+          <div style={{ textAlign: 'center', marginBottom: 36 }}>
+            <div className="ko-med" style={{ marginBottom: 4, fontSize: 'min(20px, 5.2vw)', fontWeight: "400" }}>삼성전자 서초사옥</div>
+            <div className="ko-light" style={{ color: "rgb(17, 17, 17)", fontSize: 'min(20px, 5.2vw)', fontWeight: "400" }}>5층 웨딩홀</div>
+          </div>
+
+          {/* family lines */}
+          <div style={{ marginBottom: 32 }}>
+            <div className="label-en" style={{ marginBottom: 14 }}>· FAMILY</div>
+            <div style={{
+              display: 'grid', gap: 14, fontFamily: "'Pretendard'"
             }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+                <div className="ko-reg" style={{ fontSize: 'min(20px, 5.2vw)', color: '#666', flex: 1 }}>
+                  <span style={{ color: ink }}>최교선</span>
+                  <span style={{ margin: '0 6px', opacity: 0.5 }}>·</span>
+                  <span style={{ color: ink }}>구지영</span>
+                  <span style={{ marginLeft: 6, fontSize: 'min(16px, 4.1vw)' }}>의 아들</span>
+                </div>
+                <div className="display" style={{ fontSize: 'min(20px, 5.2vw)', fontWeight: "400", fontFamily: "'Pretendard', sans-serif" }}>해성</div>
+              </div>
+              <div className="hr" />
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+                <div className="ko-reg" style={{ fontSize: 'min(20px, 5.2vw)', color: '#666', flex: 1 }}>
+                  <span style={{ color: ink }}>윤재경</span>
+                  <span style={{ margin: '0 6px', opacity: 0.5 }}>·</span>
+                  <span style={{ color: ink }}>공명아</span>
+                  <span style={{ marginLeft: 6, fontSize: 'min(16px, 4.1vw)' }}>의 딸</span>
+                </div>
+                <div className="display" style={{ fontSize: 'min(20px, 5.2vw)', fontWeight: "400", fontFamily: "'Pretendard', sans-serif" }}>채원</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="ko-light" style={{
+            textAlign: 'center', fontSize: 14, color: '#555',
+            lineHeight: 1.75, padding: '0 4px', fontFamily: "Pretendard"
+          }}>
+            두 사람의 이야기가 하나가 되는 날,<br />
+            함께 축복해 주세요
+          </div>
+
+          <div className="serif" style={{ textAlign: 'center', marginTop: 0, fontSize: 22, color: ink }}>
+
+          </div>
+        </section>
+
+        {/* ── NUMBERS strip (compact) ──────────────────────── */}
+        <section style={{ display: 'none' }}>
+          <div className="label-en" style={{ marginBottom: 18, color: ink }}>· NUMBERS</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+            {[
+              { n: '1914', t: '함께한 날들' },
+              { n: '1', t: '하나가 되는 날' },
+              { n: '∞', t: '오늘부터, 영원히' }].
+              map((x, i) =>
+                <div key={i}>
+                  <div className="display" style={{ fontSize: 44, color: ink, lineHeight: 0.9 }}>{x.n}</div>
+                  <div className="ko-light" style={{ fontSize: 11, color: ink, opacity: 0.7, marginTop: 6, lineHeight: 1.4 }}>{x.t}</div>
+                </div>
+              )}
+          </div>
+        </section>
+
+        {/* ── GUIDE section ──────────────────────────────────── */}
+        <section style={{ background: '#F8F6F0', padding: '24px 24px 0' }}>
+          <div style={{
+            border: `1px solid ${ink}`, background: '#fff',
+            padding: '22px 20px', fontFamily: "'Pretendard'"
+          }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
+              <div className="label-en">MEAL</div>
+              <div className="ko-light" style={{ fontSize: 12, color: '#666' }}>식사</div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <div style={{ paddingBottom: 16 }}>
+                <div className="ko-med" style={{ fontSize: 15, marginBottom: 6 }}>식사 시간</div>
+                <div className="ko-light" style={{ fontSize: 15, color: '#555', lineHeight: 1.65 }}>
+                  오후 1시 ~ 3시까지 식사가 제공됩니다
+                </div>
+              </div>
+              <div className="hr" style={{ margin: '0 0 16px' }} />
+              <div style={{ paddingBottom: 16 }}>
+                <div className="ko-med" style={{ fontSize: 15, marginBottom: 6 }}>식사 장소</div>
+                <div className="ko-light" style={{ fontSize: 15, color: '#555', lineHeight: 1.65 }}>
+                  서초사옥 지하1층에서 이뤄집니다<br />
+                  양식 · 중식 · 일식 중 선택하실 수 있습니다
+                </div>
+              </div>
+              <div className="hr" style={{ margin: '0 0 16px' }} />
+              <div>
+                <div className="ko-med" style={{ fontSize: 15, marginBottom: 6 }}>식당 선택</div>
+                <div className="ko-light" style={{ fontSize: 15, color: '#555', lineHeight: 1.65 }}>
+                  식당 선택은 축의대에서 이뤄지오니<br />
+                  함께 오시는 분이 계시다면 미리 상의하고 오시면 좋습니다
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── CTA section ──────────────────────────────────── */}
+        <section id="section-location" style={{
+          background: '#F8F6F0', padding: '24px 24px 24px'
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <button onClick={() => openSheet('map')} className="tap"
+              style={{
+                display: 'block', width: '100%', border: 'none',
+                background: 'transparent', padding: 0, cursor: 'pointer', textAlign: 'left'
+              }}>
               <div style={{
                 border: `1.5px solid ${ink}`, background: '#fff',
                 padding: '20px 20px', borderRadius: 0,
@@ -503,26 +466,25 @@ function MainScreen({ goTo, openSheet, tweaks }) {
                 fontFamily: "'Pretendard'"
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1 }}>
-                  {/* leading icon — account/card */}
+                  {/* leading icon — map pin */}
                   <div style={{
                     width: 40, height: 40, borderRadius: '50%',
                     border: `1.5px solid ${ink}`, flexShrink: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center'
                   }}>
-                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none">
-                      <rect x="1" y="1" width="14" height="12" rx="1.5" stroke={ink} strokeWidth="1.5"/>
-                      <path d="M1 4.5h14" stroke={ink} strokeWidth="1.5"/>
-                      <path d="M4 8.5h3M4 10.5h5" stroke={ink} strokeWidth="1.2" strokeLinecap="round"/>
+                    <svg width="14" height="17" viewBox="0 0 14 17" fill="none">
+                      <path d="M7 0C4.24 0 2 2.24 2 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 7A2 2 0 1 1 7 3a2 2 0 0 1 0 4z" fill={ink} />
                     </svg>
                   </div>
                   <div style={{ textAlign: 'left' }}>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 4 }}>
-                      <div className="label-en">ACCOUNT</div>
-                      <div className="ko-light" style={{ fontSize: 12, color: '#888' }}>계좌번호 보기</div>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4 }}>
+                      <div className="label-en">VENUE</div>
+                      <div className="ko-light" style={{ fontSize: 12, color: '#888' }}>오시는 길 보기</div>
                     </div>
-                    <div className="ko-med" style={{ fontSize: 16 }}>마음 전하실 곳</div>
+                    <div className="ko-med" style={{ fontSize: 16 }}>삼성전자 서초사옥 5층</div>
                   </div>
                 </div>
+                {/* M3 FAB-mini style trailing action indicator */}
                 <div style={{
                   width: 40, height: 40, borderRadius: '50%',
                   background: ink, color: '#fff',
@@ -531,39 +493,82 @@ function MainScreen({ goTo, openSheet, tweaks }) {
                 }}>→</div>
               </div>
             </button>
+            <div id="section-accounts">
+              <button onClick={() => openSheet('account-both')} className="tap"
+                style={{
+                  display: 'block', width: '100%', border: 'none',
+                  background: 'transparent', padding: 0, cursor: 'pointer', textAlign: 'left'
+                }}>
+                <div style={{
+                  border: `1.5px solid ${ink}`, background: '#fff',
+                  padding: '20px 20px', borderRadius: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  fontFamily: "'Pretendard'"
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1 }}>
+                    {/* leading icon — account/card */}
+                    <div style={{
+                      width: 40, height: 40, borderRadius: '50%',
+                      border: `1.5px solid ${ink}`, flexShrink: 0,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }}>
+                      <svg width="16" height="14" viewBox="0 0 16 14" fill="none">
+                        <rect x="1" y="1" width="14" height="12" rx="1.5" stroke={ink} strokeWidth="1.5" />
+                        <path d="M1 4.5h14" stroke={ink} strokeWidth="1.5" />
+                        <path d="M4 8.5h3M4 10.5h5" stroke={ink} strokeWidth="1.2" strokeLinecap="round" />
+                      </svg>
+                    </div>
+                    <div style={{ textAlign: 'left' }}>
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 4 }}>
+                        <div className="label-en">ACCOUNT</div>
+                        <div className="ko-light" style={{ fontSize: 12, color: '#888' }}>계좌번호 보기</div>
+                      </div>
+                      <div className="ko-med" style={{ fontSize: 16 }}>마음 전하실 곳</div>
+                    </div>
+                  </div>
+                  <div style={{
+                    width: 40, height: 40, borderRadius: '50%',
+                    background: ink, color: '#fff',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 18, flexShrink: 0, marginLeft: 12
+                  }}>→</div>
+                </div>
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
 
-      {/* ── CLOSING ──────────────────────────────────────── */}
-      <section style={{ ...{
-          background: lime, padding: '12px 24px 12px',
-          position: 'relative', overflow: 'hidden'
-        }, background: "rgb(212, 230, 7)" }}>
-        <div className="label-en" style={{ marginBottom: 24 }}></div>
-        <div className="display" style={{
-          color: ink,
-          fontSize: "20px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "1", letterSpacing: "-0.2px", margin: "0px"
+        {/* ── CLOSING ──────────────────────────────────────── */}
+        <section style={{
+          ...{
+            background: lime, padding: '12px 24px 12px',
+            position: 'relative', overflow: 'hidden'
+          }, background: "rgb(212, 230, 7)"
         }}>
-          보내주시는 따뜻한 축하에 감사하며,<br />함께 잘 살아가겠습니다
-        </div>
-        <div style={{ marginTop: 36 }} className="hr-ink" />
-        <div style={{
-          marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'
-        }}>
-          <div className="num-mono" style={{ fontSize: 13, color: ink, fontWeight: "300", fontFamily: "'Martian Mono', monospace", fontStretch: '100%' }}>CHAEWON</div>
-          <div className="num-mono" style={{ fontSize: 13, color: ink, fontWeight: "300", fontFamily: "'Martian Mono', monospace", fontStretch: '100%' }}>HAESEONG</div>
-        </div>
+          <div className="label-en" style={{ marginBottom: 24 }}></div>
+          <div className="display" style={{
+            color: ink,
+            fontSize: "20px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "1", letterSpacing: "-0.2px", margin: "0px"
+          }}>
+            보내주시는 따뜻한 축하에 감사하며,<br />함께 잘 살아가겠습니다
+          </div>
+          <div style={{ marginTop: 36 }} className="hr-ink" />
+          <div style={{
+            marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'
+          }}>
+            <div className="num-mono" style={{ fontSize: 13, color: ink, fontWeight: "300", fontFamily: "'Martian Mono', monospace", fontStretch: '100%' }}>CHAEWON</div>
+            <div className="num-mono" style={{ fontSize: 13, color: ink, fontWeight: "300", fontFamily: "'Martian Mono', monospace", fontStretch: '100%' }}>HAESEONG</div>
+          </div>
 
-        <div style={{
-          marginTop: 2, textAlign: 'center',
-          fontFamily: "'Pretendard', sans-serif", fontSize: 10, letterSpacing: '0.2em',
-          fontWeight: 500, color: ink, opacity: 0.55
-        }}>
+          <div style={{
+            marginTop: 2, textAlign: 'center',
+            fontFamily: "'Pretendard', sans-serif", fontSize: 10, letterSpacing: '0.2em',
+            fontWeight: 500, color: ink, opacity: 0.55
+          }}>
 
-        </div>
-      </section>
+          </div>
+        </section>
       </div>{/* end scrollable */}
     </div>);
 
