@@ -307,37 +307,85 @@ function MainScreen({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-end',
-      gap: 6
+      gap: 8
     }
   }, /*#__PURE__*/React.createElement("button", {
     onClick: () => openSheet('map'),
     className: "tap",
     style: {
-      border: `1px solid ${ink}`,
-      background: 'transparent',
-      padding: '5px 8px',
+      border: `1.5px solid ${ink}`,
+      background: ink,
+      color: lime,
+      padding: '9px 14px',
       borderRadius: 99,
       cursor: 'pointer',
       fontFamily: "'Martian Mono', monospace",
       fontSize: 9,
-      letterSpacing: '0.14em',
-      fontWeight: 300
+      letterSpacing: '0.12em',
+      fontWeight: 500,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 6,
+      minHeight: 36,
+      lineHeight: 1
     }
-  }, "LOCATION"), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "10",
+    height: "13",
+    viewBox: "0 0 10 13",
+    fill: "none",
+    style: {
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M5 0C2.24 0 0 2.24 0 5c0 3.75 5 8 5 8s5-4.25 5-8c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z",
+    fill: "currentColor"
+  })), "LOCATION"), /*#__PURE__*/React.createElement("button", {
     onClick: () => openSheet('account-both'),
     className: "tap",
     style: {
-      border: `1px solid ${ink}`,
+      border: `1.5px solid ${ink}`,
       background: 'transparent',
-      padding: '5px 8px',
+      color: ink,
+      padding: '9px 14px',
       borderRadius: 99,
       cursor: 'pointer',
       fontFamily: "'Martian Mono', monospace",
       fontSize: 9,
-      letterSpacing: '0.14em',
-      fontWeight: 300
+      letterSpacing: '0.12em',
+      fontWeight: 500,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 6,
+      minHeight: 36,
+      lineHeight: 1
     }
-  }, "ACCOUNTS"))), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "12",
+    height: "11",
+    viewBox: "0 0 12 11",
+    fill: "none",
+    style: {
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "0.75",
+    y: "0.75",
+    width: "10.5",
+    height: "9.5",
+    rx: "1.25",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M0.75 3.5h10.5",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M3 6.5h2M3 8h3.5",
+    stroke: "currentColor",
+    strokeWidth: "1.2",
+    strokeLinecap: "round"
+  })), "ACCOUNTS"))), /*#__PURE__*/React.createElement("button", {
     onClick: () => goTo('memories'),
     className: "tap fade-up delay-3",
     style: {
@@ -400,22 +448,43 @@ function MainScreen({
       position: 'absolute',
       top: 10,
       left: 10,
-      background: lime,
-      color: ink,
+      background: ink,
+      color: lime,
       fontFamily: "'Pretendard', sans-serif",
-      fontSize: 9,
-      fontWeight: 700,
-      padding: '4px 8px',
-      letterSpacing: '0.18em',
-      borderRadius: 2,
+      fontSize: 10,
+      fontWeight: 600,
+      padding: '7px 11px',
+      letterSpacing: '0.12em',
+      borderRadius: 99,
       display: 'flex',
       alignItems: 'center',
-      gap: 6
+      gap: 6,
+      boxShadow: '0 2px 8px rgba(0,0,0,0.22)'
     }
-  }, "우리의 추억 보기 ", /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "11",
+    height: "11",
+    viewBox: "0 0 11 11",
+    fill: "none",
     style: {
-      fontSize: 11,
-      opacity: 0.7
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "5.5",
+    cy: "5.5",
+    r: "4.75",
+    stroke: "currentColor",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "5.5",
+    cy: "5.5",
+    r: "1.6",
+    fill: "currentColor"
+  })), "우리의 추억 보기", /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 13,
+      fontWeight: 300,
+      lineHeight: 1
     }
   }, "↗")))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -716,7 +785,7 @@ function MainScreen({
   }, "MEAL"), /*#__PURE__*/React.createElement("div", {
     className: "ko-light",
     style: {
-      fontSize: 11,
+      fontSize: 12,
       color: '#666'
     }
   }, "식사")), /*#__PURE__*/React.createElement("div", {
@@ -732,13 +801,13 @@ function MainScreen({
   }, /*#__PURE__*/React.createElement("div", {
     className: "ko-med",
     style: {
-      fontSize: 14,
+      fontSize: 15,
       marginBottom: 6
     }
   }, "식사 시간"), /*#__PURE__*/React.createElement("div", {
     className: "ko-light",
     style: {
-      fontSize: 13,
+      fontSize: 15,
       color: '#555',
       lineHeight: 1.65
     }
@@ -754,13 +823,13 @@ function MainScreen({
   }, /*#__PURE__*/React.createElement("div", {
     className: "ko-med",
     style: {
-      fontSize: 14,
+      fontSize: 15,
       marginBottom: 6
     }
   }, "식사 장소"), /*#__PURE__*/React.createElement("div", {
     className: "ko-light",
     style: {
-      fontSize: 13,
+      fontSize: 15,
       color: '#555',
       lineHeight: 1.65
     }
@@ -772,13 +841,13 @@ function MainScreen({
   }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "ko-med",
     style: {
-      fontSize: 14,
+      fontSize: 15,
       marginBottom: 6
     }
   }, "식당 선택"), /*#__PURE__*/React.createElement("div", {
     className: "ko-light",
     style: {
-      fontSize: 13,
+      fontSize: 15,
       color: '#555',
       lineHeight: 1.65
     }
@@ -808,9 +877,9 @@ function MainScreen({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      border: `1px solid ${ink}`,
+      border: `1.5px solid ${ink}`,
       background: '#fff',
-      padding: '22px 20px',
+      padding: '20px 20px',
       borderRadius: 0,
       display: 'flex',
       alignItems: 'center',
@@ -819,32 +888,66 @@ function MainScreen({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      flex: 1,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 14,
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 40,
+      height: 40,
+      borderRadius: '50%',
+      border: `1.5px solid ${ink}`,
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "14",
+    height: "17",
+    viewBox: "0 0 14 17",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M7 0C4.24 0 2 2.24 2 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 7A2 2 0 1 1 7 3a2 2 0 0 1 0 4z",
+    fill: ink
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
       textAlign: 'left'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'baseline',
-      gap: 24,
-      marginBottom: 6
+      gap: 10,
+      marginBottom: 4
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "label-en"
   }, "VENUE"), /*#__PURE__*/React.createElement("div", {
     className: "ko-light",
     style: {
-      fontSize: 11,
-      color: '#666'
+      fontSize: 12,
+      color: '#888'
     }
   }, "오시는 길 보기")), /*#__PURE__*/React.createElement("div", {
     className: "ko-med",
     style: {
       fontSize: 16
     }
-  }, "삼성전자 서초사옥 5층")), /*#__PURE__*/React.createElement("span", {
+  }, "삼성전자 서초사옥 5층"))), /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: 22,
+      width: 40,
+      height: 40,
+      borderRadius: '50%',
+      background: ink,
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: 18,
+      flexShrink: 0,
       marginLeft: 12
     }
   }, "→"))), /*#__PURE__*/React.createElement("div", {
@@ -863,9 +966,9 @@ function MainScreen({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      border: `1px solid ${ink}`,
+      border: `1.5px solid ${ink}`,
       background: '#fff',
-      padding: '22px 20px',
+      padding: '20px 20px',
       borderRadius: 0,
       display: 'flex',
       alignItems: 'center',
@@ -874,7 +977,46 @@ function MainScreen({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      flex: 1,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 14,
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 40,
+      height: 40,
+      borderRadius: '50%',
+      border: `1.5px solid ${ink}`,
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "16",
+    height: "14",
+    viewBox: "0 0 16 14",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "1",
+    y: "1",
+    width: "14",
+    height: "12",
+    rx: "1.5",
+    stroke: ink,
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M1 4.5h14",
+    stroke: ink,
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M4 8.5h3M4 10.5h5",
+    stroke: ink,
+    strokeWidth: "1.2",
+    strokeLinecap: "round"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
       textAlign: 'left'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -882,24 +1024,33 @@ function MainScreen({
       display: 'flex',
       alignItems: 'baseline',
       gap: 6,
-      marginBottom: 6
+      marginBottom: 4
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "label-en"
   }, "ACCOUNT"), /*#__PURE__*/React.createElement("div", {
     className: "ko-light",
     style: {
-      fontSize: 11,
-      color: '#666'
+      fontSize: 12,
+      color: '#888'
     }
   }, "계좌번호 보기")), /*#__PURE__*/React.createElement("div", {
     className: "ko-med",
     style: {
       fontSize: 16
     }
-  }, "마음 전하실 곳")), /*#__PURE__*/React.createElement("span", {
+  }, "마음 전하실 곳"))), /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: 22,
+      width: 40,
+      height: 40,
+      borderRadius: '50%',
+      background: ink,
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: 18,
+      flexShrink: 0,
       marginLeft: 12
     }
   }, "→")))))), /*#__PURE__*/React.createElement("section", {

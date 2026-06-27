@@ -565,7 +565,7 @@ function MapSheet({
       color: '#333',
       lineHeight: 1.5
     }
-  }, "방문객 주차장 이용", /*#__PURE__*/React.createElement("br", null), "(3시간 무료)")))));
+  }, "방문객 주차장 이용 (3시간 무료)")))));
 }
 function RSVPSheet({
   open,

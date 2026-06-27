@@ -90,24 +90,6 @@ function TabIconTagged({
     d: "M6.5 19a5.5 5.5 0 0 1 11 0"
   }));
 }
-function TabIconBookmark({
-  active,
-  ink
-}) {
-  const c = active ? ink : '#AAAAAA';
-  return /*#__PURE__*/React.createElement("svg", {
-    width: "24",
-    height: "24",
-    viewBox: "0 0 24 24",
-    fill: active ? ink : 'none',
-    stroke: c,
-    strokeWidth: "1.6",
-    strokeLinecap: "round",
-    strokeLinejoin: "round"
-  }, /*#__PURE__*/React.createElement("path", {
-    d: "M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4.5L6 21V4z"
-  }));
-}
 function TabIconMention({
   active,
   ink
@@ -1507,6 +1489,7 @@ function StoryViewer({
   const progressRef = React.useRef(0); // 일시정지 후 이어서 재생하기 위한 현재 진행도
   const DURATION = 4000;
   const images = groups[groupIdx]?.images || [];
+  const captions = groups[groupIdx]?.captions || [];
   const goPrev = () => {
     if (idx === 0 && groupIdx === 0) return;
     cancelAnimationFrame(timerRef.current);
@@ -1761,15 +1744,30 @@ function StoryViewer({
     }
   })), /*#__PURE__*/React.createElement("div", {
     style: {
+      pointerEvents: 'none'
+    }
+  }, captions[idx] && /*#__PURE__*/React.createElement("div", {
+    style: {
       textAlign: 'center',
-      padding: '10px 0 16px',
+      padding: '14px 24px 4px',
+      color: 'rgba(255,255,255,0.92)',
+      fontFamily: "'Noto Sans KR', sans-serif",
+      fontSize: 13,
+      fontWeight: 400,
+      lineHeight: 1.6,
+      letterSpacing: '-0.01em',
+      textShadow: '0 1px 6px rgba(0,0,0,0.5)'
+    }
+  }, captions[idx]), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'center',
+      padding: '8px 0 16px',
       color: 'rgba(255,255,255,0.3)',
       fontFamily: "'Pretendard',sans-serif",
       fontSize: 11,
-      letterSpacing: '0.1em',
-      pointerEvents: 'none'
+      letterSpacing: '0.1em'
     }
-  }, "아래로 스와이프하여 닫기"));
+  }, "아래로 스와이프하여 닫기")));
 }
 
 /* ─── Main Screen ───────────────────────────────────────────── */
@@ -1783,7 +1781,6 @@ function MemoriesScreen({
   const ink = tweaks.ink;
   const [tab, setTab] = React.useState('grid');
   const [feedActive, setFeedActive] = React.useState(false);
-  const [feedType, setFeedType] = React.useState('posts'); // 'posts' | 'interests'
   const [feedScrollTo, setFeedScrollTo] = React.useState(null);
   const [story, setStory] = React.useState(null);
   const [hearts, setHearts] = React.useState([]);
@@ -1808,6 +1805,7 @@ function MemoriesScreen({
   const topbarRef = React.useRef(null);
   const [topbarH, setTopbarH] = React.useState(52);
   const proposeImages = ['img/memories/propose-newyork/newyork-1.jpg', 'img/memories/propose-newyork/newyork-2.jpg'];
+  const proposeCaptions = ['2025년 6월, New York에서 프로포즈', 'Brookyln bridge가 보이는 Pebble beach에서'];
   const highlights = [{
     label: '2021',
     images: Array.from({
@@ -1881,49 +1879,7 @@ function MemoriesScreen({
     images: ['img/memories/wedding-ng/ng-1.jpg', 'img/memories/wedding-ng/ng-2.jpg', 'img/memories/wedding-ng/ng-3.jpg', 'img/memories/wedding-ng/ng-4.jpg'],
     caption: '📍 학교'
   }];
-  const interests = [{
-    id: 'int-1',
-    label: '일상',
-    sub: 'Daily',
-    images: ['img/memories/interest-photo/interest-daily/IMG_1551.JPG', 'img/memories/interest-photo/interest-daily/IMG_1727.JPG', 'img/memories/interest-photo/interest-daily/IMG_2828.jpeg', 'img/memories/interest-photo/interest-daily/IMG_3053.JPG', 'img/memories/interest-photo/interest-daily/IMG_5753.JPG', 'img/memories/interest-photo/interest-daily/IMG_6411.JPG', 'img/memories/interest-photo/interest-daily/IMG_8708.JPG', 'img/memories/interest-photo/interest-daily/QT004134.DNG.JPG', 'img/memories/interest-photo/interest-daily/QT004708.JPG']
-  }, {
-    id: 'int-2',
-    label: '맛집',
-    sub: 'Eats',
-    images: ['img/memories/interest-photo/interest-eats/1.JPG', 'img/memories/interest-photo/interest-eats/2.JPG', 'img/memories/interest-photo/interest-eats/3.JPG', 'img/memories/interest-photo/interest-eats/4.JPG', 'img/memories/interest-photo/interest-eats/5.JPG', 'img/memories/interest-photo/interest-eats/IMG_1655.JPG', 'img/memories/interest-photo/interest-eats/IMG_1767.JPG', 'img/memories/interest-photo/interest-eats/IMG_3748.jpeg', 'img/memories/interest-photo/interest-eats/IMG_4166.JPG', 'img/memories/interest-photo/interest-eats/IMG_8923.JPG']
-  }, {
-    id: 'int-3',
-    label: '액티비티',
-    sub: 'Activity',
-    images: ['img/memories/interest-photo/interest-activity/IMG_1107.JPG', 'img/memories/interest-photo/interest-activity/IMG_6500.JPG']
-  }, {
-    id: 'int-4',
-    label: '문화',
-    sub: 'Culture',
-    images: ['img/memories/interest-photo/interest-culture/IMG_0874.JPG', 'img/memories/interest-photo/interest-culture/IMG_1404.JPG', 'img/memories/interest-photo/interest-culture/IMG_1857.JPG', 'img/memories/interest-photo/interest-culture/IMG_1936.JPG', 'img/memories/interest-photo/interest-culture/IMG_2469.jpeg', 'img/memories/interest-photo/interest-culture/IMG_3731.JPG', 'img/memories/interest-photo/interest-culture/IMG_3900.jpeg', 'img/memories/interest-photo/interest-culture/IMG_7273.JPG', 'img/memories/interest-photo/interest-culture/IMG_7321.JPG', 'img/memories/interest-photo/interest-culture/IMG_7693.JPG']
-  }, {
-    id: 'int-5',
-    label: '여행',
-    sub: 'Travel',
-    images: ['img/memories/interest-photo/interest-travel/1.jpeg', 'img/memories/interest-photo/interest-travel/AE61BB3F-3AC6-4C23-9147-D81FC11F20FF.JPG', 'img/memories/interest-photo/interest-travel/FEFBF014-C742-4181-9FD6-F74450949DD7.JPG', 'img/memories/interest-photo/interest-travel/IMG_0122.JPG', 'img/memories/interest-photo/interest-travel/IMG_3170.jpeg', 'img/memories/interest-photo/interest-travel/IMG_4262.JPG', 'img/memories/interest-photo/interest-travel/IMG_8334.JPG', 'img/memories/interest-photo/interest-travel/IMG_8430.JPG', 'img/memories/interest-photo/interest-travel/IMG_9529.JPG']
-  }, {
-    id: 'int-6',
-    label: '사진',
-    sub: 'Photos',
-    images: ['img/memories/interest-photo/interest-photos/TREY4093.jpg', 'img/memories/interest-photo/interest-photos/TREY4254-2.jpg', 'img/memories/interest-photo/interest-photos/TREY4577.jpg']
-  }];
-
-  // 관심사도 Feed처럼 스크롤되도록 — 각 관심사를 게시물 형태로 변환
-  const interestPosts = interests.map((it, i) => ({
-    id: it.id,
-    date: it.sub,
-    likes: ['1,204', '2,318', '3,402', '4,510', '1,890', '5,221'][i] || '1,000',
-    photoCount: it.images.length || 1,
-    images: it.images,
-    caption: `${it.label} · 두 사람이 함께 좋아하는 것`
-  }));
-  const openInFeed = (type, id) => {
-    setFeedType(type);
+  const openPostInFeed = id => {
     setFeedScrollTo(id);
     setFeedActive(true);
     if (screenRef.current) screenRef.current.scrollTop = 0;
@@ -1933,9 +1889,6 @@ function MemoriesScreen({
       if (screen && el) screen.scrollTop = el.offsetTop - topbarH;
     }, 60);
   };
-  const openPostInFeed = id => openInFeed('posts', id);
-  const openInterestInFeed = id => openInFeed('interests', id);
-  const feedItems = feedType === 'interests' ? interestPosts : posts;
   const backFromFeed = () => {
     setFeedActive(false);
     setFeedScrollTo(null);
@@ -2004,9 +1957,6 @@ function MemoriesScreen({
   const TABS = [{
     key: 'grid',
     Icon: TabIconGrid
-  }, {
-    key: 'repost',
-    Icon: TabIconBookmark
   }, {
     key: 'mention',
     Icon: TabIconMention
@@ -2147,7 +2097,8 @@ function MemoriesScreen({
     className: "tap",
     onClick: () => setStory({
       groups: [{
-        images: proposeImages
+        images: proposeImages,
+        captions: proposeCaptions
       }],
       startGroupIdx: 0
     }),
@@ -2297,11 +2248,12 @@ function MemoriesScreen({
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      gap: 1
     }
   }, /*#__PURE__*/React.createElement("svg", {
-    width: "16",
-    height: "16",
+    width: "14",
+    height: "14",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: ink,
@@ -2309,22 +2261,16 @@ function MemoriesScreen({
     strokeLinecap: "round",
     strokeLinejoin: "round"
   }, /*#__PURE__*/React.createElement("path", {
-    d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "9",
-    cy: "7",
-    r: "4"
-  }), /*#__PURE__*/React.createElement("line", {
-    x1: "19",
-    y1: "8",
-    x2: "19",
-    y2: "14"
-  }), /*#__PURE__*/React.createElement("line", {
-    x1: "22",
-    y1: "11",
-    x2: "16",
-    y2: "11"
-  })))), hearts.length > 0 && /*#__PURE__*/React.createElement("div", {
+    d: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 10,
+      fontWeight: 700,
+      color: ink,
+      lineHeight: 1,
+      marginBottom: 1
+    }
+  }, "+"))), hearts.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'fixed',
       inset: 0,
@@ -2499,7 +2445,7 @@ function MemoriesScreen({
     style: {
       background: '#fff'
     }
-  }, feedItems.map(p => /*#__PURE__*/React.createElement(MemoryPost, {
+  }, posts.map(p => /*#__PURE__*/React.createElement(MemoryPost, {
     key: p.id,
     lime: lime,
     ink: ink,
@@ -2519,111 +2465,7 @@ function MemoriesScreen({
       lineHeight: 1,
       marginBottom: 16
     }
-  }, "Lovestagram"))), !feedActive && tab === 'repost' && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: '#fff',
-      padding: '18px 16px 12px',
-      borderBottom: '1px solid rgba(17,17,17,0.08)'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Bricolage Grotesque',sans-serif",
-      fontSize: 22,
-      fontWeight: 400,
-      color: ink,
-      letterSpacing: '-0.01em'
-    }
-  }, "우리의 관심사"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Pretendard',sans-serif",
-      fontSize: 13,
-      color: '#666',
-      marginTop: 4
-    }
-  }, "두 사람이 함께 좋아하는 것들")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr 1fr',
-      gap: 2,
-      background: '#ddd'
-    }
-  }, interests.map(it => {
-    const thumb = it.images && it.images[0];
-    return /*#__PURE__*/React.createElement("button", {
-      key: it.id,
-      onClick: () => openInterestInFeed(it.id),
-      className: "tap",
-      style: {
-        padding: 0,
-        border: 'none',
-        cursor: 'pointer',
-        aspectRatio: '4/5',
-        background: '#F4F2EB',
-        position: 'relative',
-        overflow: 'hidden'
-      }
-    }, thumb ? /*#__PURE__*/React.createElement("img", {
-      src: thumb,
-      alt: it.label,
-      loading: "lazy",
-      decoding: "async",
-      draggable: false,
-      style: {
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        display: 'block',
-        pointerEvents: 'none'
-      }
-    }) : /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#F4F2EB'
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontFamily: "'Bricolage Grotesque',sans-serif",
-        fontWeight: 600,
-        fontSize: 30,
-        color: '#C9C5B8',
-        lineHeight: 1
-      }
-    }, "＋")), it.images && it.images.length > 1 && /*#__PURE__*/React.createElement(CarouselBadge, null), /*#__PURE__*/React.createElement("div", {
-      style: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: '20px 8px 8px',
-        background: 'linear-gradient(transparent, rgba(0,0,0,0.52))',
-        textAlign: 'center',
-        pointerEvents: 'none'
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontFamily: "'Pretendard',sans-serif",
-        fontWeight: 700,
-        fontSize: 13,
-        color: '#fff'
-      }
-    }, it.label), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontFamily: "'Bricolage Grotesque',sans-serif",
-        fontSize: 9,
-        color: 'rgba(255,255,255,0.7)',
-        letterSpacing: '0.1em',
-        textTransform: 'uppercase'
-      }
-    }, it.sub)));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      height: 60
-    }
-  })), !feedActive && tab === 'mention' && /*#__PURE__*/React.createElement(GuestbookTab, {
+  }, "Lovestagram"))), !feedActive && tab === 'mention' && /*#__PURE__*/React.createElement(GuestbookTab, {
     lime: lime,
     ink: ink
   }));
