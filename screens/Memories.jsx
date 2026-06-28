@@ -580,6 +580,12 @@ function GuestbookTab({ lime, ink }) {
   };
 
   const initials = n => n.trim().slice(0, 1).toUpperCase() || '?';
+  const formatTs = ts => {
+    if (!ts) return '';
+    const d = new Date(ts);
+    if (isNaN(d.getTime())) return ts;
+    return d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+  };
   const colors = ['#D4E607', '#111', '#FFB7C5', '#3B6CFF', '#F5E64B', '#1F8A5B'];
 
   return (
@@ -690,7 +696,7 @@ function GuestbookTab({ lime, ink }) {
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                     <span style={{ fontFamily: "'Pretendard',sans-serif", fontWeight: 700, fontSize: 14, color: ink }}>{msg.name}</span>
-                    <span style={{ fontFamily: "'Pretendard',sans-serif", fontSize: 11, color: '#aaa' }}>{msg.ts}</span>
+                    <span style={{ fontFamily: "'Pretendard',sans-serif", fontSize: 11, color: '#aaa' }}>{formatTs(msg.ts)}</span>
                     <button onClick={() => { setManagingId(msg.id); setManageInput(''); setManageError(false); setEditingId(null); }}
                       style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', color: '#ccc', fontFamily: "'Pretendard',sans-serif", fontSize: 12, padding: 0, flexShrink: 0 }}>
                       수정·삭제

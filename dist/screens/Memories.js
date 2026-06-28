@@ -968,6 +968,16 @@ function GuestbookTab({
     setEditingId(null);
   };
   const initials = n => n.trim().slice(0, 1).toUpperCase() || '?';
+  const formatTs = ts => {
+    if (!ts) return '';
+    const d = new Date(ts);
+    if (isNaN(d.getTime())) return ts;
+    return d.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
   const colors = ['#D4E607', '#111', '#FFB7C5', '#3B6CFF', '#F5E64B', '#1F8A5B'];
   return /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1299,7 +1309,7 @@ function GuestbookTab({
       fontSize: 11,
       color: '#aaa'
     }
-  }, msg.ts), /*#__PURE__*/React.createElement("button", {
+  }, formatTs(msg.ts)), /*#__PURE__*/React.createElement("button", {
     onClick: () => {
       setManagingId(msg.id);
       setManageInput('');
