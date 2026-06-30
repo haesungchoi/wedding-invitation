@@ -65,6 +65,12 @@ self.addEventListener('fetch', e => {
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
 
+  // 방명록 API(구글 Apps Script) — 항상 실시간 데이터.
+  //   SW가 절대 가로채거나 캐시하지 않도록 통과시킨다(쌓이는 축하메시지 실시간 반영).
+  if (/script\.google(usercontent)?\.com$/.test(url.hostname)) {
+    return;
+  }
+
   // 외부 CDN(fonts, react) — 네트워크 우선, 캐시 폴백
   if (url.origin !== location.origin) {
     e.respondWith(networkFirst(request));
