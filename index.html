@@ -526,21 +526,51 @@
 <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 
-<script src="dist/ios-frame.js?v=20260629a"></script>
-<script src="dist/tweaks-panel.js?v=20260629a"></script>
-<script src="image-slot.js?v=20260629a"></script>
-<script src="dist/screens/Main.js?v=20260629a"></script>
-<script src="dist/screens/Memories.js?v=20260629a"></script>
-<script src="dist/screens/Sheets.js?v=20260629a"></script>
-<script src="dist/screens/Numbers.js?v=20260629a"></script>
-<script src="dist/screens/Dove.js?v=20260629a"></script>
-<script src="dist/pc-layout.js?v=20260629a"></script>
-<script src="dist/app.js?v=20260629a"></script>
+<script src="dist/ios-frame.js?v=20260630a"></script>
+<script src="dist/tweaks-panel.js?v=20260630a"></script>
+<script src="image-slot.js?v=20260630a"></script>
+<script src="dist/screens/Main.js?v=20260630a"></script>
+<script src="dist/screens/Memories.js?v=20260630a"></script>
+<script src="dist/screens/Sheets.js?v=20260630a"></script>
+<script src="dist/screens/Numbers.js?v=20260630a"></script>
+<script src="dist/screens/Dove.js?v=20260630a"></script>
+<script src="dist/pc-layout.js?v=20260630a"></script>
+<script src="dist/app.js?v=20260630a"></script>
 
 <script>
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js');
+  // 새 SW가 페이지를 넘겨받으면 1회만 자동 새로고침 → 최신 화면이 바로 보인다.
+  // (최초 설치 시점에는 reload하지 않도록 기존 controller 유무로 가드)
+  var hadController = !!navigator.serviceWorker.controller;
+  var refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (refreshing || !hadController) return;
+    refreshing = true;
+    window.location.reload();
+  });
+
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js').then(function (reg) {
+      // 대기 중인 새 SW가 있으면 즉시 활성화 요청
+      function promote(worker) {
+        if (!worker) return;
+        worker.addEventListener('statechange', function () {
+          if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+            worker.postMessage('SKIP_WAITING');
+          }
+        });
+      }
+      if (reg.waiting && navigator.serviceWorker.controller) reg.waiting.postMessage('SKIP_WAITING');
+      reg.addEventListener('updatefound', function () { promote(reg.installing); });
+
+      // 페이지를 다시 열거나 포커스가 돌아오면 새 버전이 있는지 확인
+      // (폰에서 탭을 백그라운드에 두었다 다시 보는 흔한 패턴 대응)
+      var checkUpdate = function () { reg.update().catch(function () {}); };
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') checkUpdate();
+      });
+      window.addEventListener('focus', checkUpdate);
+    }).catch(function () {});
   });
 }
 </script>

@@ -876,8 +876,14 @@ function GuestbookTab({
   const [editingId, setEditingId] = React.useState(null);
   const [editText, setEditText] = React.useState('');
   const fileRef = React.useRef(null);
-  React.useEffect(() => {
-    fetch(`${SCRIPT_URL}?action=list`).then(r => r.json()).then(sheetsData => {
+
+  // 서버(구글 시트)에서 최신 메시지 목록을 불러와 로컬과 병합한다.
+  //   캐시 무효화(no-store + 타임스탬프 쿼리)로 항상 최신을 받아온다 →
+  //   다른 사람이 새로 남긴 축하메시지가 캐시에 막혀 안 보이던 문제 해결.
+  const loadMessages = React.useCallback(() => {
+    fetch(`${SCRIPT_URL}?action=list&t=${Date.now()}`, {
+      cache: 'no-store'
+    }).then(r => r.json()).then(sheetsData => {
       const localData = gbLoad();
       const localMap = Object.fromEntries(localData.map(m => [Number(m.id), m]));
       const deleted = getDeletedIds();
@@ -890,6 +896,19 @@ function GuestbookTab({
       gbSave(merged);
     }).catch(() => {});
   }, []);
+  React.useEffect(() => {
+    loadMessages();
+    // 페이지를 다시 보거나 포커스가 돌아오면 새로 쌓인 메시지를 다시 불러온다.
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') loadMessages();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('focus', loadMessages);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('focus', loadMessages);
+    };
+  }, [loadMessages]);
   const handlePhoto = e => {
     const f = e.target.files[0];
     if (!f) return;
